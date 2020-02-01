@@ -1,0 +1,63 @@
+<div id="panel-form-grabacion" *ngIf="grabacion">
+    <li class="flex space-between">
+        <div class="flex">
+            <i class="fa fa-pencil"></i>
+            <h2 class="h5">Editar Grabacion</h2>
+        </div>						
+        <span class="alerta alerta-verde">
+            Grabación guardada!
+        </span>
+    </li>
+    
+    <form #grabacionForm="ngForm">
+        <div>						
+            <label class="h5" for="nombre">Nombre de la grabación</label>
+            <input  name="nombre" #nombre="ngModel" [(ngModel)]="grabacion.nombre" style="padding: 10px;" type="text" id="nombre">
+        </div>
+        <div>
+            <label class="h5" for="descripcion">Descripción</label>
+            <textarea name="descripcion" #descripcion="ngModel" [(ngModel)]="grabacion.descripcion" style="width: 100%;height: 70px;min-height: 80px;padding: 8px;font-size: 14px;" id="descripcion"></textarea>
+        </div>
+        <div>
+            <label class="h5" for="estado">Estado:</label>
+            <select class="form-control custom-select" size="auto" name="estado" #estado="ngModel" [(ngModel)]="grabacion.estado" style="padding: 6px 10px;">
+                <option value="Público">Público</option>
+                <option value="Privado">Privado</option>
+            </select>
+        </div>
+        <div>
+            <label class="h5" for="imagen">Imagen</label>
+            <input id="imagen" type="file">
+        </div>
+        <button (click)="editarGrabacion()" class="btn fondo-gris-azulado" style="margin: 30px 0 0;font-size: 20px;padding: 10px 30px;">OK</button>
+    </form>
+
+    <div class="vista-previa-guardar-grabacion">
+        <h3>Vista previa grabacion</h3>
+
+        <div class="ui-block video-item pointer">
+            <div class="video-player">
+                <i *ngIf="grabacion.tipo == 'Tema'" class="etiqueta-grabacion-tema">{{grabacion.tipo}}</i>
+                <i *ngIf="grabacion.tipo == 'Freestyle'" class="etiqueta-grabacion-freestyle">{{grabacion.tipo}}</i>
+                <div *ngIf="grabacion.imagen == 'null'" style="width: 100%;height: 220px;min-width: 220px;object-fit: cover;background: #d8d8d8;display: flex;align-items: center;justify-content: center;font-size: 99px;color: #bdbdbd;">
+                    <i class="fa fa-microphone"></i>
+                </div>
+            </div>
+
+            <div class="ui-block-content video-content">
+                <a class="h6 title" href="#">{{grabacion.nombre}}</a>
+                <div>
+                    <span class="etiqueta-reputacion">Reputacion: {{grabacion.reputacion}}</span>
+                </div>
+                <div class="flex space-between">
+                    <time class="hace-cuanto">
+                        hace 10 dias
+                    </time>
+                    <span style="color: #838383;">
+                        <i class="fa fa-eye" style="margin-right: 10px;font-size: 16px;color: #757575;"></i>{{grabacion.reproducciones}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+<div class="reproductor-fijo">
+	<div class="flex">
+		<div (click)="ocultarReproductor($event.target.id)" id="ocultar-reproductor" class="mostrar-ocultar-reproductor">
+			Ocultar Reproductor
+		</div>
+		<div (click)="mostrarReproductor($event.target.id)" id="mostrar-reproductor" class="mostrar-ocultar-reproductor"style="display:none !important">
+			Mostrar Reproductor
+		</div>
+		<div class="detalles-beat col-md-2 col-lg-2 padding-0 flex">
+			<div class="imagen-beat">
+				<img id="img-beat" src="{{ url + 'get-imagen-beat/' + beat.image }}" alt="" *ngIf="beat.image">
+
+				<img id="img-beat" src="https://svn.exotica.org.uk:8443/xbmc4xbox/trunk/web/xbmciphone/images/noartplaceholder.png" alt="" *ngIf="!beat.image">
+
+			</div>
+			<ul class="nombre-beat-y-autor">
+				<li id="nombre-beat">
+					{{beat.name}}
+				</li>
+				<li id="autor-beat">
+					<span *ngIf="beat.user">{{beat.user.nick}}</span>
+					<span *ngIf="!beat.user">zodiakordk</span>
+				</li>
+			</ul>
+		</div>
+	
+		<audio id="player">
+			<source id="mp3-source" src="{{ url + 'get-audio-beat/' + beat.file }}" type="audio/mpeg">
+		</audio>
+	
+		<audio id="audio-impro" src="" type='audio/*;'></audio>
+	
+		<div class="botones-reproductor col-md- col-lg-4 flex">
+			<div class="boton-reproductor col-md-4 col-lg-4 flex justify-center">
+				<!-- <img src="https://improvisa.me/inc/iconos/previous-button-hand-drawn-outline.png" alt=""> -->
+				<i class="fa fa-step-backward"></i>
+			</div>
+			<div class="boton-reproductor col-md-4 col-lg-4" id="boton-play" (click)="reproducirAudio()">
+				<!-- <img src="https://improvisa.me/inc/iconos/play-button.png" alt=""> -->
+				<i class="fa fa-play"></i>
+			</div>
+	
+			<div class="boton-reproductor col-md-4 col-lg-4" id="boton-pause" (click)="pararAudio()" style="display:none !important;">
+				<i class="fa fa-pause"></i>
+			</div>
+			<div class="boton-reproductor col-md-4 col-lg-4 flex justify-center">
+				<!-- <img style="    transform: scaleX(-1);
+					-moz-transform: scaleX(-1);
+					-webkit-transform: scaleX(-1);" src="https://improvisa.me/inc/iconos/previous-button-hand-drawn-outline.png" alt=""> -->
+				<i class="fa fa-step-forward"></i>
+			</div>
+	<!--     	<div class="boton-reproductor">
+				<img src="https://improvisa.me/inc/iconos/random.png" alt="">
+			</div>
+			<div class="boton-reproductor">
+				<img src="https://improvisa.me/inc/iconos/repetir-cancion.png" alt="">
+			</div> -->
+		</div>
+	
+		<div class="col-md-4 col-lg-4 flex">
+			<div style="display:none;" id="custom-seekbar2" class="barra-progreso ">
+				<span></span>
+			</div>
+	
+			<div id="custom-seekbar" class="barra-progreso ">
+				<span></span>
+			</div>
+	
+			<!-- <div class="info-beat-barra" *ngIf="beat.name">
+				<span class="info-beat-barra-nombre">
+					{{beat.name}}
+				</span>
+				<span class="info-beat-barra-nick-autor">
+					{{beat.user.nick}}
+				</span>
+			</div> -->
+		</div>
+	
+		<input type="range" id="volume" class="slider-volumen" step=".1" min="0" max="1" value="1" style="margin: 8px 20px;">
+	</div>
+</div>

@@ -1,0 +1,30 @@
+<div class="header-spacer"></div>
+
+<div class="container flex justify-center flex-wrap">
+	<div class="row padding-0 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<ul class="botones-buscar-rival-desafiar">
+			<li [routerLink]="['/batallas-de-gallos/crear-batalla']">Buscar rival</li>
+			<li class="active">Desafiar</li>
+		</ul>
+		<h1 class="h5" style="width:100%;">Crear batalla / Desafiar</h1>
+		<p>Elige un rival, selecciona los parámetros de la batalla e improvisa tu ronda.</p>
+	</div>
+
+	<div class="row padding-0 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 parametros-crear-batalla">
+		<div class="flex titulo-paso-crear-batalla">
+            <div class="flex">
+                <span class="num-paso flex justify-center">2</span>ELIGE RIVAL
+            </div>
+            
+            <div class="beat-elegido-crear-batalla" *ngIf="user" style="margin-bottom: 0;">
+                <img src="{{url + 'get-image-user/' + user.image }}" *ngIf="user.image && user.image != null">
+                <img src="https://s3.amazonaws.com/FringeBucket/default-user.png" *ngIf="user.image == null">
+                {{user.nick}}	
+            </div>
+		</div>
+	</div>
+
+	<div class="row flex justify-center">
+		<button [routerLink]="['/batallas-de-gallos/crear-batalla/desafiar', nickUser]" class="btn btn-lg boton-empezar-batalla"><i class="fa fa-flash"></i>Empezar Batalla 3,2,1</button>
+	</div>
+</div>

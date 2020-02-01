@@ -1,0 +1,45 @@
+<div class="comentarios-batalla">
+    <form #comentarioBatallaForm="ngForm" (ngSubmit)="comentarBatalla(comentarioBatallaForm)" class="comment-form inline-items" style="background: #fafbfd;">
+        <h2 class="h5" style="margin-bottom: 20px;">
+            {{totalComentarios}} Comentarios
+        </h2>
+        <div class="post__author author vcard inline-items">
+            <img src="{{url + 'get-image-user/' + identity.image}}" alt="author" *ngIf="identity">
+            <img src="http://localhost:3800/api/get-image-user/usuario-por-defecto.png" alt="author" *ngIf="!identity">
+
+            <div class="form-group with-icon-right is-empty">
+                <textarea name="texto" #texto="ngModel" [(ngModel)]="comentario.texto" class="form-control" placeholder="Añade un comentario a la batalla"></textarea>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-md-2 btn-primary">Comentar</button>
+    </form>
+
+    <ul class="comments-list">
+        <li *ngFor="let comentario of comentarios; let i = index">
+            <div class="post__author author vcard inline-items">
+                <img src="{{url + 'get-image-user/' + comentario.user.image}}" alt="author">
+
+                <div class="author-date">
+                    <a class="h6 post__author-name fn pointer" style="color: #666;">{{comentario.user.nick}}</a>
+                    <div class="post__date">
+                        <time class="published" datetime="2004-07-24T18:18">
+                            38 mins ago
+                        </time>
+                    </div>
+                </div>
+
+                <a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="assets/icons/icons.svg#olymp-three-dots-icon"></use></svg></a>
+
+            </div>
+
+            <p>{{comentario.texto}}</p>
+
+            <a href="#" class="post-add-icon inline-items">
+                <svg class="olymp-heart-icon"><use xlink:href="assets/icons/icons.svg#olymp-heart-icon"></use></svg>
+                <span>{{comentario.likes}}</span>
+            </a>
+            <a href="#" class="reply">Responder</a>
+        </li>
+    </ul>                
+</div>

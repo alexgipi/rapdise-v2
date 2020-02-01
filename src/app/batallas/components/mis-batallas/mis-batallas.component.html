@@ -1,0 +1,478 @@
+<div class="menu-top-contenido">
+	<div class="menu-top-contenido__panel-1 no-seleccionable">
+		<span [routerLink]="['/batallas-de-rap-online']">
+			Batallas públicas
+		</span>
+		<span class="activo">
+			Mis batallas
+		</span>
+		<div class="menu-top-contenido__filtros">
+			<!-- <span style="margin-right: 8px;font-weight: bold;">Orden:</span> -->
+			<select (change)="getBatallasOrdenadasPor($event.target.value)">
+				<option value="-modificado_el">Más recientes</option>
+				<option value="modificado_el">Más antiguas</option>
+				<option value="-visualizaciones">Más vistas</option>
+				<option value="-likes">Más reputadas</option>
+				
+			</select>
+		</div>
+	</div>
+
+	<div class="menu-top-contenido__panel-2 botones-pagina-batallas">
+		<a [routerLink]="['/batallas-de-gallos/buscar-rival']">
+			<div  class="mi-boton float-left">
+				Buscar Rival <!-- <span class="contador-buscando-rival">{{totalBuscandoRival}}</span> -->
+			</div>
+		</a>
+		<a [routerLink]="['/batallas-de-gallos/crear-batalla']">
+			<div class="mi-boton boton-crear-batalla">Crear Batalla</div>
+		</a>
+	</div>
+	
+</div>
+
+<div class="container-batallas flex justify-center flex-wrap">
+
+	<div class="width- flex flex-wrap">
+		<div class="width-100" style="order:2; margin: 20px 0;">
+
+			<h1 class="mi-titulo">Batallas de rap online</h1>
+			<div id="fos">
+				<p id="texto-desplegable" style="display: -webkit-box;-webkit-box-orient: vertical;">
+						Participa en batallas de rap online contra otros usuarios de la comunidad. Gana reputación con tus victorias y el voto del público, sube posiciones en la clasificación y conquista la tabla. Podéis afilar vuestra espada e improvisar con sangre, pero también tenéis la opción de hacer freestyle sin atacar, sólo para medir vuestra creatividad.
+					<span id="dots"></span>
+				</p> 
+				<span id="mi-ver-mas-texto" (click)="verMasVerMenosTexto()">Ver más +</span>
+			</div>
+		</div>
+
+		<nav class="submenu-mis-batallas no-seleccionable">
+			<a (click)="getBatallasEstadoUsuario('En marcha', identity._id)" [class.activo]="viendoBatallas == 'en-marcha'">En marcha</a>
+			<a (click)="getBatallasEstadoUsuario('Finalizada', identity._id)" [class.activo]="viendoBatallas == 'finalizadas'">Finalizadas</a>
+			<a (click)="getSolicitudesBatallaUsuario(identity._id)" [class.activo]="viendoBatallas == 'peticiones'">Peticiones</a>
+		</nav>
+
+		<!-- BATALLAS FINALIZADAS -->			
+		<ul *ngIf="viendoBatallas == 'finalizadas'"  id="finalizadas" class="listado-freestyles float-left">
+			<div *ngFor="let batalla of misBatallas; let i = index" class="card-carousel video-item padding-0" style="transition: all 0.3s ease 0s;">
+				<a [routerLink]="['/batalla', batalla._id]" *ngIf="batalla">
+					<div class="video-player">
+						<div class="square" style="width: 50%;">
+							<img src="{{ url + 'get-image-user/' + batalla.usuario1.image }}" alt="" *ngIf="batalla.usuario1 && batalla.usuario1.image">
+						</div>
+						<div class="square" style="width: 50%;">
+							<img src="{{ url + 'get-image-user/' + batalla.usuario2.image }}" alt="" *ngIf="batalla.usuario2 && batalla.usuario2.image">
+						</div>
+						
+						<span style="position: absolute;z-index:99;bottom: 10px;right: 10px;padding: 0px 10px;background: rgba(0,0,0,0.8);color: #fff;border-radius:5px">
+							03:49
+						</span>
+						<div class="overlay">
+			
+						</div>
+					</div>
+					<div class="ui-block-content video-content">
+						<h2 class="h6" href="#">{{batalla.nombre}}</h2>
+						
+						<!-- Modos ronda batalla - 2 RONDAS -->
+						<div class="published" *ngIf="batalla.rondas == 2">
+							<span style="color:#000;">
+								{{batalla.rondas}} <span *ngIf="batalla.rondas == 1">Ronda - </span><span *ngIf="batalla.rondas > 1">Rondas - </span>
+							</span>
+							<!-- MODO Ronda 1 y 2 IGUALES -->
+							<span *ngIf="batalla.modoRonda1 == batalla.modoRonda2" style="color: #519654;">
+								Modo {{batalla.modoRonda1}}
+							</span>
+							<!-- MODO Ronda 1 y 2 DIFERENTES -->
+							<span *ngIf="batalla.modoRonda1 != batalla.modoRonda2" style="color: #519654;text-transform: capitalize;">
+								{{batalla.modoRonda1}} / {{batalla.modoRonda2}}
+							</span>
+						</div>
+						<span style="margin-right: 12px;display: inline-flex;align-items: center;">
+							<i class="fa fa-play" style="font-size: 0.67em;margin-right: 4px;color: #999;"></i>{{batalla.visualizaciones}}
+						</span>
+						<span style="margin-right: 6px;display: inline-flex;align-items: center;">
+							<i class="fa fa-shield" style="font-size: 0.7em;margin-right: 4px;color: #999;"></i> {{batalla.likes}}
+						</span>
+						<span style="text-transform: capitalize;color: #8d8d8d;margin-left: 6px;font-size: 14px;">{{(batalla.modificado_el | amFromUnix) | amLocale:'es' | amTimeAgo }}</span>
+					</div>
+				</a>
+			</div>
+		</ul>
+
+
+		<!-- BATALLAS EN MARCHA -->
+		<ul class="tarjetas-buscando-rival" *ngIf="viendoBatallas == 'en-marcha'" style="margin:0;">
+			<li (click)="seleccionarBatalla(batalla)" *ngFor="let batalla of misBatallas; let i = index;" class="__item-tarjeta-buscando-rival">
+				<div id="img">
+					<svg *ngIf="batalla.rondas == 2 && identity._id == batalla.usuario1._id" [class.activo]="batalla.rondas == 2 && identity._id == batalla.usuario1._id" xml:space="preserve" xmlns:xml="http://www.w3.org/XML/1998/namespace" id="Capa_1"  version="1.1" viewBox="0 0 512.003 512.003" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px"><g _ngcontent-c1="" transform="matrix(1 0 0 -1 0 45)"><polygon _ngcontent-c1="" points="68.267,30.31 11.378,30.31 11.378,-26.579 273.068,-288.269 329.957,-231.38"></polygon><polygon _ngcontent-c1="" points="11.378,30.311 11.378,-26.578 273.067,-288.268 301.512,-259.824"></polygon><g _ngcontent-c1=""><path _ngcontent-c1="" d="M 365.711 -345.48 c 8.886 -8.886 20.89 -11.287 26.817 -5.37 c 5.928 5.928 3.527 17.932 -5.359 26.829 l -59.006 69.723 c -8.875 8.886 -20.901 11.287 -26.806 5.359 l -10.74 -10.718 c -5.916 -5.939 -3.515 -17.932 5.37 -26.817 L 365.711 -345.48 Z"></path><path _ngcontent-c1="" d="M 255.757 -302.569 c 6.668 -6.668 17.477 -6.668 24.133 0 l 64.376 64.353 c 6.668 6.668 6.656 17.477 0 24.144 c -6.668 6.656 -17.477 6.668 -24.144 0 l -64.364 -64.364 C 249.101 -285.104 249.101 -295.913 255.757 -302.569"></path><path _ngcontent-c1="" d="M 356.336 -362.912 c 6.656 -6.668 17.465 -6.668 24.133 0 l 24.133 24.133 c 6.668 6.668 6.668 17.477 0 24.144 c -6.668 6.656 -17.465 6.668 -24.133 0 l -24.133 -24.144 C 349.669 -345.437 349.669 -356.246 356.336 -362.912"></path><polygon _ngcontent-c1="" points="79.639,-231.38 136.525,-288.269 398.224,-26.579 398.224,30.31 341.34,30.31"></polygon></g><polygon _ngcontent-c1="" points="108.087,-259.827 136.534,-288.269 398.224,-26.579 398.224,30.31"></polygon><g _ngcontent-c1=""><g _ngcontent-c1=""><polygon _ngcontent-c1="" points="17.071,-350.85 17.072,-350.851 17.071,-350.849"></polygon><polygon _ngcontent-c1="" points="113.611,-286.475 81.433,-254.302 29.807,-315.305 52.6,-338.108"></polygon></g><path _ngcontent-c1="" d="M 129.707 -302.568 c 6.656 -6.668 17.477 -6.668 24.133 0 c 6.656 6.656 6.656 17.465 0 24.133 l -64.364 64.364 c -6.668 6.668 -17.465 6.656 -24.133 0 c -6.668 -6.668 -6.668 -17.477 0 -24.144 l 16.09 -16.086 l 32.179 -32.173 L 129.707 -302.568 Z"></path><path _ngcontent-c1="" d="M 53.272 -338.781 l -0.673 0.673 l -22.792 22.803 l -0.668 0.668 c -6.668 6.668 -17.477 6.656 -24.144 0 c -3.325 -3.331 -4.992 -7.695 -4.996 -12.06 v -0.024 c 0.002 -4.365 1.666 -8.729 4.996 -12.06 l 12.075 -12.069 l 0.001 -0.001 l 12.068 -12.062 c 6.656 -6.668 17.477 -6.668 24.133 0 C 59.928 -356.246 59.928 -345.437 53.272 -338.781 Z"></path></g></g></svg>
+					<img src="{{url + 'get-image-user/' + batalla.usuario1.image}}" alt="">
+				</div>
+
+				<div style="flex:auto;">
+					<div style="line-height: 1;font-weight: bold;font-size: 1em;color: #666;">
+						{{batalla.nombre}}
+					</div>
+					<p style="color: #9b9b9b;text-shadow: none;border-radius: 32px;font-size: 12px !important;margin-right:5px;float: left;display: block;width: 100%;margin: 0;line-height: 1;margin-top: 8px;margin-bottom: 2px;">
+						<span class="capitalize">{{batalla.modoRonda1}}</span> - {{batalla.rondas}}R de {{batalla.tiempoTurnoRonda1}}s y {{batalla.tiempoTurnoRonda2}}s
+					</p>
+					<div>
+						<div *ngIf="batalla.rondas == 2" style="color: #6f6f6f;text-shadow: none;border-radius: 32px;font-size: 13px !important;margin-right:5px;float: left;display: block;width: 100%;margin: 0;display: flex;align-items: center;justify-content: space-between;flex-wrap: wrap;">
+							<!-- Mensaje accion batalla 2 Rondas -->
+							<span *ngIf="identity._id == batalla.usuario2._id" style="line-height: 1;margin-top: 5px;">
+								Esperando respuesta...
+							</span>
+							<span *ngIf="identity._id == batalla.usuario1._id" style="color: #ff5622;font-weight: bold;">
+								Graba la última ronda
+							</span>
+
+							<!-- Partes de progreso 2 Rondas -->
+							<div *ngIf="identity._id == batalla.usuario1._id" class="circulos-progreso-batalla-en-marcha" style="display: flex;margin-top: 5px;">
+								<i class="activo"></i>
+								<i></i>
+								<i></i>
+								<i class="desactivado"></i>
+							</div>
+							<div *ngIf="identity._id == batalla.usuario2._id" class="circulos-progreso-batalla-en-marcha" style="display: flex;margin-top: 5px;">
+								<i></i>
+								<i class="activo"></i>
+								<i class="activo"></i>
+								<i class="desactivado"></i>
+							</div>
+						</div>
+
+						<div *ngIf="batalla.rondas == 3" style="color: #6f6f6f;text-shadow: none;border-radius: 32px;font-size: 13px !important;margin-right:5px;float: left;display: block;width: 100%;margin: 0;display: flex;align-items: center;justify-content: space-between;flex-wrap: wrap;">
+							<!-- Mensaje accion batalla 3 Rondas -->
+							<span *ngIf="identity._id == batalla.usuario2._id" style="line-height: 1;margin-top: 5px;">
+								Esperando respuesta...
+							</span>
+							<span *ngIf="identity._id == batalla.usuario1._id" style="color: #ff5622;font-weight: bold;">
+								Graba la 2ª Ronda
+							</span>
+
+							<!-- Partes de progreso 3 Rondas -->
+							<div *ngIf="identity._id == batalla.usuario1._id" class="circulos-progreso-batalla-en-marcha" style="display: flex;margin-top: 5px;">
+								<i class="activo"></i>
+								<i></i>
+								<i></i>
+								<i class="desactivado"></i>
+								<i class="desactivado"></i>
+								<i class="desactivado"></i>
+							</div>
+							<div *ngIf="identity._id == batalla.usuario2._id" class="circulos-progreso-batalla-en-marcha" style="display: flex;margin-top: 5px;">
+								<i></i>
+								<i class="activo"></i>
+								<i class="activo"></i>
+								<i class="desactivado"></i>
+								<i class="desactivado"></i>
+								<i class="desactivado"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="btn-top-tarjeta">
+					<div style="margin-left: 35px;">
+						<div style="line-height: 1;">Escuchar y responder</div>
+					</div>
+				</div>
+			</li>
+		
+			<li class="item-relleno pointer" *ngIf="totalMisBatallas < 3">
+		
+			</li>
+		
+			<li class="item-relleno pointer" *ngIf="totalMisBatallas < 3">
+		
+			</li>
+		
+			<li class="item-relleno pointer" *ngIf="totalMisBatallas < 4">
+		
+			</li>
+		</ul>
+		
+		<!-- PETICIONES DE BATALLA -->
+		<ul class="tarjetas-buscando-rival" *ngIf="viendoBatallas == 'peticiones'" style="width: 100%;padding: 0;margin-top: 20px;">
+            <li class="__item-tarjeta-buscando-rival">
+                <div id="img">
+                    <img src="https://s3-eu-west-3.amazonaws.com/web-magazines/entornos/deployment/visavis/wp-content/uploads/2018/01/28153457/Arkano-01.jpg" alt="">
+                </div>
+                <div class="info-tarjeta">
+                    <strong>Tartano</strong>
+                    <div style="line-height: 1;margin-bottom: 5px;font-size: 0.95em;">2 Rondas de 60s y 120s</div>
+                    <div style="line-height: 1;margin-bottom: 5px;font-size: 0.95em;">Palabras - Imágenes</div>
+                    <div style="line-height: 1;margin-bottom: 5px;font-size: 0.95em;" class="estilos-buscando-rival">
+                        <span style="padding: 3px 5px;background: #c7c7c7;color: #fff;/* margin-left: 5px; */border-radius: 3px;font-size: 0.85em;">Trap</span>
+                        <span style="padding: 3px 5px;background: #828282;color: #fff;margin-left: 5px;border-radius: 3px;font-size: 0.85em;">Old School</span>
+                    </div>
+                </div>
+                <div class="btn-top-tarjeta">
+					<div style="display: flex;flex-wrap: wrap;justify-content: center;">
+						<div style="margin-bottom: 12px;">
+							<span style="padding: 6px 16px;background: #5b99d9;border-radius: 5px;color: white;display: flex;align-items: center;line-height: 1;">
+								Escuchar <i class="fa fa-volume-up" style="font-weight: normal;margin-left: 11px;"></i>
+							</span>
+						</div>
+						<div>
+							<span style="padding: 6px 16px;background: #579457;margin-bottom: 7px;border-radius: 5px;color: white;">
+								Responder a Tartano
+							</span>
+							<span style="padding: 6px 10px;background: #bf3939;border-radius: 5px;color: white;margin-left: 10px;">
+								<i class="fa fa-trash" style="font-weight: normal;"></i>
+							</span>
+						</div>
+					</div>
+				</div>
+            </li>
+
+
+            <li class="__item-tarjeta-buscando-rival">
+                <div id="img">
+                    <img src="http://localhost:3800/api/get-imagen-beat/psFoUGL6DuqvwgdhpQ2Sv4zl.gif" alt="">
+                </div>
+                <div class="info-tarjeta">
+                    <strong>alexgp895</strong>
+                    <div style="line-height: 1;margin-bottom: 5px;font-size: 0.95em;">2 Rondas de 60s</div>
+                    <div style="line-height: 1;margin-bottom: 5px;font-size: 0.95em;">Palabras - Imágenes</div>
+                    <div style="line-height: 1;margin-bottom: 5px;font-size: 0.95em;" class="estilos-buscando-rival">
+                        <span style="padding: 3px 5px;background: #c7c7c7;color: #fff;/* margin-left: 5px; */border-radius: 3px;font-size: 0.85em;">Reggae</span>
+                        <span style="padding: 3px 5px;background: #828282;color: #fff;margin-left: 5px;border-radius: 3px;font-size: 0.85em;">Jazzy</span>
+                    </div>
+                </div>
+                <div class="btn-top-tarjeta">
+					<div style="display: flex;flex-wrap: wrap;justify-content: center;">
+						<span style="padding: 0 10px;background: #579457;margin-bottom: 7px;border-radius: 5px;color: white;">
+							Responder a Tartano
+						</span>
+						<span style="padding: 0 10px;background: #bf3939;border-radius: 5px;color: white;">
+							Rechazar batalla
+						</span>
+					</div>
+                </div>
+            </li>
+
+            <li class="__item-tarjeta-buscando-rival">
+                <div id="img">
+                    <img src="https://pbs.twimg.com/profile_images/715511009323167744/DpLIshUN.jpg" alt="">
+                </div>
+                <div class="info-tarjeta">
+                    <strong>zakoMaster</strong>
+                    <div style="line-height: 1;margin-bottom: 5px;font-size: 0.95em;">2 Rondas de 60s</div>
+                    <div style="line-height: 1;margin-bottom: 5px;font-size: 0.95em;">Palabras - Imágenes</div>
+                    <div style="line-height: 1;margin-bottom: 5px;font-size: 0.95em;" class="estilos-buscando-rival">
+                        <span style="padding: 3px 5px;background: #c7c7c7;color: #fff;/* margin-left: 5px; */border-radius: 3px;font-size: 0.85em;">Old School</span>
+                        <span style="padding: 3px 5px;background: #828282;color: #fff;margin-left: 5px;border-radius: 3px;font-size: 0.85em;">Boom Bap</span>
+                    </div>
+                </div>
+                <div class="btn-top-tarjeta">
+					<div style="display: flex;flex-wrap: wrap;justify-content: center;">
+						<span style="padding: 0 10px;background: #579457;margin-bottom: 7px;border-radius: 5px;color: white;">
+							Responder a Tartano
+						</span>
+						<span style="padding: 0 10px;background: #bf3939;border-radius: 5px;color: white;">
+							Rechazar batalla
+						</span>
+					</div>
+                </div>
+            </li>
+
+            <li class="__item-tarjeta-buscando-rival">
+                <div id="img">
+                    <img src="http://localhost:3800/api/get-imagen-beat/0GW4a2c_0wMULUoNjH9OIqv2.jpg" alt="">
+                </div>
+                <div class="info-tarjeta">
+                    <strong>chukybeats</strong>
+                    <div style="line-height: 1;margin-bottom: 5px;font-size: 0.95em;">2 Rondas de 60s y 120s</div>
+                    <div style="line-height: 1;margin-bottom: 5px;font-size: 0.95em;">Palabras - Imágenes</div>
+                    <div style="line-height: 1;margin-bottom: 5px;font-size: 0.95em;" class="estilos-buscando-rival">
+                        <span style="padding: 3px 5px;background: #c7c7c7;color: #fff;/* margin-left: 5px; */border-radius: 3px;font-size: 0.85em;">Underground</span>
+                        <span style="padding: 3px 5px;background: #828282;color: #fff;margin-left: 5px;border-radius: 3px;font-size: 0.85em;">Lofi</span>
+                    </div>
+                </div>
+                <div class="btn-top-tarjeta">
+					<div style="display: flex;flex-wrap: wrap;justify-content: center;">
+						<span style="padding: 0 10px;background: #579457;margin-bottom: 7px;border-radius: 5px;color: white;">
+							Responder a Tartano
+						</span>
+						<span style="padding: 0 10px;background: #bf3939;border-radius: 5px;color: white;">
+							Rechazar batalla
+						</span>
+					</div>
+                </div>
+			</li>
+			
+			<li class="__item-tarjeta-buscando-rival">
+                <div id="img">
+                    <img src="http://localhost:3800/api/get-imagen-beat/0GW4a2c_0wMULUoNjH9OIqv2.jpg" alt="">
+                </div>
+                <div class="info-tarjeta">
+                    <strong>chukybeats</strong>
+                    <div style="line-height: 1;margin-bottom: 5px;font-size: 0.95em;">2 Rondas de 60s y 120s</div>
+                    <div style="line-height: 1;margin-bottom: 5px;font-size: 0.95em;">Palabras - Imágenes</div>
+                    <div style="line-height: 1;margin-bottom: 5px;font-size: 0.95em;" class="estilos-buscando-rival">
+                        <span style="padding: 3px 5px;background: #c7c7c7;color: #fff;/* margin-left: 5px; */border-radius: 3px;font-size: 0.85em;">Underground</span>
+                        <span style="padding: 3px 5px;background: #828282;color: #fff;margin-left: 5px;border-radius: 3px;font-size: 0.85em;">Lofi</span>
+                    </div>
+                </div>
+                <div class="btn-top-tarjeta">
+					<div style="display: flex;flex-wrap: wrap;justify-content: center;">
+						<span style="padding: 0 10px;background: #579457;margin-bottom: 7px;border-radius: 5px;color: white;">
+							Responder a Tartano
+						</span>
+						<span style="padding: 0 10px;background: #bf3939;border-radius: 5px;color: white;">
+							Rechazar batalla
+						</span>
+					</div>
+                </div>
+            </li>
+
+        </ul>
+
+
+			
+			<!--  MIS BATALLAS -->
+			<!-- <div id="mis-batallas" class="float-left width-100" style="margin-top: 20px;">
+				<ul class="submenu-misbatallas tab-mis-batallas">
+					<li (click)="cambiarTabMisBatallas($event, 'activas');getBatallasEstadoUsuario('Esperando respuesta',identity._id)" class="boton-tab-mis-batallas active">Activas</li>
+					<li (click)="cambiarTabMisBatallas($event, 'mis-batallas-finalizadas');getBatallasEstadoUsuario('Finalizada',identity._id)" class="boton-tab-mis-batallas">Finalizadas</li>
+					<li (click)="cambiarTabMisBatallas($event, 'peticiones')"class="boton-tab-mis-batallas">Peticiones</li>
+				</ul>
+				<div class="listado-mis-batallas float-left width-100">				
+					
+					<div class="ui-block contenido-tab-mis-batallas" id="activas" style="display:block;">
+						<div class="ui-block-title">
+							<h6 class="title">Mis batallas activas</h6>
+							<a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="assets/icons/icons.svg#olymp-three-dots-icon"></use></svg></a>
+						</div>
+		
+						<ul class="notification-list friend-requests">
+							<li *ngFor="let batalla of misBatallas; let i = index">
+								<div class="author-thumb">
+									<img src="{{ url + 'get-image-user/' + batalla.usuario1.image }}" alt="author">
+								</div>
+								<div class="notification-event">
+									<a href="#" class="h6 notification-friend">{{batalla.usuario1.nick}}<i style="margin: 0 10px;">-</i> <span style="text-transform: capitalize;">{{batalla.modo}}</span> / {{batalla.rondas}} Ronda de {{batalla.duracion}}s / {{batalla.intentosRonda}} Intentos</a>
+									<span class="chat-message-item">Hace 3 dias</span>
+								</div>
+								<span class="notification-icon">
+									<a href="#" class="accept-request">
+										Ver Batalla
+									</a>
+		
+									<a href="#" class="accept-request request-del">
+										<span class="icon-minus">
+											<svg class="olymp-happy-face-icon"><use xlink:href="assets/icons/icons.svg#olymp-happy-face-icon"></use></svg>
+										</span>
+									</a>
+		
+								</span>
+		
+								<div class="more">
+									<svg class="olymp-three-dots-icon"><use xlink:href="assets/icons/icons.svg#olymp-three-dots-icon"></use></svg>
+									<svg class="olymp-little-delete"><use xlink:href="assets/icons/icons.svg#olymp-little-delete"></use></svg>
+								</div>
+							</li>	
+						</ul>
+		
+					</div>
+
+					<div class="ui-block contenido-tab-mis-batallas" id="mis-batallas-finalizadas">
+						<div class="ui-block-title">
+							<h6 class="title">Mis batallas finalizadas</h6>
+							<a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="assets/icons/icons.svg#olymp-three-dots-icon"></use></svg></a>
+						</div>
+		
+						<ul class="notification-list friend-requests">
+							<li *ngFor="let batalla of misBatallas; let i = index">
+								<div class="author-thumb">
+									<img src="{{ url + 'get-image-user/' + batalla.usuario1.image }}" alt="author">
+								</div>
+								<div class="notification-event">
+									<a href="#" class="h6 notification-friend">
+										<span *ngIf="batalla.usuario2">{{batalla.usuario1.nick}} VS {{batalla.usuario2.nick}}</span>
+										<span *ngIf="batalla.usuario2 == null">{{batalla.usuario1.nick}}</span>
+										<i style="margin: 0 10px;">-</i>
+										<span style="text-transform: capitalize;">{{batalla.modo}}</span> / {{batalla.rondas}} Ronda de {{batalla.duracion}}s / {{batalla.intentosRonda}} Intentos</a>
+									<span class="chat-message-item">Hace 3 dias</span>
+								</div>
+								<span class="notification-icon">
+									<a href="#" class="accept-request">
+										<span class="icon-add">
+											<svg class="olymp-happy-face-icon"><use xlink:href="assets/icons/icons.svg#olymp-happy-face-icon"></use></svg>
+										</span>
+										Ver Batalla
+									</a>		
+								</span>
+		
+								<div class="more">
+									<svg class="olymp-three-dots-icon"><use xlink:href="assets/icons/icons.svg#olymp-three-dots-icon"></use></svg>
+									<svg class="olymp-little-delete"><use xlink:href="assets/icons/icons.svg#olymp-little-delete"></use></svg>
+								</div>
+							</li>
+		
+							<li class="accepted">
+								<div class="author-thumb">
+									<img src="assets/img/avatar17-sm.jpg" alt="author">
+								</div>
+								<div class="notification-event">
+									You and <a href="#" class="h6 notification-friend">Mary Jane Stark</a> just became friends. Write on <a href="#" class="notification-link">his wall</a>.
+								</div>
+								<span class="notification-icon">
+									<svg class="olymp-happy-face-icon"><use xlink:href="assets/icons/icons.svg#olymp-happy-face-icon"></use></svg>
+								</span>
+		
+								<div class="more">
+									<svg class="olymp-three-dots-icon"><use xlink:href="assets/icons/icons.svg#olymp-three-dots-icon"></use></svg>
+									<svg class="olymp-little-delete"><use xlink:href="assets/icons/icons.svg#olymp-little-delete"></use></svg>
+								</div>
+							</li>		
+						</ul>
+		
+					</div>
+
+					<div class="ui-block contenido-tab-mis-batallas" id="peticiones">
+						<div class="ui-block-title">
+							<h6 class="title">Peticiones de batalla</h6>
+							<a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="assets/icons/icons.svg#olymp-three-dots-icon"></use></svg></a>
+						</div>
+		
+						<ul class="notification-list friend-requests">
+							<li *ngFor="let solicitudesBatalla of solicitudesBatalla let i = index" class="flex space-between">
+								<div class="flex">
+									<div class="author-thumb">
+										<img src="{{ url + 'get-image-user/' + solicitudesBatalla.usuario1.image }}" alt="author">
+									</div>
+									<div class="notification-event">
+										<a href="#" class="h6 notification-friend">{{solicitudesBatalla.usuario1.nick}}<i style="margin: 0 10px;">-</i> <span style="text-transform: capitalize;">{{solicitudesBatalla.modo}}</span> / {{solicitudesBatalla.rondas}} Ronda de {{solicitudesBatalla.duracion}}s / {{solicitudesBatalla.intentosRonda}} Intentos</a>
+										<span class="chat-message-item">Hace 3 dias</span>
+									</div>
+								</div>
+
+								<span class="notification-icon">
+									<a href="#" class="accept-request">
+										<span class="icon-add">
+											<svg class="olymp-happy-face-icon"><use xlink:href="assets/icons/icons.svg#olymp-happy-face-icon"></use></svg>
+										</span>
+										Aceptar Batalla
+									</a>
+		
+									<a href="#" class="accept-request request-del">
+										<span class="icon-minus">
+											<svg class="olymp-happy-face-icon"><use xlink:href="assets/icons/icons.svg#olymp-happy-face-icon"></use></svg>
+										</span>
+									</a>
+		
+								</span>
+		
+								<div class="more">
+									<svg class="olymp-three-dots-icon"><use xlink:href="assets/icons/icons.svg#olymp-three-dots-icon"></use></svg>
+									<svg class="olymp-little-delete"><use xlink:href="assets/icons/icons.svg#olymp-little-delete"></use></svg>
+								</div>
+							</li>		
+						</ul>		
+					</div>		
+				</div>
+			</div> -->
+	</div>
+</div>
+
+<modal-responder-batalla-en-proceso [batallaSeleccionada]="batallaSeleccionada"></modal-responder-batalla-en-proceso>

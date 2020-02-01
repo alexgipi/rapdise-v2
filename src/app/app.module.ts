@@ -29,6 +29,9 @@ import { ChatModule } from './chat/chat.module';
 import { ChatGeneralModule } from './chat-general/chat-general.module';
 
 import { BeatsModule } from './beats/beats.module';
+import { FreestyleModule } from './freestyle/freestyle.module';
+import { BatallasModule } from './batallas/batallas.module';
+
 import { EntrenoModule } from './entreno/entreno.module';
 import { RankingsModule } from './rankings/rankings.module';
 
@@ -56,6 +59,8 @@ import { AppMaterialModule } from './app-material.module'
     ReproductoresModule,
     InicioModule,
     BeatsModule,
+    FreestyleModule,
+    BatallasModule,
     EntrenoModule,
     RankingsModule, 
     TranslateModule.forRoot({

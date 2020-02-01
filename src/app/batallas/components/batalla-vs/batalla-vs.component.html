@@ -1,0 +1,212 @@
+<div class="header-spacer"></div>
+
+<div class="container flex justify-center flex-wrap" *ngIf="user">
+	<div class="row padding-0 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		
+		<ul class="botones-buscar-rival-desafiar flex">
+			<li [routerLink]="['/batallas-de-gallos/crear-batalla']">Buscar rival</li>
+			<li class="active">Desafiar</li>
+			
+			<div class="alerta-no-microfono">
+				<div class="alert alert-danger">
+					Debes conectar un microfono para poder crear batallas.
+				</div>
+				<span  class="fa fa-microphone-slash icono-no-microfono"></span>
+			</div>
+
+			<div class="alerta-microfono-encontrado">
+				<div class="alert alert-success">
+					Se ha detectado un microfono.
+				</div>
+				<span  class="fa fa-microphone icono-microfono-encontrado"></span>
+			</div>			
+		</ul>
+		
+		<h1 class="h5">Crear batalla / Desafiar a {{user.nick}}</h1>
+		<p style="display:block;width: 100%;">Selecciona los parámetros de la batalla, improvisa tu ronda y comprueba si {{user.nick}} tiene agallas para darte una respuesta.</p>
+		<div class="flex" style="margin: 0 0 20px;width: 100%;">
+			<div class="chip" *ngIf="identity">
+				<img src="{{url + 'get-image-user/' + identity.image}}" alt="{{identity.nick}}"> {{identity.nick}}
+			</div>
+			<div class="chip" *ngIf="!identity">
+				<img src="https://s3.amazonaws.com/FringeBucket/default-user.png" alt="Tú"> Tú
+			</div>
+			<img style="width: 38px;height: 38px;background: #fff;padding: 3px;border-radius: 50%;margin: 0 10px;box-shadow: 2px 2px 10px #9a9a9a;opacity: 0.55;" src="http://versuscustomdesign.com/wp-content/uploads/2017/09/versus_logo_icon.png" alt="">
+			<div class="chip">
+				<img src="{{url + 'get-image-user/' + user.image}}" alt="{{user.nick}}"> {{user.nick}}
+			</div>
+		</div>
+	</div>
+
+	<div class="row padding-0 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 parametros-crear-batalla">
+		<!-- <div class="flex titulo-paso-crear-batalla">
+			<div class="flex">
+				<span class="num-paso flex justify-center">1</span>PARAMETROS DE LA BATALLA
+			</div>			
+			<p class="alert alert-secondary" style="margin: 0 0 0 20px;">
+				<strong>{{rondas}} Ronda</strong> de <strong>{{tiempoRonda}}s</strong> en modo <strong>{{modoBatalla}}</strong> con <strong>{{intentosRonda}} Intento/s</strong>
+			</p>
+		</div> -->
+
+		<ul class="opciones-crear-batalla">
+			<li class="parametro-batalla col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+				<div class="ui-block ">
+					<div class="flex space-between">
+						<span class="titulo-parametro-batalla">Rondas</span>
+						<ul class="botones-opciones-batalla cambiar-rondas-batalla">
+							<li id="rondas-1" (click)="cambiarRondasBatalla(1);" class="btn btn-secondary active">1 Ronda</li>
+							<li id="rondas-2" (click)="cambiarRondasBatalla(2);" class="btn btn-secondary">2 Rondas</li>
+						</ul>
+					</div>
+				</div>
+			</li>
+			<li class="parametro-batalla col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+				<div class="ui-block ">
+					<div class="flex space-between">
+						<span class="titulo-parametro-batalla">Tiempo Ronda</span>
+						<ul class="botones-opciones-batalla cambiar-tiempo-ronda-batalla">
+							<li id="tiempo-ronda-60" (click)="cambiarTiempoRonda(60);" class="btn btn-secondary active">60s</li>
+							<li id="tiempo-ronda-120" (click)="cambiarTiempoRonda(120);" class="btn btn-secondary">120s</li>
+						</ul>
+					</div>
+				</div>
+			</li>
+			<li class="parametro-batalla col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+				<div class="ui-block ">
+					<div class="flex space-between">
+						<span class="titulo-parametro-batalla">Modo</span>
+						<ul class="botones-opciones-batalla cambiar-modo-batalla">
+							<li id="modo-palabras" (click)="cambiarModoBatalla('palabras')" class="btn btn-secondary active">Palabras</li>
+							<li id="modo-libre" (click)="cambiarModoBatalla('libre')" class="btn btn-secondary">Libre</li>
+						</ul>
+					</div>
+				</div>
+			</li>
+			<li class="parametro-batalla col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+				<div class="ui-block ">
+					<div class="flex space-between">
+						<span class="titulo-parametro-batalla">Intentos Ronda</span>
+						<ul class="botones-opciones-batalla cambiar-intentos-batalla">
+							<li (click)="cambiarIntentosBatalla(1)" class="btn btn-secondary active" id="intentos-1">1</li>
+							<li (click)="cambiarIntentosBatalla(2)" class="btn btn-secondary" id="intentos-2">2</li>
+							<li (click)="cambiarIntentosBatalla(3)" class="btn btn-secondary" id="intentos-3">3</li>
+						</ul>
+					</div>
+				</div>
+			</li>			
+		</ul>
+	</div>
+
+	<div class="row col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 seleccion-beat-crear-batalla">
+		<div class="carrusel-seleccion-beat">
+			<ul class="filtro-seleccion-beat flex">
+				<li id="boton-todos" (click)="getBeatsPorEstilo('todos');">Todos</li>
+				<li id="boton-old-school" (click)="getBeatsPorEstilo('old-school');">Old School</li>
+				<li id="boton-boom-bap" (click)="getBeatsPorEstilo('boom-bap');">Boom Bap</li>
+				<li id="boton-underground" (click)="getBeatsPorEstilo('underground');">Underground</li>
+				<li id="boton-trap" (click)="getBeatsPorEstilo('trap');">Trap</li>
+				<li id="boton-lofi" (click)="getBeatsPorEstilo('lofi');">Lofi</li>
+				<li id="boton-jazzy" (click)="getBeatsPorEstilo('jazzy');">Jazzy</li>
+				<li id="boton-reggae" (click)="getBeatsPorEstilo('reggae');">Reggae</li>
+				<li>Favoritos</li>
+				<li>Mis beats</li>
+			</ul>
+			<div class="items-carrusel-seleccion-beat">
+				<div class="flex" style="width: 30000px;">
+					<div class="item-carrusel-seleccion-beat"id="-1">
+						<div style="min-width: 163.09px;min-height: 163.09px; border: 2px dashed" id="-1"></div>
+						<ul class="detalles-beat-carrusel">
+							<li style="padding: 5px;background: #888da885;width: 100%;display: block;border-radius: 4px;margin: 22px 0 10px;"></li>
+							<li style="padding: 5px;background: #888da885;width: 55%;display: block;border-radius: 4px;margin: 15px 0 10px;"></li>
+							<li style="padding: 5px;background: #888da885;width: 30%;display: block;border-radius: 4px;margin: 10px 0 10px;"></li>
+						</ul>
+					</div>
+	
+					<div class="item-carrusel-seleccion-beat" id="0">
+						<div style="min-width: 163.09px;min-height: 163.09px; border: 2px dashed" id="0"></div>
+						<ul class="detalles-beat-carrusel">
+							<li style="padding: 5px;background: #888da885;width: 100%;display: block;border-radius: 4px;margin: 22px 0 10px;"></li>
+							<li style="padding: 5px;background: #888da885;width: 55%;display: block;border-radius: 4px;margin: 15px 0 10px;"></li>
+							<li style="padding: 5px;background: #888da885;width: 30%;display: block;border-radius: 4px;margin: 10px 0 10px;"></li>
+						</ul>
+					</div>
+					
+					<div class="item-carrusel-seleccion-beat beat-carrusel{{i + 1}}" *ngFor="let beat of beats; let i = index" [class.active]="i == 0" [attr.id]="i + 1" [attr.value]="beat._id">
+						<img (click)="startPlayer(beat);" [attr.id]="i + 1" src="{{url + 'get-imagen-beat/' + beat.image }}" *ngIf="beat.image && beat.image != null">
+					
+						<img (click)="startPlayer(beat);" [attr.id]="i + 1" src="{{url + 'get-image-user/' + beat.user.image }}" *ngIf="beat.image == null">
+						<ul class="detalles-beat-carrusel">
+							<li>{{beat.name}}</li>
+							<li>{{beat.user.nick}}</li>
+							<li>{{beat.duration}}</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="botones-carrusel-seleccion-beat">
+				<div class="prev-carrusel-seleccion-beat flex justify-center" (click)="carruselPrev();" *ngIf="indexCarruselBeats > 1">
+					<i class="fa fa-chevron-left"></i>
+				</div>
+
+				<div class="next-carrusel-seleccion-beat flex justify-center" (click)="carruselNext();" *ngIf="indexCarruselBeats !== totalBeats">
+					<i class="fa fa-chevron-right"></i>					
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row flex justify-center">
+		<button (click)="empezarBatalla();" *ngIf="intentosRondaRestantes >= 1" class="btn btn-lg boton-empezar-batalla"><i class="fa fa-flash"></i>Empezar Batalla en 3,2,1...</button>
+
+		<a class="btn btn-primary btn-md" *ngIf="intentosRondaRestantes < 1">No te quedan intentos</a>
+	</div>
+</div>
+
+<div class="cuenta321-y-batallando">
+	<div class="panel-cuenta321">
+		<div id="cuenta-321">3</div>
+	</div>
+
+	<div class="panel-batallando">
+		<div class="row flex justify-center">
+			<div style="position: absolute; top: 0px;">
+				<div class="cuenta-atras flex justify-center">
+					<!-- <div>1 Ronda</div> -->
+					<span id="countdowntimer">
+							{{tiempoRonda}}        
+					</span>
+				</div>
+				
+				<div class="barra-progreso-entreno flex justify-center">
+					<div class="barra"></div>
+				</div>
+			</div>	
+			
+			<div class="contenedor-palabras"></div>
+	
+			<div class="flex justify-center" style="width: 100%;">
+				<button (click)="pararBatalla();" class="btn btn-danger boton-parar-batalla">Gastar Intento</button>
+				<div class="vidas-batalla" *ngIf="intentosRondaRestantes == 3">
+					<i class="fa fa-heart"></i>
+					<i class="fa fa-heart"></i>
+					<i class="fa fa-heart"></i>
+				</div>
+	
+				<div class="vidas-batalla" *ngIf="intentosRondaRestantes == 2">
+					<i class="fa fa-heart"></i>
+					<i class="fa fa-heart"></i>
+				</div>
+	
+				<div class="vidas-batalla" *ngIf="intentosRondaRestantes == 1">
+					<i class="fa fa-heart"></i>
+				</div>
+				
+			</div>
+
+		</div>
+	</div>
+
+	<section class="visualizador-voz-batalla">
+		<canvas class="visualizer"></canvas>
+	</section>
+</div>

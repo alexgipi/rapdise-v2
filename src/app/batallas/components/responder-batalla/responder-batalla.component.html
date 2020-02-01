@@ -1,0 +1,218 @@
+<div class="header-spacer"></div>
+
+<div class="container flex justify-center flex-wrap" *ngIf="batalla.usuario2 == null">
+	<div class="row padding-0 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<h1 class="h4"><i class="fa fa-arrow-left" style="margin-right: 10px;"></i>Volver a Batallas</h1>
+	</div>
+
+	<div class="row cabecera-responder-batalla">
+		<div class="cartel-vs-responder-batalla flex">
+			<div class="flex">
+				<img src="{{url + 'get-image-user/' + batalla.usuario1.image }}" *ngIf="batalla.usuario1.image && batalla.usuario1.image != null">
+				<img src="https://s3.amazonaws.com/FringeBucket/default-user.png" *ngIf="batalla.usuario1.image == null">
+				<span>
+					{{batalla.usuario1.nick}}
+				</span>
+			</div>
+			<div class="responder-buscando-rival">
+				<span >
+					Buscando Rival
+				</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="row padding-0 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 parametros-crear-batalla">
+		<div class="flex justify-center" style="width:100%;">			
+			<p class="alert alert-secondary" style="margin: 0 15px 20px 0;">
+				<strong>{{rondas}} Rondas</strong> de <strong>{{tiempoRonda1}}s</strong> y <strong>{{tiempoRonda2}}s</strong> en modo <strong>{{modoBatalla}}</strong>
+			</p>
+
+			<div class="alerta-no-microfono">
+				<div class="alert alert-danger">
+					Debes conectar un microfono para poder crear batallas.
+				</div>
+				<span  class="fa fa-microphone-slash icono-no-microfono"></span>
+			</div>
+
+			<div class="alerta-microfono-encontrado">
+				<div class="alert alert-success">
+					Se ha detectado un microfono.
+				</div>
+				<span  class="fa fa-microphone icono-microfono-encontrado"></span>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="row flex justify-center">
+		<button (click)="empezarBatalla();" *ngIf="batalla.usuario1._id != identity._id" class="btn btn-lg boton-empezar-batalla"><i class="fa fa-flash"></i>Responder...</button>
+		<div *ngIf="batalla.usuario1._id == identity._id" class="alert alert-danger">
+			¡No puedes responderte a ti mismo!
+		</div>
+	</div>
+</div>
+
+<div class="container flex justify-center flex-wrap" *ngIf="batalla.usuario2 != null">
+	<div class="row padding-0 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<h1 class="h4"><i class="fa fa-arrow-left" style="margin-right: 10px;"></i>Volver a Batallas</h1>
+	</div>
+
+	<div class="row cabecera-responder-batalla">
+		<div class="cartel-vs-responder-batalla flex">
+			<div class="flex">
+				<img src="{{url + 'get-image-user/' + batalla.usuario1.image }}" *ngIf="batalla.usuario1.image && batalla.usuario1.image != null" style="height: 60px;border-radius: 99%;margin-right: 20px;width: 60px;object-fit: cover;">
+				<img src="https://s3.amazonaws.com/FringeBucket/default-user.png" *ngIf="batalla.usuario1.image == null" style="height: 60px;border-radius: 99%;margin-right: 20px;width: 60px;object-fit: cover;">
+				<span>
+					{{batalla.usuario1.nick}}
+				</span>
+			</div>
+			<div style="margin: 0 10px;">VS</div>
+			<div class="flex">
+				<span>
+					{{batalla.usuario2.nick}}
+				</span>
+				<img src="{{url + 'get-image-user/' + batalla.usuario2.image }}" *ngIf="batalla.usuario2.image && batalla.usuario2.image != null" style="height: 60px;border-radius: 99%;margin-left: 20px;width: 60px;object-fit: cover;">
+				<img src="https://s3.amazonaws.com/FringeBucket/default-user.png" *ngIf="batalla.usuario2.image == null" style="height: 60px;border-radius: 99%;margin-left: 20px;width: 60px;object-fit: cover;">
+			</div>
+		</div>
+	</div>
+
+	<div class="row padding-0 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 parametros-crear-batalla">
+		<div class="flex justify-center" style="width:100%;">			
+			<p class="alert alert-secondary" style="margin: 0 15px 20px 0;">
+				<strong>{{rondas}} Rondas</strong> de <strong>{{tiempoRonda1}}s</strong> y <strong>{{tiempoRonda2}}s</strong> en modo <strong>{{modoBatalla}}</strong>
+			</p>
+
+			<!-- <div class="alerta-no-microfono">
+				<div class="alert alert-danger">
+					Debes conectar un microfono para poder crear batallas.
+				</div>
+				<span  class="fa fa-microphone-slash icono-no-microfono"></span>
+			</div>
+
+			<div class="alerta-microfono-encontrado">
+				<div class="alert alert-success">
+					Se ha detectado un microfono.
+				</div>
+				<span  class="fa fa-microphone icono-microfono-encontrado"></span>
+			</div> -->
+		</div>
+	</div>
+
+	<div class="row flex justify-center padding-0 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<div class="wrapper">
+			<ul class="StepProgress">
+			  <li class="StepProgress-item is-done"><strong>{{batalla.usuario1.nick}} - Ronda 1</strong>				
+				<audio *ngIf="batalla.impro1 != null" id="audio-impro1" controls src="" style="width: 100%;margin-top:15px;"></audio>
+			  </li>
+			  <li class="StepProgress-item is-done"><strong>{{batalla.usuario2.nick}} - Ronda 1</strong>
+				<audio *ngIf="batalla.impro2 != null" id="audio-impro2" controls src="" style="width: 100%;margin-top:15px;"></audio>
+			  </li>
+			  <li class="StepProgress-item current"><strong>{{batalla.usuario2.nick}} - Ronda 2</strong>
+				<audio *ngIf="batalla.impro3 != null" id="audio-impro3" controls src="" style="width: 100%;"></audio>
+			  </li>
+			  <li class="StepProgress-item"><strong>{{batalla.usuario1.nick}} - Ronda 2</strong>
+				<audio *ngIf="batalla.impro4 != null" id="audio-impro4" controls src="" style="width: 100%;"></audio>
+			  </li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="row flex justify-center">
+		
+		<div *ngIf="batalla.rondas == 2">
+			<!-- Le toca al usuario1 -->
+			<div *ngIf="batalla.impro2 && batalla.impro3 && batalla.impro4 == null">
+				<div *ngIf="batalla.usuario1._id == identity._id">
+					<button (click)="empezarBatalla();" class="btn btn-lg boton-empezar-batalla">
+						<i class="fa fa-flash"></i>Responder...
+					</button>
+				</div>
+				<div *ngIf="batalla.usuario1._id != identity._id">
+					Le toca a {{batalla.usuario1.nick}}
+				</div>
+			</div>
+
+			<!-- Le toca al usuario2 -->
+			<div *ngIf="batalla.impro1 && batalla.impro2 == null || batalla.impro2 && batalla.impro3 == null ">
+				<!-- identity es IGUAL al usuario 2 de la batalla -->
+				<div *ngIf="batalla.usuario2._id == identity._id">
+					<button (click)="empezarBatalla();" *ngIf="batalla.impro1 && batalla.impro2 == null" class="btn btn-lg boton-empezar-batalla">
+						Responder...
+					</button>
+					<button (click)="empezarBatalla();" *ngIf="batalla.impro2 && batalla.impro3 == null" class="btn btn-lg boton-empezar-batalla">
+						Iniciar ronda 2
+					</button>
+					<div *ngIf="batalla.impro2 == null" style="padding: 10px 20px !important;margin-left: 10px;background: #e05252;" class="btn btn-lg boton-empezar-batalla">
+						<div class="fa fa-close"></div>
+					</div>
+				</div>
+				<!-- identity es DIFERENTE al usuario 2 de la batalla -->
+				<div *ngIf="batalla.usuario2._id != identity._id">
+					Le toca a {{batalla.usuario2.nick}}
+				</div>			
+			</div>
+
+			<!-- Batalla finalizada -->
+			<div *ngIf="batalla.impro4 != null" class="alert alert-danger">
+				Batalla finalizada, no puedes responder!
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+<section class="visualizador-voz-batalla">
+	<canvas class="visualizer"></canvas>
+	<ul class="botones-opciones-batalla cambiar-intentos-batalla">
+		<li>¿Activar camara?</li>
+	</ul>
+	<div class="relative">
+		<div class="" style="position: absolute;z-index:999;right: 10px;top: 10px;color: #fff;padding: 3px 3px 3px 7px;background: rgba(0,0,0,0.3);border-radius: 4px;">
+			Usar camara
+			<span (click)="activarDesactivarVideo('activar')" class="active" id="video-si" style="cursor:pointer;padding: 5px 10px;background: #f07f5e;border-radius: 4px;color: #fff;margin-left: 5px;">
+				Si
+			</span>
+			<span (click)="activarDesactivarVideo('desactivar')" id="video-si" style="cursor:pointer;padding: 5px 10px;background: #d4d4d4;border-radius: 4px;color: #8e8e8e;margin-left: 5px;">
+				No
+			</span>
+		</div>
+		<video id="preview" width="160" height="120" autoplay muted style="border-radius: 6px;box-shadow: 0 0 6px rgba(0,0,0,0.25);width: 100%;object-fit: cover;height: 165px;"></video>
+	</div>
+</section>
+
+
+
+<div class="cuenta321-y-batallando">
+	<div class="panel-cuenta321">
+		<div id="cuenta-321">3</div>
+	</div>
+
+	<div class="panel-batallando">
+		<div class="row flex justify-center">
+			<div style="position: absolute; top: 0px;">
+				<div class="cuenta-atras flex justify-center">
+					<!-- <div>1 Ronda</div> -->
+					<span id="countdowntimer">
+							{{tiempoRonda1}}        
+					</span>
+				</div>
+				
+				<div class="barra-progreso-entreno flex justify-center">
+					<div class="barra"></div>
+				</div>
+			</div>	
+			
+			<div class="contenedor-palabras">
+
+			</div>
+
+		</div>
+	</div>
+
+	
+</div>
+
+<reproductor></reproductor>

@@ -1,0 +1,410 @@
+<audio src="" id="player-beat-crear-batalla"></audio>
+
+<div class="menu-top-contenido">
+	<div class="menu-top-contenido__panel-1 no-seleccionable">
+		<span> Batallas públicas </span>
+		<span class="pointer" tabindex="0" ng-reflect-router-link="/batallas-de-rap/mis-batallas"> Mis batallas </span>
+		<div class="menu-top-contenido__filtros">
+			<select>
+				<option value="-modificado_el" ng-reflect-value="-modificado_el">Más recientes</option>
+				<option value="modificado_el" ng-reflect-value="modificado_el">Más antiguas</option>
+				<option value="-visualizaciones" ng-reflect-value="-visualizaciones">Más vistas</option>
+				<option value="-likes" ng-reflect-value="-likes">Más reputadas</option>
+			</select>
+		</div>
+	</div>
+	<div class="menu-top-contenido__panel-2 botones-pagina-batallas">
+		<a ng-reflect-router-link="/batallas-de-rap/buscar-rival" href="/batallas-de-rap/buscar-rival">
+			<div class="mi-boton float-left"> Buscar Rival </div>
+		</a>
+	</div>
+</div>
+<div class="container-crear-batalla">
+	<div style="max-width:45%;">
+		<div style="width: 100%;padding: 25px;background: #fff;box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.22);border-radius: 6px;">
+			<ul class="botones-buscar-rival-desafiar flex margin-0">			
+				<div class="alerta-no-microfono">
+					<div class="alert alert-danger">
+						Debes conectar un microfono para poder crear batallas.
+					</div>
+					<span  class="fa fa-microphone-slash icono-no-microfono"></span>
+				</div>			
+			</ul>
+
+			<div class="width-100 flex justify-center">			
+				<div style="flex: 4;padding-right: 20px;">
+					<h1 class="h4" style="float:left;width: 100%;font-family: verdana;text-transform: uppercase;color: #606060;">
+						Crear batalla
+					</h1>
+					<p style="text-align: left;margin: 10px auto 25px;font-family: verdana;font-size: 14px !important;color: rgba(26, 26, 26, 0.74);">
+						Tendrás que lanzar la primera ronda, pero eso te da derecho a escoger las normas de la batalla. Ten presente que tendrás que esperar a que otro usuario te responda. Pulsar en "Empezar batalla" dara inicio a un contador de tres segundos antes de grabar. ¡Dale duro! 
+					</p>
+				</div>
+				<section class="visualizador-voz-batalla" style="right: 0;top: 0;position: relative;width: 200px;">
+					<canvas class="visualizer display-none"></canvas>
+					<div class="relative">
+						<div class="" style="position: absolute;z-index:999;right: 10px;top: 10px;color: #fff;padding: 3px 3px 3px 7px;background: rgba(0,0,0,0.3);border-radius: 4px;">
+							Usar camara
+							<span (click)="activarDesactivarVideo('activar')" class="active" id="video-si" style="cursor:pointer;padding: 5px 10px;background: #f07f5e;border-radius: 4px;color: #fff;margin-left: 5px;">
+								Si
+							</span>
+							<span (click)="activarDesactivarVideo('desactivar')" id="video-si" style="cursor:pointer;padding: 5px 10px;background: #d4d4d4;border-radius: 4px;color: #8e8e8e;margin-left: 5px;">
+								No
+							</span>
+						</div>
+						<video id="preview" width="160" height="120" autoplay muted style="border-radius: 6px;box-shadow: 0 0 6px rgba(0,0,0,0.25);width: 100%;object-fit: cover;"></video>
+					</div>
+				</section>
+			</div>
+			
+			<div  class="width-100">
+
+				<h3 class="h4 width-100" style="margin-top: 5px;">
+					Normas de la batalla
+				</h3>
+
+				<div class="ajustes-crear-batalla">
+					<div class="ajuste-crear-batalla">
+						<h4 class="h5">Rondas</h4>
+						<div class="botones-ajuste no-seleccionable">
+							<span id="rondas-2" (click)="cambiarRondasBatalla(2);"  [class.active]="rondas == 2">2</span>
+							<span id="rondas-3" (click)="cambiarRondasBatalla(3);" [class.active]="rondas == 3">3</span>
+						</div>
+					</div>
+
+					<div class="ajuste-crear-batalla">
+						<h4 class="h5">Visiblidad</h4>
+						<div class="botones-ajuste no-seleccionable">
+							<span id="rondas-2" class="active">Pública</span>
+							
+							<span id="rondas-4">Privada</span>
+						</div>
+					</div>
+				</div>
+
+				<div id="accordion" role="tablist" style="width: 100%;">
+					<div class="card mi-card">
+						<div class="mi-card-header" role="tab" id="headingOne">
+							<h5 class="mb-0">
+								<a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+									<div style="color: #737373;font-weight: normal;">
+										<span style="margin-right: 20px;color: #333;font-weight: 600;">Ronda #1 </span>
+										60 Segundos en modo Palabras
+									</div>
+									<i class="fa fa-angle-up"></i>
+								</a>
+							</h5>
+						</div>
+					
+						<div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+							<div class="card-body">
+								<ul class="opciones-crear-batalla contenido-mi-tab" id="contenido-mi-tab1">
+									<li class="parametro-batalla">
+										<div>
+											<div>
+												<span class="titulo-parametro-batalla">Tiempo ronda</span>
+												<ul class="botones-opciones-batalla cambiar-tiempo-ronda1">
+													<li id="tiempo-1-60" (click)="cambiarTiempoRonda(1, 60);" class="btn btn-secondary active">60s</li>
+													<li id="tiempo-1-120" (click)="cambiarTiempoRonda(1, 120);" class="btn btn-secondary">120s</li>
+												</ul>
+											</div>
+										</div>
+									</li>
+									<li class="parametro-batalla">
+										<div>
+											<div>
+												<span class="titulo-parametro-batalla">Modo</span>
+												<ul class="botones-opciones-batalla cambiar-modo-ronda1">
+													<li id="modo-1-palabras" (click)="cambiarModoRonda(1,'palabras')" class="btn btn-secondary active">Palabras</li>
+													<li id="modo-1-libre" (click)="cambiarModoRonda(1,'libre')" class="btn btn-secondary">Libre</li>
+													<li id="modo-1-imagenes" (click)="cambiarModoRonda(1,'imagenes')" class="btn btn-secondary">Imagenes</li>
+												</ul>
+											</div>
+										</div>
+									</li>
+		
+									<!-- Más parametros	-->
+									<li class="parametro-batalla">
+										<div>
+											<div>
+												<span class="titulo-parametro-batalla">Sangre</span>
+												<ul class="botones-opciones-batalla cambiar-sangre-ronda1">
+													<li (click)="cambiarSangreRonda(1,'no')" id="sangre-1-no" class="btn btn-secondary active">No</li>
+													<li (click)="cambiarSangreRonda(1,'si')" id="sangre-1-si" class="btn btn-secondary">Si</li>
+												</ul>
+											</div>
+										</div>
+									</li>
+		
+									<li class="parametro-batalla">
+										<div>
+											<div>
+												<span class="titulo-parametro-batalla">Acapella</span>
+												<ul class="botones-opciones-batalla cambiar-acapella-ronda1">
+													<li (click)="cambiarAcapellaRonda(1,'no')" id="acapella-1-no" class="btn btn-secondary active">No</li>
+													<li (click)="cambiarAcapellaRonda(1,'si')" id="acapella-1-si" class="btn btn-secondary">Si</li>
+												</ul>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="card mi-card">
+						<div class="mi-card-header" role="tab" id="headingTwo">
+							<h5 class="mb-0">
+								<a class="collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+									<span>Ronda #2</span> <i class="fa fa-angle-up"></i>
+								</a>
+							</h5>
+						</div>
+						<div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
+							<div class="card-body">
+								<ul class="opciones-crear-batalla contenido-mi-tab" id="contenido-mi-tab2">
+									<li class="parametro-batalla">
+										<div>
+											<div>
+												<span class="titulo-parametro-batalla">Tiempo ronda</span>
+												<ul class="botones-opciones-batalla cambiar-tiempo-ronda2">
+													<li id="tiempo-2-60" (click)="cambiarTiempoRonda(2, 60);" class="btn btn-secondary active">60s</li>
+													<li id="tiempo-2-120" (click)="cambiarTiempoRonda(2, 120);" class="btn btn-secondary">120s</li>
+												</ul>
+											</div>
+										</div>
+									</li>
+									<li class="parametro-batalla">
+										<div>
+											<div>
+												<span class="titulo-parametro-batalla">Modo</span>
+												<ul class="botones-opciones-batalla cambiar-modo-ronda2">
+													<li id="modo-2-palabras" (click)="cambiarModoRonda(2,'palabras')" class="btn btn-secondary active">Palabras</li>
+													<li id="modo-2-libre" (click)="cambiarModoRonda(2,'libre')" class="btn btn-secondary">Libre</li>
+													<li id="modo-2-imagenes" (click)="cambiarModoRonda(2,'imagenes')" class="btn btn-secondary">Imagenes</li>
+												</ul>
+											</div>
+										</div>
+									</li>
+		
+									<!-- Más parametros	-->
+									<li class="parametro-batalla">
+										<div>
+											<div>
+												<span class="titulo-parametro-batalla">Sangre</span>
+												<ul class="botones-opciones-batalla cambiar-sangre-ronda2">
+													<li (click)="cambiarSangreRonda(2,'no')" id="sangre-2-no" class="btn btn-secondary active">No</li>
+													<li (click)="cambiarSangreRonda(2,'si')" id="sangre-2-si" class="btn btn-secondary">Si</li>
+												</ul>
+											</div>
+										</div>
+									</li>
+		
+									<li class="parametro-batalla">
+										<div>
+											<div>
+												<span class="titulo-parametro-batalla">Acapella</span>
+												<ul class="botones-opciones-batalla cambiar-acapella-ronda2">
+													<li (click)="cambiarAcapellaRonda(2,'no')" id="acapella-2-no" class="btn btn-secondary active">No</li>
+													<li (click)="cambiarAcapellaRonda(2,'si')" id="acapella-2-si" class="btn btn-secondary">Si</li>
+												</ul>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="card mi-card" [class.desactivado]="rondas != 3">
+						<div class="mi-card-header" role="tab" id="headingThree">
+							<h5 class="mb-0">
+								<a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+									<span>Ronda #3</span> <i class="fa fa-angle-up"></i>
+								</a>
+							</h5>
+						</div>
+						<div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+							<div class="card-body">
+								<ul class="opciones-crear-batalla contenido-mi-tab" id="contenido-mi-tab3">
+									<li class="parametro-batalla">
+										<div>
+											<div>
+												<span class="titulo-parametro-batalla">Tiempo ronda</span>
+												<ul class="botones-opciones-batalla cambiar-tiempo-ronda3">
+													<li id="tiempo-3-60" (click)="cambiarTiempoRonda(3, 60);" class="btn btn-secondary active">60s</li>
+													<li id="tiempo-3-120" (click)="cambiarTiempoRonda(3, 120);" class="btn btn-secondary">120s</li>
+												</ul>
+											</div>
+										</div>
+									</li>
+									<li class="parametro-batalla">
+										<div>
+											<div>
+												<span class="titulo-parametro-batalla">Modo</span>
+												<ul class="botones-opciones-batalla cambiar-modo-ronda3">
+													<li id="modo-3-palabras" (click)="cambiarModoRonda(3,'palabras')" class="btn btn-secondary active">Palabras</li>
+													<li id="modo-3-libre" (click)="cambiarModoRonda(3,'libre')" class="btn btn-secondary">Libre</li>
+													<li id="modo-3-imagenes" (click)="cambiarModoRonda(3,'imagenes')" class="btn btn-secondary">Imagenes</li>
+												</ul>
+											</div>
+										</div>
+									</li>
+
+									<!-- Más parametros	-->
+									<li class="parametro-batalla">
+										<div>
+											<div>
+												<span class="titulo-parametro-batalla">Sangre</span>
+												<ul class="botones-opciones-batalla cambiar-sangre-ronda3">
+													<li (click)="cambiarSangreRonda(3,'no')" id="sangre-3-no" class="btn btn-secondary active">No</li>
+													<li (click)="cambiarSangreRonda(3,'si')" id="sangre-3-si" class="btn btn-secondary">Si</li>
+												</ul>
+											</div>
+										</div>
+									</li>
+
+									<li class="parametro-batalla">
+										<div>
+											<div>
+												<span class="titulo-parametro-batalla">Acapella</span>
+												<ul class="botones-opciones-batalla cambiar-acapella-ronda3">
+													<li (click)="cambiarAcapellaRonda(3,'no')" id="acapella-3-no" class="btn btn-secondary active">No</li>
+													<li (click)="cambiarAcapellaRonda(3,'si')" id="acapella-3-si" class="btn btn-secondary">Si</li>
+												</ul>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<button (click)="empezarBatalla();" class="btn btn-lg boton-empezar-batalla">
+					Empezar Batalla
+				</button>
+			</div>		
+		</div>
+	</div>
+
+	<seleccion-beats-batalla (PasameElBeat)="recibirBeat($event)"></seleccion-beats-batalla>
+
+	<!-- <div style="float: left;width: 25%;padding: 20px;">
+		<div class="form-group flex" style="margin: 0;padding: 8px;background: #fff;">
+			<h5 class="h5" style="margin: 0 15px;font-size: 17px;">Seleccionar bases</h5>
+			<select (change)="getBeatsPorEstilo($event.target.value);" class="form-control custom-select" size="auto" style="height: 35px; max-width: 155px;">
+				<option selected="" value="todos">Todos los estilos</option>
+				<option value="old-school">Old School</option>
+				<option value="boom-bap">Boom Bap</option>											
+				<option value="underground">Underground</option>
+				<option value="trap">Trap</option>
+				<option value="lofi">Lofi</option>
+				<option value="jazzy">Jazzy</option>
+				<option value="reggae">Reggae</option>
+			</select>
+		</div>
+		<ul class="beats-crear-batalla">
+			<li (click)="startPlayer(beat); " *ngFor="let beat of beats; let i = index" [class.active]="i == 0" [attr.id]="i + 1" [attr.value]="beat._id">
+				<div class="float-left" style="margin-left: 5px;">
+					<img src="{{url}}get-imagen-beat/{{beat.image}}" *ngIf="beat.image != null" alt="" style="min-height: 45px;max-height:45px;min-width: 45px;max-width:45px;border-radius: 4px;object-fit:cover;">
+					<img src="{{url}}get-image-user/{{beat.user.image}}" *ngIf="beat.image == null" alt="" style="min-height: 45px;max-height:45px;min-width: 45px;max-width:45px;border-radius: 4px;object-fit:cover;">
+				</div>
+				<div class="flex space-between crear-batalla-seleccionar-beat" [class.active]="beat._id == idBeat1">
+					<div class="crear-batalla-nombre-beat">
+						<span style="font-weight: bold;font-size: 15px;display: block;position: relative;top: 2px">
+							{{beat.name}}
+						</span>
+						<span style="position: relative;bottom: 1px;">{{beat.user.nick}}</span>
+						<span style="position: relative;bottom: 1px;margin-left: 7px;text-transform: capitalize;font-size: 0.89em;">
+							{{beat.style.replace('-', ' ')}}
+						</span>
+					</div>
+					<div class="crear-batalla-info-beat">
+						<span class="duracion-beat-crear-batalla" *ngIf="beat._id != idBeat1 && beat._id != idBeat2 && beat._id != idBeat3">
+							{{beat.duration}}
+						</span>
+						<i *ngIf="beat._id == idBeat1" (click)="selecionarBeat(1, beat);" class="etiqueta-redondeada azul">Ronda 1</i>
+						<i *ngIf="beat._id == idBeat2" (click)="selecionarBeat(2, beat);" class="etiqueta-redondeada naranja">Ronda 2</i>
+						<i *ngIf="rondas == 3 && beat._id == idBeat3" (click)="selecionarBeat(3, beat);" class="etiqueta-redondeada fucsia">Ronda 3</i>
+					</div>
+				</div>
+				<div class="over-beat-crear-batalla">
+					<div class="flex flex-wrap justify-center">
+						<h3 style="width: 100%;margin: 0;line-height: 1;font-size: 1.2em;color: #fff;text-align: center;margin-bottom: 7px;">Usar base en:</h3>
+						<i (click)="selecionarBeat(1, beat);" class="etiqueta-redondeada">Ronda 1</i>
+						<i (click)="selecionarBeat(2, beat);" class="etiqueta-redondeada">Ronda 2</i>
+						<i (click)="selecionarBeat(3, beat);" *ngIf="rondas == 3" class="etiqueta-redondeada">Ronda 3</i>
+					</div>					
+				</div>		
+			</li>			
+		</ul>
+
+	</div> -->
+</div>
+
+<div class="cuenta321-y-batallando">
+	<div class="panel-cuenta321">
+		<div id="cuenta-321">3</div>
+	</div>
+
+	<div class="panel-batallando">
+		<div class="row flex justify-center">
+			<div style="position: absolute; bottom: 0px;">
+				<div class="cuenta-atras flex justify-center">
+					<span id="countdowntimer">
+						    
+					</span>
+				</div>
+				
+				<div class="barra-progreso-entreno flex justify-center">
+					<div class="barra"></div>
+				</div>
+			</div>	
+			
+			<div class="contenedor-palabras"></div>
+
+		</div>
+	</div>
+
+	
+</div>
+
+<div class="modal-editar-volumen-batalla" *ngIf="batallaCreada == true">
+	<div class="panel-editar-vol-batalla">
+		<i class="fa fa-close"></i>
+		<h2>Batalla creada correctamente.</h2>
+		<p>Si quieres, puedes ajustar el volumen del beat y de la voz</p>
+
+		<audio src="" id="audio-batalla-creada"></audio>
+		<audio src="" id="beat-batalla-creada"></audio>
+
+		<div class="reproductor-audio">
+			<i (click)="playBatallaCreada()" *ngIf="escuchandoBatallaCreada == false" class="fa fa-play"></i>
+			<i (click)="pauseBatallaCreada()" *ngIf="escuchandoBatallaCreada == true" class="fa fa-pause" style="font-weight: normal;"></i>
+			<div class="linea-tiempo-reproductor-audio">
+				<span></span>
+			</div>
+			<span>0:00 / 1:00</span>
+		</div>
+
+		<div class="barras-volumen">
+			<div class="barra-ajustar-volumen">
+				<strong><i class="fa fa-volume-up"></i>	Base</strong>
+				<input type="range" min="1" max="100" value="50" (change)="setVolumenBase($event.target.value)">
+			</div>
+			
+			<div class="barra-ajustar-volumen">
+				<strong><i class="fa fa-volume-up"></i> Voz</strong>
+				<input type="range" min="1" max="100" value="50" (change)="setVolumenVoz($event.target.value)">
+			</div>
+		</div>
+
+		<div class="botones-modal">
+			<button class="ok">Guardar cambios</button>
+		</div>
+
+	</div>
+</div>
+
+<reproductor></reproductor>

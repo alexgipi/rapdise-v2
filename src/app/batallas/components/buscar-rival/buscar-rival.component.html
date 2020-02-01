@@ -1,0 +1,169 @@
+<div class="header-spacer"></div>
+
+<div class="container-buscar-rival">
+
+	<div class="relative">
+			<div style="width: 100%;padding: 25px;background: #f2f2f2;border-radius: 5px;">
+				<h1 class="h3">Elige un rival y muéstrale quién manda</h1>
+				<p style="margin-bottom: 0;">
+                        En esta sección se muestran todos los usuarios que esperan rival. Utiliza los parámetros que encontrarás a continuación para delimitar tu búsqueda según tus preferencias. Por ejemplo, si quieres ver exclusivamente batallas por palabras, marca solamente dicha opción.
+				</p>
+            </div>
+
+			<!--  BATALLAS BUSCANDO RIVAL-->			
+			<div id="buscando-rival" style="display: block;margin-top: 10px;width: 100%;">
+				<div>
+
+                    <div class="panel-group" style="width: 100%;margin: 0;">
+                        <div class="panel panel-default" style="width: 100%">
+                            <div class="panel-heading" style="margin-bottom: 15px;">
+                                <div style="display: flex;align-items: center;justify-content: space-between;font-size: 17px;">
+                                    <div>
+                                        <a aria-expanded="false" class="collapsed btn-filtrar-rival" data-toggle="collapse" href="#collapse1">
+                                            <span>Filtrar <i class="fa fa-angle-down"></i></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-collapse collapse" id="collapse1" aria-expanded="false">
+                                <div class="panel-body">
+                                    <ul class="opciones-crear-batalla">
+                                            <li class="parametro-batalla">
+                                                <div>
+                                                    <span class="titulo-parametro-batalla">Busqueda</span>
+                                                    <input [(ngModel)]="filtroBatalla" name="filtroBatalla" type="text" style="padding: 4px 10px;background: #fff;" placeholder="Buscar usuario">
+                                                </div>
+                                            </li>
+                                            <li class="parametro-batalla">
+                                                <div>
+                                                    <span class="titulo-parametro-batalla">Rondas</span>
+                                                    <ul class="botones-opciones-batalla cambiar-rondas-batalla">
+                                                        <li id="rondas-2" (click)="seleccionarDesseleccionarFiltro('rondas','2',$event.target.id)" class="btn  btn-filtro active">
+                                                            <span class="icono-btn-filtro"><i class="fa fa-check" ></i><i class="fa fa-close"></i></span>
+                                                            2
+                                                        </li>
+                                                        <li id="rondas-3" (click)="seleccionarDesseleccionarFiltro('rondas','3',$event.target.id)" class="btn  btn-filtro active">
+                                                            <span class="icono-btn-filtro"><i class="fa fa-check" ></i><i class="fa fa-close"></i></span>
+                                                            3
+                                                        </li>
+                                                        <li id="rondas-4" (click)="seleccionarDesseleccionarFiltro('rondas','4',$event.target.id)" class="btn  btn-filtro active">
+                                                            <span class="icono-btn-filtro"><i class="fa fa-check" ></i><i class="fa fa-close"></i></span>
+                                                            4
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="parametro-batalla">                                
+                                                <div>
+                                                    <span class="titulo-parametro-batalla">Tiempo Ronda</span>
+                                                    <ul class="botones-opciones-batalla cambiar-tiempo-ronda-batalla">
+                                                        <li id="tiempo-ronda-60" (click)="seleccionarDesseleccionarFiltro('tiempo-ronda','60',$event.target.id)" class="btn  btn-filtro active">
+                                                            <span class="icono-btn-filtro"><i class="fa fa-check" ></i><i class="fa fa-close"></i></span>
+                                                            60s
+                                                        </li>
+                                                        <li id="tiempo-ronda-120" (click)="seleccionarDesseleccionarFiltro('tiempo-ronda','120',$event.target.id)" class="btn  btn-filtro active">
+                                                            <span class="icono-btn-filtro"><i class="fa fa-check" ></i><i class="fa fa-close"></i></span>
+                                                            120s
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="parametro-batalla">
+                                                <div>
+                                                    <span class="titulo-parametro-batalla">Modo</span>
+                                                    <ul class="botones-opciones-batalla cambiar-modo-batalla">
+                                                        <li id="modo-palabras" (click)="seleccionarDesseleccionarFiltro('modo','palabras',$event.target.id)" class="btn  btn-filtro active">
+                                                            <span class="icono-btn-filtro"><i class="fa fa-check" ></i><i class="fa fa-close"></i></span>
+                                                            Palabras
+                                                        </li>
+                                                        <li id="modo-libre" (click)="seleccionarDesseleccionarFiltro('modo','libre',$event.target.id)" class="btn  btn-filtro active">
+                                                            <span class="icono-btn-filtro"><i class="fa fa-check" ></i><i class="fa fa-close"></i></span>
+                                                            Libre
+                                                        </li>
+                                                        <li id="modo-imagenes" (click)="seleccionarDesseleccionarFiltro('modo','imagenes',$event.target.id)" class="btn  btn-filtro active">
+                                                            <span class="icono-btn-filtro"><i class="fa fa-check" ></i><i class="fa fa-close"></i></span>
+                                                            Imágenes
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                
+                                            <li class="parametro-batalla">
+                                                <div>
+                                                    <span class="titulo-parametro-batalla">Sangre</span>
+                                                    <ul class="botones-opciones-batalla cambiar-intentos-batalla">
+                                                        <li (click)="seleccionarDesseleccionarFiltro('sangre','si',$event.target.id)" class="btn  btn-filtro active" id="sangre-si">
+                                                            <span class="icono-btn-filtro"><i class="fa fa-check" ></i><i class="fa fa-close"></i></span>
+                                                            Si
+                                                        </li>
+                                                        <li (click)="seleccionarDesseleccionarFiltro('sangre','no',$event.target.id)" class="btn  btn-filtro active" id="sangre-no">
+                                                            <span class="icono-btn-filtro"><i class="fa fa-check" ></i><i class="fa fa-close"></i></span>
+                                                            No
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                
+                                            <li class="parametro-batalla">
+                                                <div>
+                                                    <span class="titulo-parametro-batalla">Acapella</span>
+                                                    <ul class="botones-opciones-batalla cambiar-intentos-batalla">
+                                                        <li (click)="seleccionarDesseleccionarFiltro('acapella','si',$event.target.id)" class="btn  btn-filtro active" id="acapella-si">
+                                                            <span class="icono-btn-filtro"><i class="fa fa-check" ></i><i class="fa fa-close"></i></span>
+                                                            Si
+                                                        </li>
+                                                        <li (click)="seleccionarDesseleccionarFiltro('acapella','no',$event.target.id)" class="btn  btn-filtro active" id="acapella-no">
+                                                            <span class="icono-btn-filtro"><i class="fa fa-check" ></i><i class="fa fa-close"></i></span>
+                                                            No
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                                    
+                                    </ul>
+                                </div>
+                                <div class="panel-footer"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+
+                    <ul class="tarjetas-buscando-rival" style="width: 100%;padding: 0;margin-top: 20px;">
+                        <li [routerLink]="['/batallas-de-rap/responder', batalla._id]" class="__item-tarjeta-buscando-rival" *ngFor="let batalla of batallasBuscandoRival | filtroBatallasBusqueda:filtroBatalla | filtroBatallas:rondasFiltro:tiempoRondas:modoRondas:sangreRondas:acapellaRondas; let i = index">
+                            <div id="img">
+                                    <img *ngIf="batalla.usuario2 == null" src="{{ url + 'get-image-user/' + batalla.usuario1.image }}">
+                            </div>
+                            <div class="info-tarjeta">
+                                <strong>{{batalla.nombre}}</strong>
+                                <div style="line-height: 1;margin-bottom: 5px;font-size: 0.95em;">2 Rondas de 60s y 120s</div>
+                                <div style="line-height: 1;margin-bottom: 5px;font-size: 0.95em;">Palabras - Imágenes</div>
+                                <div class="estilos-buscando-rival" style="line-height: 1;margin-bottom: 5px;font-size: 0.95em;">
+                                    <span style="text-transform: capitalize; padding: 3px 5px;background: #c7c7c7;color: #fff;/* margin-left: 5px; */border-radius: 3px;font-size: 0.85em;">
+                                        {{batalla.base1.style}}
+                                    </span>
+                                    <span style="text-transform: capitalize; padding: 3px 5px;background: #828282;color: #fff;margin-left: 5px;border-radius: 3px;font-size: 0.85em;">
+                                        {{batalla.base2.style.replace('-', ' ')}}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="btn-top-tarjeta">
+                                <div style="display: flex;flex-wrap: wrap;justify-content: center;">
+                                    <div style="margin-bottom: 12px;">
+                                        <span style="padding: 6px 16px;background: #5b99d9;border-radius: 5px;color: white;display: flex;align-items: center;line-height: 1;">
+                                            Escuchar <i class="fa fa-volume-up" style="font-weight: normal;margin-left: 11px;"></i>
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span style="padding: 6px 16px;background: #579457;margin-bottom: 7px;border-radius: 5px;color: white;">
+                                            Responder a {{batalla.nombre}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+				</div>
+			</div>
+	</div>
+</div>

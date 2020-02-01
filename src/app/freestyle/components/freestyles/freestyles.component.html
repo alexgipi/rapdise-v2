@@ -1,0 +1,96 @@
+<div class="menu-top-contenido">
+    <div class="menu-top-contenido__panel-1 no-seleccionable">
+        <span class="activo">
+            Freestyles públicos
+        </span>
+        <span [routerLink]="['/freestyle/mis-freestyles']" class="pointer">
+                Mis freestyles
+        </span>
+        <div class="menu-top-contenido__filtros">
+            <!-- <span style="margin-right: 8px;font-weight: bold;">Orden:</span> -->
+            <i class="fa fa-sliders icono-filtros"></i>
+            <select (change)="getGrabacionesOrdenadasPor($event.target.value)">
+                <option value="-creado_el">Más recientes</option>
+                <option value="creado_el">Más antiguos</option>
+                <option value="-reproducciones">Más vistos</option>
+                <option value="-reputacion">Más reputados</option>
+                
+            </select>
+        </div>
+    </div>
+
+    <div class="menu-top-contenido__panel-2 botones-pagina-batallas">
+            <a [routerLink]="['/freestyle/grabadora']">
+                <div class="mi-boton float-left" style="background:#f73f49">
+                    Grabar freestyle
+                </div>
+            </a>
+    </div>
+    
+</div>
+<div class="container-grabadora flex justify-center flex-wrap">
+
+    <div class="contenido-grabadora">
+        <div class="width-100" style="order: 2;margin: 20px 0;">
+            <h1 class="mi-titulo">Freestyle</h1>
+            <div id="fos">
+                <p id="texto-desplegable" style="display: -webkit-box;-webkit-box-orient: vertical;"> 
+                    La improvisación es un elemento clave del rap y una gran manera de sacar los pensamientos y crear arte al instante. El entrenamiento es esencial hasta para los mejores, a parte de eso, con una buena base, originalidad, y grandes dósis de creatividad, podéis crear un freestyle épico, ¡grabadlo, no dejéis que se desvanezca en el aire!
+                <span id="dots"></span>
+                </p>
+                <span id="mi-ver-mas-texto">Ver más +</span>
+            </div>
+            
+        </div>
+        
+        <ul class="listado-freestyles">
+            <div *ngFor="let grabacion of grabaciones" class="card-carousel padding-0" style="transition: all 0.3s ease 0s;">
+                <a [routerLink]="['/freestyle', grabacion._id]">
+                    <div class="video-player">
+                        <img *ngIf="grabacion.imagen != 'null'" alt="" id="" src="{{url + 'get-imagen-grabacion/' + grabacion.imagen}}">
+                        <img *ngIf="grabacion.imagen == 'null'" alt="" id="" src="{{url + 'get-image-user/' + grabacion.user.image}}">
+                        <div class="square" style="width: 50%;"></div>
+                        <div class="square" style="width: 50%;"></div>
+                        <div class="card-carousel__acciones-izq" style="position: absolute;z-index: 99;left: 10px;top: 10px;display: flex;align-items: center;justify-content: center;border-radius: 4px;/* opacity: 0; *//* visibility: hidden; */transition: all 0.3s;">
+                            <span *ngIf="grabacion.modo == 'Palabras'" style="display: flex;align-items: center;justify-content: center;border-radius: 4px;height: 20px;/* width: 25px; */padding: 0 6px;margin-right: 5px;color: #ffffff;background: #4d445e;font-size: 0.97em;">
+                                {{grabacion.modo}}
+                            </span>
+                            <span *ngIf="grabacion.modo == 'Imagenes'" style="display: flex;align-items: center;justify-content: center;border-radius: 4px;height: 20px;/* width: 25px; */padding: 0 6px;margin-right: 5px;color: #ffffff;background: #815250;font-size: 0.97em;">
+                                {{grabacion.modo}}
+                            </span>
+                        </div>
+                        <div *ngIf="identity && grabacion.user._id == identity._id" class="card-carousel__acciones">
+                            <span style="display: flex;align-items: center;justify-content: center;border-radius: 4px;height: 25px;/* width: 25px; */background: rgba(0, 0, 0, 0.6);padding: 0 9px;margin-right: 5px;color: #ffffff;">Editar</span>
+                            <span (click)="borrarGrabacion(grabacion)" style="display: flex;align-items: center;justify-content: center;border-radius: 4px;height: 25px;width: 25px;background: rgba(0, 0, 0, 0.6);color: #ffffffde;">
+                                <i class="fa fa-trash" style="font-size:17px;font-weight: normal;"></i>
+                            </span>
+                        </div>
+                        <span style="position: absolute;z-index:99;bottom: 10px;right: 10px;padding: 0px 10px;background: rgba(0,0,0,0.8);color: #fff;border-radius:5px">
+                        {{formatearSegundos(grabacion.tiempoGrabacion)}}
+                        </span>
+                        <div class="overlay">
+        
+                        </div>
+                    </div>
+                    <div class="ui-block-content video-content">
+                        <h2 class="h6" href="#">{{grabacion.nombre}}</h2>
+                        <a [routerLink]="['/',grabacion.user.nick]" class="published" style="display: block;color: #989898;">{{grabacion.user.nick}}</a>
+                        <span style="margin-right: 6px;display: inline-flex;align-items: center;">
+                        {{grabacion.reproducciones}}<i class="fa fa-play" style="font-size: 0.67em;margin-left: 4px;color: #999;"></i>
+                        </span>
+                        <span class="hace-cuanto-tiempo" style="color: #8d8d8d;margin-left: 6px;font-size: 14px;">{{(grabacion.creado_el | amFromUnix) | amLocale:'es' | amTimeAgo }}</span>
+                    </div>
+                </a>
+            </div>
+        </ul>
+        
+        <nav class="submenu-principal-movil">
+            <ul class="menu-biblioteca-panel-beats">
+                <a [routerLink]="['/freestyle/grabadora']" style="margin: 0;">
+                    <li>Grabar freestyle</li>
+                </a>
+            </ul>
+        </nav>
+    </div>
+</div>
+
