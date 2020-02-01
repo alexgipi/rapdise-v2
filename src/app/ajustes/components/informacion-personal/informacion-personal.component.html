@@ -1,0 +1,227 @@
+<section id="col-main" style="margin-top: 30px;">
+			
+		<div class="dashboard-container">
+
+			<div class="container-fluid">
+				<div class="row">
+				
+					<div class="col-12  col-lg-3 editar-perfil-columna-imagen">
+						<div id="account-edit-photo">
+							<div *ngIf="user.image">
+								<img src="{{ url + 'get-image-user/' + user.image }}">				
+							</div>
+							<input style="display: none;" id="cambiar-imagen" type="file" placeholder="Subir imágen" (change)="fileChangeEvent($event)" required>
+							<label class="btn btn-green-pro" for="cambiar-imagen">Cambiar imagen</label>
+						</div>
+						<div>
+							<label>Imagen de portada</label>
+							<div *ngIf="user.portada">
+								<img src="{{ url + 'get-imagen-portada/' + user.portada }}" style="width:100%;height:130px;object-fit:cover; border-radius: 5px; margin:10px 0">				
+							</div>
+							<input type="file" placeholder="Subir imágen" (change)="fileChangeEvent2($event)" required>
+						</div>
+					</div><!-- close .col -->
+					<div class="col">
+					
+						<form #userEditForm="ngForm" class="account-settings-form">
+							
+							<div id="ajustes-identidad-cuenta">
+								<h5>Identidad de la cuenta</h5>
+								
+								<div class="row">
+									<div class="col-sm">
+										<div class="form-group">
+											<label for="first-name" class="col-form-label">Nick:</label>
+											<input class="form-control" type="text" name="nick" #nick="ngModel" [(ngModel)]="user.nick" required>	
+											<span *ngIf="!nick.valid && nick.touched">
+												El nick es obligatorio				
+											</span>
+										</div>
+									</div><!-- close .col -->
+									<div class="col-sm">
+										<div class="form-group">
+											<label for="last-name" class="col-form-label">Correo electrónico:</label>
+											<input class="form-control" type="text" name="email" #email="ngModel" [(ngModel)]="user.email" required>
+											<span *ngIf="!email.valid && email.touched">
+												El correo electrónico es obligatorio			
+											</span>
+										</div>
+									</div><!-- close .col -->
+									<div class="col-sm">
+										<div class="form-group">
+											<label for="last-name" class="col-form-label">País:</label>
+											<select class="form-control custom-select" size="auto" name="pais" #pais="ngModel" [(ngModel)]="user.pais">
+												<option value="AR">Argentina</option>
+												<option value="COL">Colombia</option>
+												<option value="CHI">Chile</option>											
+												<option value="EC">Ecuador</option>
+												<option selected="" value="ES">España</option>
+												<option value="FR">Francia</option>
+												<option value="GUA">Guatemala</option>
+												<option value="IT">Italia</option>
+												<option value="PAN">Panama</option>
+												<option value="POR">Portugal</option>
+												<option value="USA">Estados Unidos</option>
+											</select>
+										</div>
+									</div><!-- close .col -->
+								</div><!-- close .row -->
+								<hr>
+							</div>
+
+							<div id="ajustes-descripcion-usuario">
+								<h5>Un pequeño texto o frase que te identifique</h5>
+								
+									<textarea style="min-height: 100px;width: 100%;border-radius: 5px;border: 1px solid #ddd;padding: 5px 10px;font-size: 18px;" name="bio" #bio="ngModel" [(ngModel)]="user.bio">
+											{{identity.bio}}
+									</textarea>
+									<div class="clearfix"></div>
+								<hr>
+							</div>
+
+							<div id="ajustes-informacion-general">
+								<h5>Información personal</h5>
+								<div class="row">
+									<div class="col-sm">
+										<div class="form-group">
+											<label for="first-name" class="col-form-label">Nombre:</label>
+											<input class="form-control" type="text" name="name" #name="ngModel" [(ngModel)]="user.name" required>	
+											<span *ngIf="!name.valid && name.touched">
+												El nombre es obligatorio				
+											</span>
+										</div>
+									</div><!-- close .col -->
+									<div class="col-sm">
+										<div class="form-group">
+											<label for="last-name" class="col-form-label">Apellido:</label>
+											<input class="form-control" type="text" name="surname" #surname="ngModel" [(ngModel)]="user.surname" required>
+											<span *ngIf="!surname.valid && surname.touched">
+												El apellido es obligatorio				
+											</span>
+										</div>
+									</div><!-- close .col -->
+									<div class="col-sm">
+										<div class="form-group">
+											<label for="last-name" class="col-form-label">País:</label>
+											<select class="form-control custom-select" size="auto" name="pais" #pais="ngModel" [(ngModel)]="user.pais">
+												<option value="AR">Argentina</option>
+												<option value="COL">Colombia</option>
+												<option value="CHI">Chile</option>											
+												<option value="EC">Ecuador</option>
+												<option selected="" value="ES">España</option>
+												<option value="FR">Francia</option>
+												<option value="GUA">Guatemala</option>
+												<option value="IT">Italia</option>
+												<option value="PAN">Panama</option>
+												<option value="POR">Portugal</option>
+												<option value="USA">Estados Unidos</option>
+											</select>
+										</div>
+									</div><!-- close .col -->
+								</div><!-- close .row -->
+								<hr>
+							</div>
+
+							<div id="ajustes-descripcion-usuario">
+								<h5>Redes</h5>								
+								<div class="row">
+										<div class="col-sm">
+											<div class="form-group">
+												<label for="last-name" class="col-form-label">
+													<i style="margin-right:7px;font-weight:normal;" class="fa fa-instagram"></i>Instagram</label>
+												<input placeholder="https://" class="form-control" type="url" name="instagram" #instagram="ngModel" [(ngModel)]="user.instagram">
+											</div>
+										</div><!-- close .col -->
+										<div class="col-sm">
+											<div class="form-group">
+												<label for="last-name" class="col-form-label">
+													<i style="margin-right:7px;font-weight:normal;" class="fa fa-facebook"></i>Facebook</label>
+												<input placeholder="https://" class="form-control" type="url" name="facebook" #facebook="ngModel" [(ngModel)]="user.facebook">
+											</div>
+										</div><!-- close .col -->
+										<div class="col-sm">
+											<div class="form-group">
+												<label for="last-name" class="col-form-label">
+													<i style="margin-right:7px;font-weight:normal;" class="fa fa-twitter"></i>Twitter</label>
+												<input placeholder="https://" class="form-control" type="url" name="twitter" #twitter="ngModel" [(ngModel)]="user.twitter">
+											</div>
+										</div><!-- close .col -->
+										<div class="col-sm">
+											<div class="form-group">
+												<label for="last-name" class="col-form-label">
+													<i style="margin-right:7px;font-weight:normal;" class="fa fa-youtube"></i>YouTube</label>
+												<input placeholder="https://" class="form-control" type="url" name="youtube" #youtube="ngModel" [(ngModel)]="user.youtube">
+												
+											</div>
+										</div><!-- close .col -->
+										<div class="col-sm">
+											<div class="form-group">
+												<label for="last-name" class="col-form-label">
+													<i style="margin-right:7px;font-weight:normal;" class="fa fa-soundcloud"></i>SoundCloud</label>
+												<input placeholder="https://" class="form-control" type="url" name="soundCloud" #soundCloud="ngModel" [(ngModel)]="user.soundCloud">
+												
+											</div>
+										</div><!-- close .col -->
+										<!-- <div class="col-sm">
+											<div class="form-group">
+												<label for="last-name" class="col-form-label">BeatStars</label>
+												<input class="form-control" type="text" name="youtube" #youtube="ngModel" [(ngModel)]="user.youtube">
+												
+											</div>
+										</div>close .col -->
+									</div><!-- close .row -->
+								<hr>
+							</div>
+
+							<div id="ajustes-cambiar-clave">
+								<h5>Cambiar Contraseña</h5>
+								<p class="small-paragraph-spacing">Desde aquí puedes cambiar la contraseña de tu cuenta.</p>
+								<div class="row">
+									<div class="col-sm">
+										<div class="form-group">
+											<label for="password" class="col-form-label">Contraseña actual</label>
+											<input type="text" class="form-control" id="password" value="············">
+										</div>
+									</div><!-- close .col -->
+									<div class="col-sm">
+										<div class="form-group">
+											<label for="new-password" class="col-form-label">Nueva contraseña:</label>
+											<input type="text" class="form-control" id="new-password" placeholder="Mínimo 6 caracteres">
+										</div>
+									</div><!-- close .col -->
+									<div class="col-sm">
+										<div class="form-group">
+											<div><label for="confirm-password" class="col-form-label">&nbsp; &nbsp;</label></div>
+											<input type="text" class="form-control" id="confirm-password" placeholder="Confirma tu nueva contraseña">
+										</div>
+									</div><!-- close .col -->
+								</div><!-- close .row -->							
+								<hr>
+							</div>
+
+							
+							<div class="flex">
+								<button id="ajustes-guardar-cambios" (click)="editarUsuario()" type="submit" href="dashboard-account.html" class="btn btn-green-pro" style="margin: 0;">
+									Guardar cambios
+								</button>
+								<button id="ajustes-finalizar-registro" (click)="editarUsuario(true)" type="submit" href="dashboard-account.html" class="btn btn-green-pro display-none" style="margin: 0;">
+									Finalizar
+								</button>
+								<div class="alert alert-success" *ngIf="status == 'success'">
+									Datos actualizados correctamente!
+								</div>
+							
+								<div class="alert alert-danger" *ngIf="status == 'error'">
+									No se han podido actualizar tus datos! Probablemente el email o el nick que has introducido ya esta siendo usado por otro usuario. Intentalo de nuevo con otros datos!
+								</div>
+							</div>
+							<br>
+						</form>
+					
+					</div><!-- close .col -->
+				
+				</div><!-- close .row -->
+			</div><!-- close .container-fluid -->
+					
+		</div><!-- close .dashboard-container -->
+</section>

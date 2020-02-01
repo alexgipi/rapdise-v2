@@ -1,0 +1,63 @@
+{
+    "app": {
+        "barra-busqueda": {
+            "placeholder": "Search"
+        },
+        "select-idiomas" : {
+            "ingles": "English",
+            "español": "Spanish"
+        }
+    },
+    "menu-izquierda": {
+        "inicio": "Home",
+        "batallas": "Battles",
+        "freestyle": "Freestyle",
+        "bases": "Beats",
+        "entrenar": "Training",
+        "rankings": "Rankings",
+        "mi-perfil": "My profile",
+        "ajustes": "Settings"
+    },
+    "biblioteca": {
+        "menu": {
+            "bases":"Beats",
+            "productores": "Producers",
+            "listas": "Playlists",
+            "de-reproduccion": "",
+            "subir-bases": "Upload beats"
+        },
+        "subir-bases": {
+            "titulo-pagina": "Upload your beats to Rapdise and show your talent as a producer",
+            "form": {
+                "label-subir-archivo": "Upload file",
+                "btn-add-imagen": "Add image",
+                "btn-cambiar-imagen": "Change image",
+                "btn-ajustar-recorte": "Adjust crop",
+                "label-titulo": "Title",
+                "placeholder-titulo": "Name of your new beat",
+                "label-estilos": "Beat styles",
+                "option-estilos-otros": "Others",
+                "placeholder-bpm": "Beats per minute",
+                "placeholder-add-etiquetas": "Add tags / Intro",
+                "placeholder-add-etiqueta": "Add tag",
+                "label-limitacion-uso": "Type of use",
+                "uso-libre": "Free use",
+                "uso-limitado": "Limited use",
+                "placeholder-limitacion-uso": "Specify beat usage",
+                "label-permitir-uso-en": "Allow use in:",
+                "uso-batallas": "Battles",
+                "uso-freestyles": "Freestyles",
+                "uso-entreno": "Training",
+                "label-enlace-compra": "Purchase link (Optional)",
+                "label-descripcion": "Description (Optional)",
+                "btn-publicar-base": "Upload beat",
+                "btn-guardar-cambios": "Save changes"
+            },
+            "modal-recortar-imagen": {
+                "titulo": "Adjust image cropping",
+                "btn-cerrar": "Close",
+                "btn-aceptar": "Accept"
+            }
+        }
+    }
+}

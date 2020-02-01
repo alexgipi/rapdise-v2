@@ -1,0 +1,91 @@
+<div class="modal__content">
+    <h2 style="font-size: 1.5rem;margin-bottom: 20px;"> Editar <strong>{{listaAEditar.nombre}}</strong></h2>
+    <form #editarListaForm="ngForm" (ngSubmit)="editarLista(editarListaForm);sendLista($event);" class="form-list">
+        <li class="form-list__row form-list__row--inline" style="float: left;width: 100%;">
+            <div>
+                <label>Nombre</label>
+                <input required type="text" name="nombre" #nombre="ngModel" [(ngModel)]="listaAEditar.nombre">
+            </div>
+            <div>
+                <label>Tipo</label>
+                <select name="style" required name="tipo" #tipo="ngModel" [(ngModel)]="listaAEditar.tipo">
+                    <option disabled="" selected="" value="" ng-reflect-value="">Selecciona un tipo de lista</option>
+                    <option value="lista_general" ng-reflect-value="old-school">General</option>
+                    <option value="lista_propia" ng-reflect-value="trap">Beats própios</option>
+                </select>
+            </div>
+            <div style="flex: 1;">
+                <label>Visibilidad</label>
+                <select required name="estado" #estado="ngModel" [(ngModel)]="listaAEditar.estado">
+                    <option disabled="" selected="" value="" ng-reflect-value="">Visibilidad de la lista</option>
+                    <option value="publica" ng-reflect-value="libre">Pública</option>
+                    <option value="privada" ng-reflect-value="limitado">Privada</option>
+                </select>
+            </div>
+        </li>
+        
+        <li class="form-list__row" style="float: left;width: 100%;">
+            <label>Descripción de la lista <i style="text-transform: capitalize;">(Opcional)</i></label>
+            <textarea name="descripcion" #descripcionS="ngModel" [(ngModel)]="listaAEditar.descripcion"></textarea>
+        </li>
+
+        <div class="listado-beats-crear-lista">
+            <div class="menu-filtro">
+                <li (click)="mostrarMisBeats();" [class.activo]="mostrandoBeats == 'mis-beats'">Contenido de la lista</li>
+                <li (click)="mostrarTodosLosBeats();" [class.activo]="mostrandoBeats == 'todos'">Añadir beats</li>
+            </div>
+            <ul>
+                <li class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" *ngFor="let beatLista of beatsLista;">
+                    <div class="item-listado-beats-crear-lista" id="beat-{{beatLista.beat._id}}">
+                        <div class="detalles-beat-listado-crear-lista">
+                            <img src="http://localhost:3800/api/get-image-user/Jx2kwOQywrVbeYj2V4kP3sZa.jpg">
+                            <div class="flex flex-wrap">
+                                <span>{{beatLista.beat.name}}</span>
+                                <span>{{beatLista.beat.autor}}</span>
+                            </div>
+                        </div>
+                        <div class="acciones-beat-listado-crear-lista">
+                            <i class="fa fa-play-circle"></i>
+
+                           
+                            <i class="fa fa-close" (click)="quitarBeatLista(beatLista)" style="border:none;"></i>
+                        </div>        
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <li class="float-left">
+            <button class="button" type="submit" [disabled]="!editarListaForm.form.valid">Guardar</button>
+        </li>
+
+        <li class="form-list__row" style="width: auto;display: inline-block;padding: 10px;border: 1px solid #eee;margin-left: 15px;border-radius: 4px;">
+            <label style="width: auto;display: inline-block;margin: 0;">Mostrar lista en mi biblioteca</label>
+            <div class="flex float-left" style="margin-right: 15px;">
+                <span (click)="elegirMostrarEnBiblioteca();" [class.mi-checked]="listaAEditar.enBiblioteca == 'SI'" class="mi-checkbox">
+                    <i class="fa fa-check"></i>
+                </span>
+            </div>
+        </li>
+    </form>
+</div>
+
+<div class="reproductor-modal">
+    <img class="imagen-beat-autor" src="http://localhost:3800/api/get-imagen-beat/bwPCmjmuUFJRSXB9Y0fdjoOZ.jpg">
+    <div class="detalles-beat">
+        <span class="nombre-beat">El nombre del beat</span>
+        <span class="autor-beat">nickAutor</span>
+    </div>
+    <div class="botones-reproductor-modal">
+        <i class="fa fa-step-backward"></i>
+        <i *ngIf="sonando == false" class="fa fa-play-circle-o"></i>
+        <i *ngIf="sonando == true" class="fa fa-pause"></i>
+        <i class="fa fa-step-forward"></i>
+    </div>
+
+    <div class="barra-reproductor-modal">
+        <div class="barra">
+            <span></span>
+        </div>
+    </div>
+</div>

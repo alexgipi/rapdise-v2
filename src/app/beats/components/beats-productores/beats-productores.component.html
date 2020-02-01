@@ -1,0 +1,160 @@
+<div class="contenido-biblioteca biblioteca-productores sticky">
+
+	<div class="cabecera-biblioteca">
+
+		<menu-biblioteca></menu-biblioteca>
+
+		<div class="barra-filtros-biblioteca">
+			<div style="display: flex;height: 32px;">
+				<!-- <div id="dropdown-estilos" class="mi-dropdown" style="margin-right: 8px;">
+					<div  class="btn-mi-dropdown naranja">
+						Todos los estilos
+						<div style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;z-index: 999;"></div>
+						<i class="fa fa-angle-down"></i>
+					</div>
+					<ul class="menu-mi-dropdown" id="menu-dropdown-estilos">
+						<a [routerLink]="['/biblioteca-de-beats']"><li class="activo">Todos</li></a>
+						<a [routerLink]="['/beats/old-school']"><li>Old School</li></a>
+						<a [routerLink]="['/beats/trap']"><li>Trap</li></a>
+						<a [routerLink]="['/beats/underground']"><li>Underground</li></a>
+						<a [routerLink]="['/beats/boom-bap']"><li>Boom Bap</li></a>
+						<a [routerLink]="['/beats/lofi']"><li>Lofi Rap</li></a>
+						<a [routerLink]="['/beats/jazzy']"><li>Jazzy</li></a>
+						<a [routerLink]="['/beats/reggae']"><li>Reggae</li></a>						
+					</ul>
+				</div> -->
+				<div id="dropdown-filtros" class="mi-dropdown">
+					<div  class="btn-mi-dropdown naranja-blanco">
+						<!-- {{filtroSeleccionado || 'Más recientes'}} -->
+						Más recientes
+
+						<div (click)="activarDesactivarDropdown('filtros')" style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;z-index: 999;"></div>
+
+						<i class="fa fa-angle-down"></i>
+	
+						
+					</div>
+					<ul class="menu-mi-dropdown" id="menu-dropdown-filtros">
+						<li [class.activo]="filtroSeleccionado == 'Más recientes'">Más recientes</li>
+						<li [class.activo]="filtroSeleccionado == 'Más antiguas'">Más antiguas</li>
+						<li [class.activo]="filtroSeleccionado == 'Más reputadas'">Más reputadas</li>
+						<li [class.activo]="filtroSeleccionado == 'Más reproducidas'">Más reproducidas</li>						
+					</ul>
+				</div>
+				
+			</div>
+			
+			<div style="display: inline-flex;justify-content: flex-end;align-items: center;">
+				<h1 class="h5">Productores con gran oído y mejor estilo</h1>
+				<div class="busqueda-filtros-biblioteca">
+					<input type="text" placeholder="Buscar..." name="filtroBeat">
+					<i class="fa fa-search"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="reproductor-biblio">
+		<reproductor-biblioteca [beat]="beat"></reproductor-biblioteca>
+	</div>
+
+	<div class="panel-beats-biblioteca">
+
+		<div class="contenedor-listado-productores" style="border-right: 1px solid #e4e4e4">
+			
+			<ul class="productores-cards">
+				<div *ngFor="let productor of productores; let i = index" class="usercard">
+					<div (click)="seleccionarProductor(productor)" class="usercard-avatar">
+						<i class="mdi mdi-play-arrow"></i>
+						<img src="{{url + 'get-image-user/' + productor.image}}" alt="" class="usercard-img">
+					</div>
+					<div class="usercard-body">
+						<h2 class="usercard-title">{{productor.nick}}</h2>
+						<span class="usercard-badge">{{totalesBeats[i]}} Bases</span>
+						<span class="usercard-badge">
+							<i class="fa fa-play" style="font-size: 11px;margin-right: 7px;color: #a1a1a1;"></i>
+							{{totalesReproduccionesBeats[i] || 0}}
+						</span>
+						<span class="usercard-badge">
+							<svg height="511pt" version="1.1" viewBox="-38 0 511 511.99956" width="511pt" xmlns="http://www.w3.org/2000/svg" style="height: 13px;width: 17px;top: 2px;position: relative;"><g _ngcontent-qsl-c0="" id="surface1"><path _ngcontent-qsl-c0="" d="M 413.476562 341.910156 C 399.714844 379.207031 378.902344 411.636719 351.609375 438.289062 C 320.542969 468.625 279.863281 492.730469 230.699219 509.925781 C 229.085938 510.488281 227.402344 510.949219 225.710938 511.289062 C 223.476562 511.730469 221.203125 511.96875 218.949219 512 L 218.507812 512 C 216.105469 512 213.691406 511.757812 211.296875 511.289062 C 209.605469 510.949219 207.945312 510.488281 206.339844 509.9375 C 157.117188 492.769531 116.386719 468.675781 85.289062 438.339844 C 57.984375 411.6875 37.175781 379.277344 23.433594 341.980469 C -1.554688 274.167969 -0.132812 199.464844 1.011719 139.433594 L 1.03125 138.511719 C 1.261719 133.554688 1.410156 128.347656 1.492188 122.597656 C 1.910156 94.367188 24.355469 71.011719 52.589844 69.4375 C 111.457031 66.152344 156.996094 46.953125 195.90625 9.027344 L 196.246094 8.714844 C 202.707031 2.789062 210.847656 -0.117188 218.949219 0.00390625 C 226.761719 0.105469 234.542969 3.007812 240.773438 8.714844 L 241.105469 9.027344 C 280.023438 46.953125 325.5625 66.152344 384.429688 69.4375 C 412.664062 71.011719 435.109375 94.367188 435.527344 122.597656 C 435.609375 128.386719 435.757812 133.585938 435.988281 138.511719 L 436 138.902344 C 437.140625 199.046875 438.554688 273.898438 413.476562 341.910156 Z M 413.476562 341.910156 " style="stroke:none;fill-rule:nonzero;fill: rgb(193, 193, 193);fill-opacity:1;"></path><path _ngcontent-qsl-c0="" d="M 413.476562 341.910156 C 399.714844 379.207031 378.902344 411.636719 351.609375 438.289062 C 320.542969 468.625 279.863281 492.730469 230.699219 509.925781 C 229.085938 510.488281 227.402344 510.949219 225.710938 511.289062 C 223.476562 511.730469 221.203125 511.96875 218.949219 512 L 218.949219 0.00390625 C 226.761719 0.105469 234.542969 3.007812 240.773438 8.714844 L 241.105469 9.027344 C 280.023438 46.953125 325.5625 66.152344 384.429688 69.4375 C 412.664062 71.011719 435.109375 94.367188 435.527344 122.597656 C 435.609375 128.386719 435.757812 133.585938 435.988281 138.511719 L 436 138.902344 C 437.140625 199.046875 438.554688 273.898438 413.476562 341.910156 Z M 413.476562 341.910156 " style="stroke:none;fill-rule:nonzero;fill: rgb(172, 172, 172);fill-opacity:1;"></path></g></svg>
+							{{productor.reputation}}
+						</span>
+						<div class="usercard-btn-container">
+							<button class="usercard-btn">Old School</button>
+							<button class="usercard-btn">Jazzy</button>
+							<button class="usercard-btn">Trap</button>
+							<button class="usercard-btn">Lofi</button>
+						</div>
+						<div class="usercard-acciones">
+							<!-- <button class="seguir">
+								<span>Seguir</span><span style="display: none;">Siguiendo</span>
+							</button> -->
+							<button class="ver-prod">
+								<a [routerLink]="['/', productor.nick, 'bases']">Ver página de productor</a>
+							</button>
+						</div>
+					</div>
+				</div>
+				<!-- <div *ngFor="let productor of productores; let i = index" class="card-container">
+					<div class="mi-card-usuario" [class.activo]="productor._id == productorSeleccionado">
+
+						<div class="mi-card-usuario-top">
+
+						<div class="mi-card-usuario-top-overlay">
+							<img *ngIf="productor.image != null" src="{{url + 'get-image-user/' + productor.image}}" alt="{{productor.nick}}">
+
+							<div class="mi-card-usuario-info">
+							<h2>{{productor.nick}}</h2>
+							<div class="flex justify-center">
+								<a [routerLink]="['/', productor.nick, 'bases']" class="mi-card-usuario-btn mi-card-usuario-btn-left">Ver perfil</a>
+								<a href="#" class="mi-card-usuario-btn mi-card-usuario-btn-right">Seguir</a>
+							</div>
+							
+							</div>
+						</div>
+
+						<div class="mi-card-usuario-work">
+							<div class="mi-card-usuario-project mi-card-usuario-project1"></div>
+							<div class="mi-card-usuario-project mi-card-usuario-project2"></div>
+							<div class="mi-card-usuario-project mi-card-usuario-project3"></div>
+						</div>
+						</div>
+
+						<div class="mi-card-usuario-bottom">
+	
+						<div (click)="seleccionarProductor(productor)" class="mi-card-usuario-btn-circle">
+							<span class="mi-card-usuario-btn-text">+</span>
+						</div>
+						<div class="mi-card-usuario-views">
+		
+							<div class="mi-card-usuario-icon">
+								<svg height="511.99899pt" style="width: 25px;height: 25px;fill: #8c8c8c;position: relative;top: 2px;" viewBox="1 1 511.99899 511.99899" width="511.99899pt" xmlns="http://www.w3.org/2000/svg"><path d="m437.019531 74.980469c-48.351562-48.351563-112.640625-74.980469-181.019531-74.980469s-132.667969 26.628906-181.019531 74.980469c-48.351563 48.351562-74.980469 112.640625-74.980469 181.019531s26.628906 132.667969 74.980469 181.019531c48.351562 48.351563 112.640625 74.980469 181.019531 74.980469s132.667969-26.628906 181.019531-74.980469c48.351563-48.351562 74.980469-112.640625 74.980469-181.019531s-26.628906-132.667969-74.980469-181.019531zm-181.019531 406.785156c-124.488281 0-225.765625-101.277344-225.765625-225.765625s101.277344-225.765625 225.765625-225.765625 225.765625 101.277344 225.765625 225.765625-101.277344 225.765625-225.765625 225.765625zm0 0"></path><path d="m256 207.621094c-26.675781 0-48.375 21.703125-48.375 48.378906s21.699219 48.375 48.375 48.375 48.378906-21.699219 48.378906-48.375-21.703125-48.378906-48.378906-48.378906zm0 66.519531c-10.003906 0-18.140625-8.136719-18.140625-18.140625s8.136719-18.140625 18.140625-18.140625 18.140625 8.136719 18.140625 18.140625-8.136719 18.140625-18.140625 18.140625zm0 0"></path><path d="m256 139.085938c-64.464844 0-116.910156 52.449218-116.910156 116.914062s52.445312 116.910156 116.910156 116.910156 116.914062-52.445312 116.914062-116.910156-52.449218-116.914062-116.914062-116.914062zm0 203.589843c-47.792969 0-86.675781-38.882812-86.675781-86.675781s38.882812-86.675781 86.675781-86.675781 86.675781 38.882812 86.675781 86.675781-38.882812 86.675781-86.675781 86.675781zm0 0"></path><path d="m256 69.546875c-8.347656 0-15.117188 6.765625-15.117188 15.117187 0 8.347657 6.769532 15.117188 15.117188 15.117188 86.140625 0 156.21875 70.078125 156.21875 156.21875 0 8.347656 6.769531 15.117188 15.117188 15.117188 8.351562 0 15.117187-6.769532 15.117187-15.117188 0-102.8125-83.640625-186.453125-186.453125-186.453125zm0 0"></path><path d="m256 412.21875c-86.136719 0-156.21875-70.082031-156.21875-156.21875 0-8.351562-6.769531-15.117188-15.117188-15.117188-8.347656 0-15.117187 6.765626-15.117187 15.117188 0 102.808594 83.644531 186.453125 186.453125 186.453125 8.351562 0 15.117188-6.769531 15.117188-15.117187 0-8.347657-6.765626-15.117188-15.117188-15.117188zm0 0"></path></svg>
+							</div>
+
+							<span>Nº Bases</span>
+							<strong>{{totalesBeats[i]}}</strong>
+						</div>
+						<div class="mi-card-usuario-followers">
+
+							<div class="mi-card-usuario-icon"><i class="fa fa-play"></i></div>
+
+							<span>Reproducciones</span>
+							<strong>{{totalesReproduccionesBeats[i] || 0}}</strong>
+						</div>
+						<div class="mi-card-usuario-likes">
+
+							<div class="mi-card-usuario-icon">
+								<svg height="511pt" style="height: 22px;width: 22px;" version="1.1" viewBox="-38 0 511 511.99956" width="511pt" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-ukh-c0="" id="surface1"><path _ngcontent-ukh-c0="" d="M 413.476562 341.910156 C 399.714844 379.207031 378.902344 411.636719 351.609375 438.289062 C 320.542969 468.625 279.863281 492.730469 230.699219 509.925781 C 229.085938 510.488281 227.402344 510.949219 225.710938 511.289062 C 223.476562 511.730469 221.203125 511.96875 218.949219 512 L 218.507812 512 C 216.105469 512 213.691406 511.757812 211.296875 511.289062 C 209.605469 510.949219 207.945312 510.488281 206.339844 509.9375 C 157.117188 492.769531 116.386719 468.675781 85.289062 438.339844 C 57.984375 411.6875 37.175781 379.277344 23.433594 341.980469 C -1.554688 274.167969 -0.132812 199.464844 1.011719 139.433594 L 1.03125 138.511719 C 1.261719 133.554688 1.410156 128.347656 1.492188 122.597656 C 1.910156 94.367188 24.355469 71.011719 52.589844 69.4375 C 111.457031 66.152344 156.996094 46.953125 195.90625 9.027344 L 196.246094 8.714844 C 202.707031 2.789062 210.847656 -0.117188 218.949219 0.00390625 C 226.761719 0.105469 234.542969 3.007812 240.773438 8.714844 L 241.105469 9.027344 C 280.023438 46.953125 325.5625 66.152344 384.429688 69.4375 C 412.664062 71.011719 435.109375 94.367188 435.527344 122.597656 C 435.609375 128.386719 435.757812 133.585938 435.988281 138.511719 L 436 138.902344 C 437.140625 199.046875 438.554688 273.898438 413.476562 341.910156 Z M 413.476562 341.910156 " style="stroke:none;fill-rule:nonzero;fill: rgb(193, 193, 193);fill-opacity:1;"></path><path _ngcontent-ukh-c0="" d="M 413.476562 341.910156 C 399.714844 379.207031 378.902344 411.636719 351.609375 438.289062 C 320.542969 468.625 279.863281 492.730469 230.699219 509.925781 C 229.085938 510.488281 227.402344 510.949219 225.710938 511.289062 C 223.476562 511.730469 221.203125 511.96875 218.949219 512 L 218.949219 0.00390625 C 226.761719 0.105469 234.542969 3.007812 240.773438 8.714844 L 241.105469 9.027344 C 280.023438 46.953125 325.5625 66.152344 384.429688 69.4375 C 412.664062 71.011719 435.109375 94.367188 435.527344 122.597656 C 435.609375 128.386719 435.757812 133.585938 435.988281 138.511719 L 436 138.902344 C 437.140625 199.046875 438.554688 273.898438 413.476562 341.910156 Z M 413.476562 341.910156 " style="stroke:none;fill-rule:nonzero;fill: rgb(172, 172, 172);fill-opacity:1;"></path></g></svg>
+							</div>
+
+							<span>Reputacion</span>
+							<strong>{{productor.reputation}}</strong>
+						</div>
+						</div>
+					</div>
+				</div>				 -->
+			</ul>
+			
+		</div>
+	</div>
+</div>

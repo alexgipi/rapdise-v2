@@ -1,0 +1,291 @@
+<div class="modal-responder-batalla">
+	<div class="modal-rasponder-batalla__contenido panel-reproductor-principal" *ngIf="batallaSeleccionada">
+        <div class="barra-titulo-top" style="width: 100%;display: flex;align-items: center;padding: 0 15px;height: 45px;">
+            <div class="flex info-usuario">
+                <strong style="font-size: 19px;">{{batallaSeleccionada.nombre}}</strong>
+            </div>
+        </div>
+
+        <div class="float-left" id="contenedor-reproductor-principal">
+            <div class="contenido-panel-reproductor-principal" style="border-radius: 0;">
+                <div class="reproduccion-reproductor-principal">
+                    <div class="contenido-reproduccion reproduccion-batalla izq-activo">
+                        <div class="ver-batalla-ronda-izq" id="ronda1-usuario1">
+                            <video class="video-batalla visible" id="impro-usuario1" src="http://localhost:3800/api/get-audio-batalla/5c4ba78ddfa09d2654a997d4-1563206603.webm"></video>
+                            <div class="palabras-ronda-batalla">
+                                <span>jabón</span>
+                            </div>
+                        </div>
+                        <div class="ver-batalla-ronda-der" id="ronda1-usuario2" style="outline: 2px solid rgba(25, 25, 25, 0.3);">
+                            <video class="video-batalla visible" id="impro-usuario2" src="http://localhost:3800/api/get-audio-batalla/5c4d4b1de566ec33582f2c03-1563298307.webm"></video>
+                        </div>
+                        <div class="capa-controles-player capa-activa">
+                            <span class="overNegro"></span>
+                            
+                            <div class="icono-play-pause-redondo naranja">
+                                <i class="fa fa-play"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="barra-reproductor-principal">
+                    <div class="acciones-barra-reproductor-principal">
+                        <i class="fa fa-play"></i>
+                        <i class="fa fa-volume-up"></i>
+                        <div class="tiempo no-seleccionable">
+                            <span id="tiempo-actual">00:00</span>
+                            <span style="padding:0 5px;">/</span>
+                            <span id="duration">4:00</span>
+                        </div>
+                    </div>
+                    <div class="contenedor-barra-player">
+                        <div class="barra-player">
+                            <span class="tiempo-actual-barra-player">
+                                <div class="flex relative width-100">
+                                    <i></i>
+                                </div>
+                            </span>
+                            <div *ngIf="batallaSeleccionada.rondas == 2" class="relative flex justify-center width-100">
+                                <div class="separadores-barra-player">
+                                    <div class="separador-barra-player"></div>
+                                    <div class="separador-barra-player"></div>
+                                    <div class="separador-barra-player"></div>
+                                    <div class="separador-barra-player"></div>
+                                    <div class="separador-barra-player"></div>
+                                </div>
+                                <div *ngIf="identity" class="progreso-batalla-barra-responder" style="position: absolute;left: 0;width: 75%;height: 100%;display: flex;">
+                                    <div class="flex width-100" *ngIf="usuarioQueToca._id == identity._id">
+                                        <div style="height: 100%;background: #FF5722;flex: auto;"></div>
+                                        <div style="height: 100%;background: #76aac2;flex: auto;"></div>
+                                        <div style="height: 100%;background: #76aac2;flex: auto;"></div>
+                                    </div>
+                                    <div class="flex width-100" *ngIf="usuarioQueToca._id != identity._id">
+                                        <div style="height: 100%;background: #76aac2;flex: auto;"></div>
+                                        <div style="height: 100%;background: #FF5722;flex: auto;"></div>
+                                        <div style="height: 100%;background: #FF5722;flex: auto;"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="batallaSeleccionada.rondas == 3" class="relative flex justify-center width-100">
+                                <div class="separadores-barra-player">
+                                    <div class="separador-barra-player"></div>
+                                    <div class="separador-barra-player"></div>
+                                    <div class="separador-barra-player"></div>
+                                    <div class="separador-barra-player"></div>
+                                    <div class="separador-barra-player"></div>
+                                    <div class="separador-barra-player"></div>
+                                    <div class="separador-barra-player"></div>
+                                </div>
+                                <div *ngIf="identity" class="progreso-batalla-barra-responder" style="position: absolute;left: 0;width: 50%;height: 100%;display: flex;">
+                                    <div class="flex width-100" *ngIf="usuarioQueToca._id == identity._id">
+                                        <div style="height: 100%;background: #FF5722;flex: auto;"></div>
+                                        <div style="height: 100%;background: #76aac2;flex: auto;"></div>
+                                        <div style="height: 100%;background: #76aac2;flex: auto;"></div>
+                                    </div>
+                                    <div class="flex width-100" *ngIf="usuarioQueToca._id != identity._id">
+                                        <div style="height: 100%;background: #76aac2;flex: auto;"></div>
+                                        <div style="height: 100%;background: #FF5722;flex: auto;"></div>
+                                        <div style="height: 100%;background: #FF5722;flex: auto;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <audio id="audio-beat" src="{{url + 'get-audio-beat/' + beatSeleccionado.file}}"></audio>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- <div class="float-left" id="contenedor-reproductor-principal">
+            <div class="contenido-panel-reproductor-principal" style="border-radius: 0;">
+                <div class="reproduccion-reproductor-principal">
+                    <div class="contenido-reproduccion reproduccion-batalla">
+                        <div class="ver-batalla-ronda-izq" id="ronda1-usuario1" style="width: 100%;">
+                            <video (click)="playPauseFreestyle()" class="video-batalla visible" id="impro-usuario1" src="{{url + 'get-audio-batalla/' + batallaSeleccionada.impro1 }}"></video>
+                            <div class="palabras-ronda-batalla">
+                                <span>{{palabraActual}}</span>
+                            </div>
+                        </div>
+                        <div class="capa-controles-player" [class.capa-activa]="escuchandoRival == false">
+                            <span (click)="playPauseFreestyle()" class="overNegro"></span>
+
+                            <div *ngIf="escuchandoRival == false" (click)="playFreestyle()" class="icono-play-pause-redondo naranja">
+                                <i class="fa fa-play"></i>
+                            </div>
+                            <div *ngIf="escuchandoRival" (click)="pauseFreestyle()" class="icono-play-pause-redondo naranja">
+                                <i class="fa fa-pause"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="barra-reproductor-principal">
+                    <div class="acciones-barra-reproductor-principal">
+                        <i *ngIf="escuchandoRival == false" (click)="playFreestyle()" class="fa fa-play"></i>
+                        <i *ngIf="escuchandoRival" (click)="pauseFreestyle()" class="fa fa-pause"></i>
+                        <i class="fa fa-volume-up"></i>
+                        <div class="tiempo no-seleccionable">
+                            <span id="tiempo-actual">{{tiempoActualFormateado}}</span>
+                            <span style="padding:0 5px;">/</span>
+                            <span id="duration">{{formatearSegundos(batallaSeleccionada.tiempoTurnoRonda1)}}</span>
+                        </div>
+                    </div>
+                    <div class="contenedor-barra-player">
+                        <div class="barra-player">
+                            <span class="tiempo-actual-barra-player">
+                                <div class="flex relative width-100">
+                                    <i></i>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="opciones-barra-reproductor-principal">
+                        <i class="fa fa-cog"></i>
+                        <i class="fas fa-expand"></i>
+                    </div>
+                    <audio id="audio-beat" src="{{url + 'get-audio-beat/' + beat1.file }}"></audio>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="detalles-batalla-ver-batalla">
+            <div class="ver-batalla-info-batalla">
+
+                <div class="detalles-modal-responder-batalla flex">
+                    <div style="font-size: 16px;">
+                        <span style="background: #eee;border-radius: 4px;font-size: 0.95em;font-weight: bold;color: rgba(0,0,0,0.4);text-align: center;display: inline-flex;padding: 0px 7px;">
+                            {{batallaSeleccionada.rondas}}R
+                        </span>
+                        <span>
+                            de <span>{{batallaSeleccionada.tiempoTurnoRonda1}}</span> <span *ngIf="batallaSeleccionada.tiempoTurnoRonda2 != batallaSeleccionada.tiempoTurnoRonda1"> y {{batallaSeleccionada.tiempoTurnoRonda2}}</span> Segundos
+                        </span>
+
+                        <span class="capitalize" style="margin-left: 14px;">
+                            <strong style="margin-right: 5px;">Modo:</strong> <span>{{batallaSeleccionada.modoRonda1}}</span> <span *ngIf="batallaSeleccionada.modoRonda2 != batallaSeleccionada.modoRonda1">, {{batallaSeleccionada.modoRonda2}}</span>
+                        </span>
+                        
+                        <span *ngIf="batallaSeleccionada.rondas == 2">
+                            <!-- // TE TOCA 2 RONDAS -->
+                            <span *ngIf="tocaGrabarImpro == 3 && identity && usuarioQueToca._id == identity._id" (click)="abrirCerrarPanelGrabarRespuesta();" class="alerta-progreso-batalla naranja">
+                                Te toca iniciar la 2ª Ronda
+                            </span>
+                            <span *ngIf="tocaGrabarImpro == 4 && identity && usuarioQueToca._id == identity._id" (click)="abrirCerrarPanelGrabarRespuesta();" class="alerta-progreso-batalla naranja">
+                                Te toca responder la 2ª Ronda
+                            </span>
+                            <!-- // NO TE TOCA 2 RONDAS -->
+                            <span *ngIf="tocaGrabarImpro == 3 || tocaGrabarImpro == 4 && identity && usuarioQueToca._id != identity._id" class="alerta-progreso-batalla azul">
+                                Esperando respuesta de {{batallaSeleccionada.usuario1.nick}}
+                            </span>
+                        </span>
+    
+                        <span *ngIf="identity && batallaSeleccionada.rondas == 3">
+                            <!-- // TE TOCA 3 RONDAS -->
+                            <span *ngIf="tocaGrabarImpro == 4 && usuarioQueToca._id == identity._id" (click)="abrirCerrarPanelGrabarRespuesta();" class="alerta-progreso-batalla naranja">
+                                Te toca responder la 2ª Ronda
+                            </span>
+                            <span *ngIf="tocaGrabarImpro == 5 && usuarioQueToca._id == identity._id" (click)="abrirCerrarPanelGrabarRespuesta();" class="alerta-progreso-batalla naranja">
+                                Te toca iniciar la 3ª Ronda
+                            </span>
+                            <span *ngIf="tocaGrabarImpro == 6 && usuarioQueToca._id == identity._id" (click)="abrirCerrarPanelGrabarRespuesta();" class="alerta-progreso-batalla naranja">
+                                Te toca responder la 3ª Ronda
+                            </span>
+                            <!-- // NO TE TOCA 3 RONDAS -->
+                            <span *ngIf="tocaGrabarImpro == 4 && usuarioQueToca._id != identity._id || tocaGrabarImpro == 5 && usuarioQueToca._id != identity._id || tocaGrabarImpro == 6 && usuarioQueToca._id != identity._id" class="alerta-progreso-batalla azul">
+                                Esperando respuesta de {{batallaSeleccionada.usuario1.nick}}
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="flex" style="margin-top: 20px;">
+                    <div *ngIf="batallaSeleccionada.rondas == 2">
+                        <!-- // TE TOCA 2 RONDAS -->
+                        <div *ngIf="tocaGrabarImpro == 4 && identity && usuarioQueToca._id == identity._id" (click)="abrirCerrarPanelGrabarRespuesta();" class="btn-responder-batalla naranja">
+                            Responde y finaliza la batalla
+                        </div>
+                        <!-- // NO TE TOCA 2 RONDAS -->
+                        <div *ngIf="tocaGrabarImpro == 4 && identity && usuarioQueToca._id != identity._id" class="btn-responder-batalla azul">
+                            Esperando respuesta...
+                        </div>
+                    </div>
+
+                    <div *ngIf="identity && batallaSeleccionada.rondas == 3">
+                        <!-- // TE TOCA 3 RONDAS -->
+                        <div *ngIf="tocaGrabarImpro == 4 && usuarioQueToca._id == identity._id" (click)="abrirCerrarPanelGrabarRespuesta();" class="btn-responder-batalla naranja">
+                            Responder 2ª Ronda
+                        </div>
+                        <div *ngIf="tocaGrabarImpro == 5 && usuarioQueToca._id == identity._id" (click)="abrirCerrarPanelGrabarRespuesta();" class="btn-responder-batalla naranja">
+                            Iniciar 3ª Ronda
+                        </div>
+                        <div *ngIf="tocaGrabarImpro == 6 && usuarioQueToca._id == identity._id" (click)="abrirCerrarPanelGrabarRespuesta();" class="btn-responder-batalla naranja">
+                            Responde y finaliza la batalla
+                        </div>
+                        <!-- // NO TE TOCA 3 RONDAS -->
+                        <div *ngIf="tocaGrabarImpro == 4 && usuarioQueToca._id != identity._id || tocaGrabarImpro == 5 && usuarioQueToca._id != identity._id || tocaGrabarImpro == 6 && usuarioQueToca._id != identity._id" class="btn-responder-batalla azul">
+                            Esperando respuesta...
+                        </div>
+                    </div>
+                    
+                    <p style="margin: 0;flex: auto;line-height: 1.3;font-size: 0.95em !important;">
+                        Recuerda que para conseguir la mejor calidad en el sonido es recomendable usar auriculares o alejar el microfono lo maximo posible del altavoz.
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="panel-modal-grabar-respuesta">
+            <div class="barra-titulo-top">
+                <i (click)="abrirCerrarPanelGrabarRespuesta();" class="fa fa-arrow-left"></i>
+                <h4>Responder a {{batallaSeleccionada.usuario1.nick}}</h4>
+            </div>
+
+            <div class="contenido-grabar-respuesta no-seleccionable">
+                <div class="video-camara">
+                    <div [class.display-none]="grabando == false" class="contenedor-palabras-respuesta"></div>
+                    <video id="preview" width="160" height="120" autoplay muted></video>
+                    <section [class.display-none]="grabando" class="visualizador-voz-batalla">
+                        <canvas class="visualizer"></canvas>
+
+                        <div class="" style="/* position: absolute; */z-index:999;right: 10px;top: 10px;color: #fff;padding: 5px 9px;background: rgba(0,0,0,0.3);border-radius: 4px;display: flex;align-items: center;">
+                            Usar la camara
+                            <span (click)="activarDesactivarVideo('activar')" class="active" id="video-si" style="cursor:pointer;padding: 0 10px;background: #ff5722;border-radius: 4px;color: #fff;margin-left: 9px;flex: auto;text-align: center;">
+                                Si
+                            </span>
+                            <span (click)="activarDesactivarVideo('desactivar')"  id="video-no" style="cursor:pointer;padding: 0 10px;background: #d4d4d4;border-radius: 4px;color: #8e8e8e;margin-left: 5px;flex: auto;text-align: center;">
+                                No
+                            </span>
+                        </div>
+                    </section>
+                    <div style="display: none;" class="contador-3-2-1">3</div>
+
+                    <div *ngIf="grabando == false && tocaGrabarImpro == 4" class="mensaje-ronda-grabada">
+                        <p>¡Estás a un paso de finalizar la batalla!<br> Dalo todo en tu última ronda, ganate al público y llevate el máximo numero de votos posibles...</p>
+                    </div>
+                </div>
+                <div class="boton-grabar-respuesta">
+                    
+                    <span (click)="empezarGrabacion();" *ngIf="batallaSeleccionada.rondas == 2 && grabando == false && tocaGrabarImpro == 4">
+                        RESPONDER ULTIMA RONDA
+                    </span>
+
+                    <span (click)="empezarGrabacion();" *ngIf="batallaSeleccionada.rondas == 3 && grabando == false && tocaGrabarImpro == 4">
+                        RESPONDER 2ª RONDA
+                    </span>
+                    <span (click)="empezarGrabacion();" *ngIf="batallaSeleccionada.rondas == 3 && grabando == false && tocaGrabarImpro == 5">
+                        INICIAR 3a RONDA...
+                    </span>
+                    <span (click)="empezarGrabacion();" *ngIf="batallaSeleccionada.rondas == 3 && grabando == false && tocaGrabarImpro == 6">
+                        RESPONDER ULTIMA RONDA
+                    </span>
+                    <span *ngIf="grabando"></span>
+                    <i id="countdowntimer"></i>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="ofuscador-modal"></div>
+</div>

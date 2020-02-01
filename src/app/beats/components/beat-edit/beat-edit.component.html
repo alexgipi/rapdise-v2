@@ -1,0 +1,384 @@
+<div class="contenido-biblioteca sticky">
+		<!-- <mat-progress-bar *ngIf="!beats" mode="indeterminate"></mat-progress-bar> -->
+
+	<div class="cabecera-biblioteca">
+		<menu-biblioteca></menu-biblioteca>
+
+		<div class="submenu-top-pagina submenu-top-estilos">
+			<li>
+				<a class="activo" [routerLink]="['/bases-de-rap']">Todas</a>
+			</li>
+			<li><a [routerLink]="['old-school']">Old School</a></li>
+			<li><a [routerLink]="['trap']">Trap</a></li>
+			<li><a [routerLink]="['boom-bap']">Boom Bap</a></li>
+			<li><a [routerLink]="['underground']">Underground</a></li>
+			<li><a [routerLink]="['lofi']">Lofi</a></li>
+			<li><a [routerLink]="['jazzy']">Jazzy</a></li>
+			<li><a [routerLink]="['old-school']">Reggae</a></li>
+		</div>
+
+		<div class="barra-filtros-biblioteca">			
+			<div style="display: inline-flex;justify-content: flex-end;align-items: center;">
+				<h1 *ngIf="beatAEditar" class="h5">
+					Editando: {{beatAEditar.name}}
+					<span *ngFor="let estilo of beatAEditar.style; let i = index" style="margin-left: 7px;padding: 3px 6px;border: 1px solid;border-radius: 3px;text-transform: capitalize;font-weight: bold;">
+						{{estilo}}
+					</span>
+					<!-- <span *ngFor="let etiqueta of beatAEditar.etiquetas; let i = index" style="margin-left: 7px;padding: 3px 6px;border: 1px solid;border-radius: 3px;text-transform: capitalize;font-weight: bold;">
+						{{etiqueta.valor}}
+					</span> -->
+				</h1>
+			</div>
+		</div>
+		
+	</div>
+
+	<div class="reproductor-biblio">
+		<reproductor-add-beat [editar]="true" [tipoCaratula]="tipoCaratula" [imagenRecortada]="imagenRecortada" [beat]="beatAEditar" [etiquetas]="etiquetas" (PasarTipoCaratula)="recibirTipoCaratula($event)" (PasarAjustesCaratula)="recibirAjustesCaratula($event)"></reproductor-add-beat>
+	</div>
+
+	<div class="panel-beats-biblioteca">	
+		
+		<div class="contenedor-subir-beats">
+			<form #editarBeatForm="ngForm" enctype="multipart/form-data">
+	
+				<div class="modal__container padding-0 col-xl-12 col-lg-12 col-md-12">
+					<div class="modal__content">
+												
+						<ul class="form-list">
+							<li class="form-list__row form-list__row--inline" style="float: left;width: 100%;">						
+								<div class="col-xl-6 col-lg-6 col-md-6 padding-0" style="padding-right: 6px !important;">
+									<input id="subir-audio-beat" type="file" name="file" placeholder="Subir fichero" (change)="audioFileChange($event)" style="display:none !important;opacity: 0;position: absolute; top: -400px;">
+									
+									<audio src="{{ url + 'get-audio-beat/' + beatAEditar.file}}" type="audio/mpeg" id="audio-subir-beat" *ngIf="beatAEditar && beatAEditar.file && beatAEditar.file != 'null' && audioEditado == false" controls></audio>
+			
+									<audio [src]="urlAudioBeat" type="audio/mpeg" *ngIf="audioEditado && urlAudioBeat != null" controls id="audio-subir-beat"></audio>
+			
+									<button (click)="abrirInputFileBeat()" *ngIf="beatAEditar && beatAEditar.file && beatAEditar.file != 'null'" class="mi-btn mi-btn-gris-oscuro" style="color: #fff;width: 100%;border: 2px dashed;background: #f1f3f4;color: #999;">
+										<span> Cambiar archivo </span>
+									</button>
+								</div>
+								<div class="col-xl-6 col-lg-6 col-md-6 padding-0" style="padding-left: 6px !important;">
+									<input id="subir-imagen-beat" name="image" type="file" placeholder="Subir fichero" (change)="imagenFileChange($event)">		
+									
+									<div class="archivo-seleccionado">
+										<div class="imagen-beat-subida">
+											<i (click)="abrirInputFileImagen();" *ngIf="urlImagenBeat == null && beatAEditar && beatAEditar.image == null" class="fa fa-image"></i>
+											<div (click)="setTipoCaratula('imagen')" *ngIf="imagenesASubir && tipoCaratula == 'rapdise'" class="over-usar">Usar</div>
+											<!-- <img *ngIf="imagenRecortada" [src]="imagenRecortada"> -->
+											<img *ngIf="urlImagenBeat == null && beatAEditar && beatAEditar.image && beatAEditar.image != 'null'" src="{{ url + 'get-imagen-beat/' + beatAEditar.image}}">
+											<img *ngIf="urlImagenBeat != null" [src]="urlImagenBeat">
+										</div>
+										<div class="botones-archivo-seleccionado" *ngIf="beatAEditar">
+											<button (click)="abrirInputFileImagen();" class="mi-btn mi-btn-gris-oscuro" style="color: #fff;">
+												<span *ngIf="beatAEditar.ajustesCaratula.tipoCaratula == 'imagen'">{{ 'biblioteca.subir-bases.form.btn-cambiar-imagen' | translate }}</span>
+												<span *ngIf="beatAEditar.ajustesCaratula.tipoCaratula != 'imagen'">{{ 'biblioteca.subir-bases.form.btn-add-imagen' | translate }}</span>
+											</button>
+			
+											<button style="margin-bottom: 10px;" (click)="abrirCerrarModalAddImagen();" [disabled]="!imagenRecortada || imagenesASubir && tipoCaratula == 'rapdise'" class="mi-btn mi-btn-secundario">
+												{{ 'biblioteca.subir-bases.form.btn-ajustar-recorte' | translate }}
+											</button>
+			
+											<span *ngIf="beatAEditar.ajustesCaratula.tipoCaratula == 'rapdise'" style="font-size: 13px;color: #999;">Usando caratula de Rapdise</span>
+											<span *ngIf="beatAEditar.ajustesCaratula.tipoCaratula == 'imagen'" style="font-size: 13px;color: #999;">Usando caratula con imagen</span>
+											
+										</div>
+									</div>
+								</div>
+							</li>
+							<li *ngIf="beatAEditar" class="form-list__row form-list__row--inline" style="float: left;width: 100%;">						
+								<div>
+									<mat-form-field class="width-100" appearance="outline">
+										<mat-label>{{ 'biblioteca.subir-bases.form.label-titulo' | translate }}</mat-label>
+										<input matInput #input maxlength="25" name="name" #name="ngModel" [(ngModel)]="beatAEditar.name" required placeholder="{{ 'biblioteca.subir-bases.form.placeholder-titulo' | translate }}">
+										<mat-hint align="start">{{input.value?.length || 0}}/25</mat-hint>
+									</mat-form-field>
+								</div>
+								<div>								
+			
+									<mat-form-field class="width-100" appearance="outline">
+										<mat-label>{{ 'biblioteca.subir-bases.form.label-estilos' | translate }}</mat-label>
+										<mat-select name="style" #style="ngModel" [(ngModel)]="beatAEditar.style" required (selectionChange)="changed()" multiple>
+											<mat-option *ngFor="let estilo of estilosDisponibles" [value]="estilo">{{estilo}}</mat-option>
+											<mat-option value="otros">{{ 'biblioteca.subir-bases.form.option-estilos-otros' | translate }}</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+								<div>
+									<mat-form-field appearance="outline">
+										<mat-label>BPM</mat-label>
+										<input matInput placeholder="{{ 'biblioteca.subir-bases.form.placeholder-bpm' | translate }}" type="number" range="" name="bpm" #bpm="ngModel" [(ngModel)]="beatAEditar.bpm"  max="250">
+									</mat-form-field>
+								</div>
+													
+							</li>
+							<li *ngIf="beatAEditar" class="form-list__row form-list__row--inline flex width-100" style="margin-bottom: 20px;">
+								<tag-input
+									[maxItems]='4'
+									[(ngModel)]='beatAEditar.etiquetas'
+									[identifyBy]="'_id'"
+									(onAdd)="addEtiqueta($event);"
+									(onRemove)="quitarEtiqueta($event)"
+									[onAdding]="onAdding"
+									[onRemoving]="onRemoving"
+									[displayBy]="'valor'"
+									[placeholder]="'biblioteca.subir-bases.form.placeholder-add-etiqueta' | translate"
+									[secondaryPlaceholder]="'biblioteca.subir-bases.form.placeholder-add-etiquetas' | translate"
+									theme='bootstrap'
+									[ngModelOptions]="{standalone: true}">
+								</tag-input>
+							</li>
+			
+							<li *ngIf="beatAEditar" class="form-list__row form-list__row--inline flex width-100" style="margin-bottom: 20px;">
+								<div>
+									<mat-form-field class="width-100" appearance="outline">
+											<mat-label>{{ 'biblioteca.subir-bases.form.label-limitacion-uso' | translate }}</mat-label>
+										<mat-select name="uso" #uso="ngModel" [(ngModel)]="beatAEditar.uso" required (selectionChange)="especificarUsos(uso.value);">
+											<mat-option value="libre">{{ 'biblioteca.subir-bases.form.uso-libre' | translate }}</mat-option>
+											<mat-option value="limitado">{{ 'biblioteca.subir-bases.form.uso-limitado' | translate }}</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+			
+								<div class="permisos-beat no-seleccionable" [class.disabled]="beatAEditar.uso == 'libre' || !beatAEditar.uso">
+									<label>{{ 'biblioteca.subir-bases.form.label-permitir-uso-en' | translate }}</label>
+									
+									<mat-checkbox [disabled]="beatAEditar.uso == 'libre' || !beatAEditar.uso" class="example-margin" name="permitirBatalla" #permitirBatalla="ngModel" [(ngModel)]="beatAEditar.permitirBatalla">
+										{{ 'biblioteca.subir-bases.form.uso-batallas' | translate }}
+									</mat-checkbox>
+									<mat-checkbox [disabled]="beatAEditar.uso == 'libre' || !beatAEditar.uso" class="example-margin" name="permitirGrabacion" #permitirGrabacion="ngModel" [(ngModel)]="beatAEditar.permitirGrabacion">
+										{{ 'biblioteca.subir-bases.form.uso-freestyles' | translate }}
+									</mat-checkbox>
+									<mat-checkbox [disabled]="beatAEditar.uso == 'libre' || !beatAEditar.uso" class="example-margin" name="permitirEntreno" #permitirEntreno="ngModel" [(ngModel)]="beatAEditar.permitirEntreno">
+										{{ 'biblioteca.subir-bases.form.uso-entreno' | translate }}
+									</mat-checkbox>
+								</div>
+							</li>
+			
+							<li *ngIf="beatAEditar" class="form-list__row" style="float: left;width: 100%;">
+								<label>{{ 'biblioteca.subir-bases.form.label-enlace-compra' | translate }}</label>
+								<input name="enlace" #enlace="ngModel" [(ngModel)]="beatAEditar.enlace" type="text">
+							</li>
+							<li *ngIf="beatAEditar" class="form-list__row" style="float: left;width: 100%;">
+								<label>{{ 'biblioteca.subir-bases.form.label-descripcion' | translate }}</label>
+								<textarea name="descripcion" #descripcion="ngModel" [(ngModel)]="beatAEditar.descripcion">                
+								</textarea>
+							</li>             
+								
+							<li *ngIf="beatAEditar" class="float-left flex width-100 space-between">
+								<button class="button" (click)="editarBeat();listadoBeats.getBeatsUsuario();" type="submit" [disabled]="!editarBeatForm.form.valid || !beatAEditar.file">
+									{{ 'biblioteca.subir-bases.form.btn-guardar-cambios' | translate }}
+								</button>
+								<button class="button borrar-base" (click)="editarBeat();listadoBeats.getBeatsUsuario();" type="submit" [disabled]="!editarBeatForm.form.valid || !beatAEditar.file">
+									Eliminar esta base
+								</button>
+							</li>
+						</ul>
+					</div> 
+				</div>
+			</form>
+
+			<!-- <beat-edit *ngIf="beatAEditar" [beatAEditar]="beatAEditar"></beat-edit> -->
+			
+			<listado-beats-subidos #listadoBeats></listado-beats-subidos>
+		</div>
+		
+	</div>
+
+</div>
+
+
+<!-- Modal -->
+<div class="modal-rapdise padding-0" [class.abierto]="modalAddImagenAbierto">
+	<div (click)="abrirCerrarModalAddImagen()" style="position: absolute;width: 100%;height: 100%;background: #4d4d4df5;"></div>
+	<div class="modal-dialog width-100" style="width: 100% !important">
+		<div class="modal-content">
+			<div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">{{ 'biblioteca.subir-bases.modal-recortar-imagen.titulo' | translate }}</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="abrirCerrarModalAddImagen()">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			</div>
+			<div class="modal-body">
+				
+				<image-cropper
+					[imageChangedEvent]="imageChangedEvent"
+					[maintainAspectRatio]="true"
+					[aspectRatio]="4 / 4"
+					[resizeToWidth]="600"
+					[cropperMinWidth]="600"
+					(imageCropped)="imageCropped($event)"
+					(imageLoaded)="imageLoaded()"
+					(cropperReady)="cropperReady()"
+					(loadImageFailed)="loadImageFailed()">
+				</image-cropper>
+
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" (click)="cancelarRecorte()" class="mi-btn mi-btn-secundario">
+					{{ 'biblioteca.subir-bases.modal-recortar-imagen.btn-cancelar' | translate }}
+				</button>
+				<button type="button" class="mi-btn mi-btn-primario" (click)="abrirCerrarModalAddImagen()">
+					{{ 'biblioteca.subir-bases.modal-recortar-imagen.btn-aceptar' | translate }}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- MODAL EDITAR BEAT -->
+
+<!-- <div class="mi-modal" [class.mi-modal-abierto]="modalAbierto == true">
+	<div class="modal__container padding-0 col-xl-7 col-lg-7 col-md-7" style="margin:auto;">
+		<div class="modal__featured">			
+			<button (click)="cerrarModalEditar();" class="boton-cerrar-modal">
+				<i class="fa fa-close"></i>
+			</button>
+			<div class="modal__circle" style="background-color: #53b3a6;"></div>
+			<img class="modal__product" *ngIf="urlImagenBeat == null && beatAEditar.image && beatAEditar.image != 'null'" src="{{ url + 'get-imagen-beat/' + beatAEditar.image}}">
+			<img class="modal__product" *ngIf="urlImagenBeat != null" [src]="urlImagenBeat">
+		</div>
+		<form *ngIf="beatAEditar" #beatAEditarForm="ngForm" (ngSubmit)="editarBeat()" class="modal__content">
+			<h2 style="font-size: 1.5rem;margin-bottom: 20px;">
+				Editar <strong>{{beatAEditar.name}}</strong> - {{beatAEditar.style}}
+			</h2>
+			<ul class="form-list">
+
+				<li class="form-list__row form-list__row--inline">						
+					<div class="col-xl-6 col-lg-6 col-md-6 padding-0" style="padding-right: 6px !important;">
+						<label>Archivo mp3</label>
+
+						<div class="mi-boton-file verde">
+							<span>Editar archivo</span>
+							<input (change)="audioFileChange($event)" type="file">
+						</div>
+					</div>
+					<div class="col-xl-6 col-lg-6 col-md-6 padding-0" style="padding-left: 6px !important;">
+						<label>Imagen <i>(Recomendado)</i></label>
+
+						<div class="mi-boton-file blanco-verde">
+							<span>Editar imagen</span>
+							<input (change)="imagenFileChange($event)" type="file">
+						</div>
+					</div>
+				</li>
+
+				<div class="beat-a-editar col-xl-6 col-lg-6 col-md-6 padding-0" *ngIf="beatAEditar.file && beatAEditar.file != 'null' && audioEditado == false" style="float: left;width: 100%;margin-bottom: 15px;padding-right: 6px !important;">
+					<audio controls style="width: 100%;">
+						<source src="{{ url + 'get-audio-beat/' + beatAEditar.file}}" type="audio/mpeg">
+					</audio>
+				</div>
+
+				<div class="beat-a-editar col-xl-6 col-lg-6 col-md-6 padding-0" *ngIf="audioEditado" style="float: left;width: 100%;margin-bottom: 15px;padding-right: 6px !important;">
+					<audio controls id="audio-subir-beat" style="width: 100%;">
+						<source *ngIf="urlAudioBeat != null" [src]="urlAudioBeat" type="audio/mpeg">
+					</audio>
+				</div>
+
+				<div *ngIf="beatAEditar.image && beatAEditar.image != 'null' && imagenEditada == false" class="col-xl-6 col-lg-6 col-md-6" style="float: left;width: 100%;margin-bottom: 15px;padding-left: 6px !important;height: 55px;display: flex;align-items: center;justify-content: flex-end;padding: 0;">
+					<strong style="margin-right: 10px;">Imagen:</strong>{{beatAEditar.image}}
+					<img src="{{url + 'get-imagen-beat/' + beatAEditar.image}}" style="height: 55px;width: 55px;object-fit: cover;border-radius: 99%;padding: 5px;margin-left: 5px;">
+				</div>
+
+				<div *ngIf="imagenEditada" class="col-xl-6 col-lg-6 col-md-6" style="float: left;width: 100%;margin-bottom: 15px;padding-left: 6px !important;height: 55px;display: flex;align-items: center;justify-content: flex-end;padding: 0;">
+					<strong style="margin-right: 10px;">Imagen:</strong>{{imagenesASubir[0].name}}
+					<img src="{{urlImagenBeat}}" style="height: 55px;width: 55px;object-fit: cover;border-radius: 99%;padding: 5px;margin-left: 5px;">
+				</div>
+
+				<li class="form-list__row form-list__row--inline">						
+					<div>
+						<label>Nombre</label>
+						<input type="text" name="name" #name="ngModel" [(ngModel)]="beatAEditar.name" required>
+					</div>
+					<div>
+						<label>Estilo</label>
+						<select name="style" #style="ngModel" [(ngModel)]="beatAEditar.style" required>
+							<option value="" disabled selected>Selecciona el estilo del beat</option>
+							<option value="old-school">Old School</option>
+							<option value="trap">Trap</option>
+							<option value="underground">Underground</option>
+							<option value="boom-bap">Boom Bap</option>
+							<option value="jazzy">Jazzy</option>
+							<option value="lofi">Lofi Rap</option>
+							<option value="reggae">Reggae</option>
+						</select>
+					</div>
+					<div style="flex: 1;">
+						<label>
+						Uso
+						</label>
+						<select name="uso" #uso="ngModel" [(ngModel)]="beatAEditar.uso" (change)="especificarUsos(uso.value);" required>
+							<option value="" disabled selected>Especificar uso del beat</option>
+							<option value="libre">Libre</option>
+							<option value="limitado">Limitado</option>
+						</select>
+					</div>						
+				</li>
+	
+				<li *ngIf="beatAEditar.uso == 'libre'" class="form-list__row" style="opacity: 0.5;">
+					<label>Permitir uso en:</label>
+					<div class="flex float-left" style=" margin-right: 15px;">
+						<span style="float: left;">Batallas</span>
+						<span class="mi-checkbox mi-checked mi-disabled">
+							<i class="fa fa-check"></i>
+						</span>
+					</div>
+	
+					<div class="flex float-left" style=" margin-right: 15px;">
+						<span style="float: left;">Grabaciones</span>
+						<span class="mi-checkbox mi-checked mi-disabled">
+							<i class="fa fa-check"></i>
+						</span>
+					</div>
+	
+					<div class="flex float-left">
+						<span style="float: left;">Entrenos</span>
+						<span class="mi-checkbox mi-checked mi-disabled">
+							<i class="fa fa-check"></i>
+						</span>
+					</div>
+				</li>
+	
+				<li *ngIf="beatAEditar.uso == 'limitado'" class="form-list__row">
+					<label>Permitir uso en:</label>
+					<div class="flex float-left" style=" margin-right: 15px;">
+						<span style="float: left;">Batallas</span>
+						<span class="mi-checkbox" (click)="editarPermiso('batalla')" [class.mi-checked]="beatAEditar.permitirBatalla == 'SI'">
+							<i class="fa fa-check"></i>
+						</span>
+					</div>
+	
+					<div class="flex float-left" style="margin-right: 15px;">
+						<span style="float: left;">Grabaciones</span>
+						<span class="mi-checkbox" (click)="editarPermiso('grabacion')" [class.mi-checked]="beatAEditar.permitirGrabacion == 'SI'">
+							<i class="fa fa-check"></i>
+						</span>
+					</div>
+	
+					<div class="flex float-left">
+						<span style="float: left;">Entrenos</span>
+						<span class="mi-checkbox" (click)="editarPermiso('entreno')" [class.mi-checked]="beatAEditar.permitirEntreno == 'SI'">
+							<i class="fa fa-check"></i>
+						</span>
+					</div>
+				</li>
+	
+				<li class="form-list__row">
+					<label>Enlace de compra <i style="text-transform: capitalize;">(Opcional)</i></label>
+					<input name="enlace" #enlace="ngModel" [(ngModel)]="beatAEditar.enlace" type="text">
+				</li>
+				<li class="form-list__row">
+					<label>Descripción <i style="text-transform: capitalize;">(Opcional)</i></label>
+					<textarea name="descripcion" #descripcion="ngModel" [(ngModel)]="beatAEditar.descripcion">                
+					</textarea>
+				</li>             
+					
+				<li class="form-list__row">
+					<button class="button" type="submit">Guardar cambios</button>
+	
+				</li>
+			</ul>
+		</form> 
+	</div>
+
+</div> -->

@@ -1,0 +1,431 @@
+
+	<div class="contenido-biblioteca sticky">
+
+        <div class="cabecera-biblioteca">
+            <menu-biblioteca></menu-biblioteca>
+            <div class="barra-filtros-biblioteca">
+                <div style="display: flex;height: 32px;">
+                    <div id="dropdown-estilos" class="mi-dropdown" style="margin-right: 8px;">
+                        <div  class="btn-mi-dropdown naranja">
+                            Todos los estilos
+                            <div style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;z-index: 999;"></div>
+                            <i class="fa fa-angle-down"></i>
+                        </div>
+                        <ul class="menu-mi-dropdown" id="menu-dropdown-estilos">
+                            <a [routerLink]="['/biblioteca-de-beats']"><li class="activo">Todos</li></a>
+                            <a [routerLink]="['/beats/old-school']"><li>Old School</li></a>
+                            <a [routerLink]="['/beats/trap']"><li>Trap</li></a>
+                            <a [routerLink]="['/beats/underground']"><li>Underground</li></a>
+                            <a [routerLink]="['/beats/boom-bap']"><li>Boom Bap</li></a>
+                            <a [routerLink]="['/beats/lofi']"><li>Lofi Rap</li></a>
+                            <a [routerLink]="['/beats/jazzy']"><li>Jazzy</li></a>
+                            <a [routerLink]="['/beats/reggae']"><li>Reggae</li></a>						
+                        </ul>
+                    </div>
+                    <div id="dropdown-filtros" class="mi-dropdown">
+                        <div  class="btn-mi-dropdown naranja-blanco">
+                            <!-- {{filtroSeleccionado || 'Más recientes'}} -->
+                            Más recientes
+    
+                            <div (click)="activarDesactivarDropdown('filtros')" style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;z-index: 999;"></div>
+    
+                            <i class="fa fa-angle-down"></i>
+        
+                            
+                        </div>
+                        <ul class="menu-mi-dropdown" id="menu-dropdown-filtros">
+                            <li [class.activo]="filtroSeleccionado == 'Más recientes'">Más recientes</li>
+                            <li [class.activo]="filtroSeleccionado == 'Más antiguas'">Más antiguas</li>
+                            <li [class.activo]="filtroSeleccionado == 'Más reputadas'">Más reputadas</li>
+                            <li [class.activo]="filtroSeleccionado == 'Más reproducidas'">Más reproducidas</li>						
+                        </ul>
+                    </div>
+                    
+                </div>
+                
+                <div style="display: inline-flex;justify-content: flex-end;align-items: center;">
+                    <h1 class="h5">Comparte tus listas con la comunidad</h1>
+                    <div class="busqueda-filtros-biblioteca">
+                        <input type="text" placeholder="Buscar..." name="filtroBeat">
+                        <i class="fa fa-search"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="h5 barra-titulo">
+                <span class="btn-titulo" (click)="abrirModal('crear-lista');">Crear Lista</span>
+            </div>
+
+            
+        </div>
+
+        <div class="reproductor-biblio">
+            <reproductor-biblioteca #reproductorBiblioteca [beat]="beat" (ReproductorSonando)="getReproductorSonando($event)" (PasameBeatEnBucle)="activarDesactivarBeatEnBucle($event)" (DireccionCambioBeat)="cambiarBeat($event)" (PasameElBeat)="recibirBeat($event)"></reproductor-biblioteca>
+        </div>
+
+
+        <div class="panel-beats-biblioteca">
+            
+            <div class="bd-example" data-example-id="">
+                <div class="collapse" id="collapseExample" aria-expanded="true">
+                    <div class="col-xl-12 panel-lista-seleccionada" *ngIf="lista">
+                        <div aria-controls="collapseExample" aria-expanded="true" data-target="#collapseExample" data-toggle="collapse" class="h5 barra-lista-seleccionada">
+                            <span>{{lista.nombre}} - {{lista.user.nick}}</span>
+                            <!-- <div class="estilos-lista">
+        
+                    
+                                    <li *ngFor="let estilo of estilosLista"
+                                        [class.rojo]="estilo == 'boom-bapm'"
+                                        [class.naranja]="estilo == 'trap'"
+                                        [class.negro]="estilo == 'old-school'"
+                                        [class.verde]="estilo == 'underground'"
+                                        [class.azul]="estilo == 'jazzy'">
+                                        {{estilo.replace('-', ' ')}}
+                                    </li> 
+                                </div> -->
+                            <span (click)="abrirCerrarListaActiva();" class="fa fa-angle-down" style="font-size: 1.7em;font-weight: normal;"></span>
+        
+                        </div>
+                        
+                        <div class="mini-reproductor no-seleccionable" (click)="abrirCerrarListaActiva();" *ngIf="listaActivaAbierta == false">
+                            <div class="mini-reproductor__contenido">
+                                <div class="cerrar" style="position: absolute;right: 15px;top: 15px;width: 15px;height: 15px;display: flex;align-items: center;justify-content: center;transform: rotate(45deg);">
+                                    <div style="display: flex;width: 100%;height: 100%;position: relative;justify-content: center;align-items: center;">
+                                        <span style="width: 1px;height: 100%;background: #797979;display: inline-block;position: absolute;"></span>
+                                        <span style="width: 1px;height: 100%;background: #797979;display: inline-block;transform: rotate(90deg);"></span>
+                                    </div>
+                                </div>
+                                <div class="img-mini-reproductor">
+                                    <img *ngIf="beat.user && beat.user.image" alt="{{beat.user.nick}}" src="{{url + 'get-image-user/' + beat.user.image}}">
+                                    <div class="linea-tiempo-mini-reproductor mi-barra-tiempo-actual">
+                                        <span></span>
+                                    </div>
+                                </div>
+                                
+                                <div style="float: left;height: 60px;padding: 0 10px;" *ngIf="beat">
+                                    <div>{{lista.nombre}}</div>
+                                    <div>{{beat.name}} - {{beat.user.nick}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <reproductor-biblioteca *ngIf="verReproductorMovil" [beat]="beat" (PasameBeatEnBucle)="activarDesactivarBeatEnBucle($event)" (DireccionCambioBeat)="cambiarBeat($event)">
+                            
+                        </reproductor-biblioteca>
+
+                        <ul class="listado-panel-beats-biblioteca beats grid-beats"  *ngIf="identity">
+                            <li *ngFor="let beatLista of beatsLista; let i = index" [attr.id]="i + 1" [attr.value]="beatLista.beat._id" class="otro-beat-{{beatLista.beat._id}}" [class.active]="beatLista.beat._id == idBeat1" [ngClass]="{'sonando': beatLista.beat._id == idBeat1 && sonando, 'pausado': beatLista.beat._id == idBeat1 && sonando == false}">
+            
+                                <div [class.active]="beatLista.beat._id == idBeat1" class="flex space-between contenido-li-listado-beat">
+            
+                                    <div class="caratula-beat-listado">
+                                        <i class="mdi mdi-play-circle-outline i-play-listado" (click)="getBeat(beatLista.beat._id, true, $event);"></i>
+                                        <i class="mdi mdi-pause-circle-outline i-pause-listado" (click)="pauseBeat();"></i>
+            
+                                        <img *ngIf="beatLista.beat.image != null" src="{{url + 'get-imagen-beat/' + beatLista.beat.image}}">
+                                        <img *ngIf="beatLista.beat.image == null" src="{{url + 'get-image-user/' + beatLista.beat.user.image}}">
+                                        
+                                        <svg class="barras-sonando" *ngIf="beatLista.beat._id == idBeat1" xmlns="http://www.w3.org/2000/svg" width="55" height="80" viewBox="0 0 55 80" fill="#222">
+                                            <g transform="matrix(1 0 0 -1 0 80)">
+                                                <rect width="10" height="5" rx="3">
+                                                    <animate *ngIf="sonando" attributeName="height" begin="0s" dur="4.3s" values="20;45;57;80;64;32;66;45;64;23;66;13;64;56;34;34;2;23;76;79;20" calcMode="linear" repeatCount="indefinite"/>
+                                                </rect>
+                                                <rect x="15" width="10" height="5" rx="3">
+                                                    <animate *ngIf="sonando" attributeName="height" begin="0s" dur="2s" values="80;55;33;5;75;23;73;33;12;14;60;80" calcMode="linear" repeatCount="indefinite"/>
+                                                </rect>
+                                                <rect x="30" width="10" height="5" rx="3">
+                                                    <animate *ngIf="sonando" attributeName="height" begin="0s" dur="1.4s" values="50;34;78;23;56;23;34;76;80;54;21;50" calcMode="linear" repeatCount="indefinite"/>
+                                                </rect>
+                                                <rect x="45" width="10" height="5" rx="3">
+                                                    <animate *ngIf="sonando" attributeName="height" begin="0s" dur="2s" values="30;45;13;80;56;72;45;76;34;23;67;30" calcMode="linear" repeatCount="indefinite"/>
+                                                </rect>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <div class="contenido-listado-izq" (click)="getBeat(beatLista.beat._id, true, $event)">
+                                        <div class="float-left flex width-100 height-100">
+                                            <div class="float-left">								
+                                                <span class="titulo-beat" style="display: -webkit-box;-webkit-box-orient: vertical;text-overflow: ellipsis;-webkit-line-clamp: 2;">
+                                                    {{beatLista.beat.name}}
+                                                </span>
+                                                <div class="autor-beat">
+                                                    {{beatLista.beat.user.nick}}							
+                                                </div>
+                                            </div>
+                                            <!-- <div class="float-left" style="position: relative;bottom: 7px;left: 10px;">
+                                                <i class="fa fa-volume-up" style="color: #9c9c9c;font-size: 1.5em;font-weight: normal;"></i>
+                                            </div> -->
+                                        </div>
+                                        
+                                    </div>
+            
+                                    <div class="mas-info-beat-biblioteca">
+                                        
+                                        <div class="control-bottom" style="float: left;width: 100%;color: #fff;margin-right: 5px;">
+                                            <div class="flex control-bottom-der">
+                                                <i *ngIf="beatLista.beat.uso == 'libre' && beatLista.beat._id == idBeat1" (click)="descargar(beatLista.beat.file)" class="mdi mdi-file-download"></i>
+                                                <i *ngIf="beatLista.beat.uso == 'limitado'" class="fa fa-usd" style="color:#59ab7e;margin: 0;/* margin-right: 8px; */font-size: 13px;width: 30px;height: 30px;display: flex;justify-content: center;align-items: center;"></i>
+                                                <a *ngIf="beatLista.beat.enlace" href="{{beatLista.beat.enlace}}" rel="nofollow" target="_blank"><i class="fa fa-shopping-cart"></i></a>
+                                                <i *ngIf="beatLista.beat._id == idBeat1" (click)="reproductorBiblioteca.abrirCerrarModalAddLista();" class="mdi mdi-playlist-add"></i>
+                                            </div>
+                                        </div>
+            
+                                        
+                                        
+                                        
+                                        <div class="item-mas-info-beat info-reproducciones no-border">
+                                            <div class="info-beat-num">{{beatLista.beat.bpm || 120 }} BPM</div>
+                                        </div>
+                                        <div class="item-mas-info-beat info-reproducciones">
+                                            <div class="info-beat-num" style="text-transform: capitalize;">{{beatLista.beat.style.replace("-"," ")}}</div>
+                                        </div>
+                                        <div class="item-mas-info-beat info-reproducciones">
+                                            <i class="fa fa-play"></i>
+                                            <div class="info-beat-num reproducciones-beat-{{beatLista.beat._id}}">{{beatLista.beat.reproducciones}}</div>
+                                        </div>
+                                        <div [class.activo]="likes.indexOf(beatLista.beat._id) >= 0" class="item-mas-info-beat info-reputacion relative">
+                                            <div aria-label="+1 Reputación" class="over-dar-repu naranja" id="{{beatLista.beat._id}}" *ngIf="likes && likes.indexOf(beatLista.beat._id) < 0" (click)="likeBeat(beatLista.beat._id);sumarLikeBeat(beatLista.beat._id);">
+                                                + 1
+                                            </div>
+            
+                                            <div aria-label="-1 Reputación" class="over-dar-repu rojo"
+                                            id="{{beatLista.beat._id}}"
+                                            *ngIf="likes && likes.indexOf(beatLista.beat._id) >= 0"
+                                            (mouseenter)="mouseEnter(beatLista.beat._id)"
+                                            (mouseleave)="mouseLeave(beatLista.beat._id)"
+                                            (click)="borrarLikeBeat(beatLista.beat._id); restarLikeBeat(beatLista.beat._id)">
+                                                - 1
+                                            </div>
+                                            <svg height="511pt" version="1.1" viewBox="-38 0 511 511.99956" width="511pt" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-qsl-c0="" id="surface1"><path _ngcontent-qsl-c0="" d="M 413.476562 341.910156 C 399.714844 379.207031 378.902344 411.636719 351.609375 438.289062 C 320.542969 468.625 279.863281 492.730469 230.699219 509.925781 C 229.085938 510.488281 227.402344 510.949219 225.710938 511.289062 C 223.476562 511.730469 221.203125 511.96875 218.949219 512 L 218.507812 512 C 216.105469 512 213.691406 511.757812 211.296875 511.289062 C 209.605469 510.949219 207.945312 510.488281 206.339844 509.9375 C 157.117188 492.769531 116.386719 468.675781 85.289062 438.339844 C 57.984375 411.6875 37.175781 379.277344 23.433594 341.980469 C -1.554688 274.167969 -0.132812 199.464844 1.011719 139.433594 L 1.03125 138.511719 C 1.261719 133.554688 1.410156 128.347656 1.492188 122.597656 C 1.910156 94.367188 24.355469 71.011719 52.589844 69.4375 C 111.457031 66.152344 156.996094 46.953125 195.90625 9.027344 L 196.246094 8.714844 C 202.707031 2.789062 210.847656 -0.117188 218.949219 0.00390625 C 226.761719 0.105469 234.542969 3.007812 240.773438 8.714844 L 241.105469 9.027344 C 280.023438 46.953125 325.5625 66.152344 384.429688 69.4375 C 412.664062 71.011719 435.109375 94.367188 435.527344 122.597656 C 435.609375 128.386719 435.757812 133.585938 435.988281 138.511719 L 436 138.902344 C 437.140625 199.046875 438.554688 273.898438 413.476562 341.910156 Z M 413.476562 341.910156 " style="stroke:none;fill-rule:nonzero;fill: rgb(193, 193, 193);fill-opacity:1;"></path><path _ngcontent-qsl-c0="" d="M 413.476562 341.910156 C 399.714844 379.207031 378.902344 411.636719 351.609375 438.289062 C 320.542969 468.625 279.863281 492.730469 230.699219 509.925781 C 229.085938 510.488281 227.402344 510.949219 225.710938 511.289062 C 223.476562 511.730469 221.203125 511.96875 218.949219 512 L 218.949219 0.00390625 C 226.761719 0.105469 234.542969 3.007812 240.773438 8.714844 L 241.105469 9.027344 C 280.023438 46.953125 325.5625 66.152344 384.429688 69.4375 C 412.664062 71.011719 435.109375 94.367188 435.527344 122.597656 C 435.609375 128.386719 435.757812 133.585938 435.988281 138.511719 L 436 138.902344 C 437.140625 199.046875 438.554688 273.898438 413.476562 341.910156 Z M 413.476562 341.910156 " style="stroke:none;fill-rule:nonzero;fill: rgb(172, 172, 172);fill-opacity:1;"></path></g></svg>
+                                            <div class="info-beat-num">{{beatLista.beat.likes}}</div>
+                                        </div>
+                                        <div class="etiqueta-estilo">{{beatLista.beat.style.replace("-"," ")}}</div>
+                                    </div>
+            
+                                </div>	
+                            </li>
+                        </ul>
+                
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12 padding-0 float-left" style="border-right: 1px solid #e4e4e4;">
+
+                <ul class="cards-listas-beats">
+                    <div (click)="selecionarLista(lista);" aria-controls="collapseExample" aria-expanded="true" data-target="#collapseExample" data-toggle="collapse" *ngFor="let lista of listas; let i = index" class="card radius shadowDepth1">
+                        <div class="card__image border-tlr-radius">
+                            <div *ngIf="lista.beats.length < 3" class="square-box" style="border-radius: 4px;">
+                                <div class="square-content">
+                                    <div class="square-box">
+                                        <div class="square-content">
+                                            <img *ngIf="lista && lista.beats[0].beat" src="{{url + 'get-imagen-beat/' + lista.beats[0].beat.image }}" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div *ngIf="lista.beats.length == 2" class="square-box" style="border-radius: 4px;">
+                                <div class="square-content">
+                                    <div class="square-box" style="width: 50%;height:50%;float:left;">
+                                        <div class="square-content">
+                                            <img *ngIf="lista && lista.beats[0].beat" src="{{url + 'get-imagen-beat/' + lista.beats[0].beat.image }}" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="square-box" style="width: 50%;height:50%;float:left;">
+                                        <div class="square-content">
+                                            <img *ngIf="lista && lista.beats[0].beat" src="{{url + 'get-imagen-beat/' + lista.beats[1].beat.image }}" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div *ngIf="lista.beats.length == 3" class="square-box" style="border-radius: 4px;">
+                                <div class="square-content">
+                                    <div class="square-box" style="width: 50%;height:50%;float:left;">
+                                        <div class="square-content">
+                                            <img *ngIf="lista && lista.beats[0].beat" src="{{url + 'get-imagen-beat/' + lista.beats[0].beat.image }}" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="square-box" style="width: 50%;height:50%;float:left;">
+                                        <div class="square-content">
+                                            <img *ngIf="lista && lista.beats[0].beat" src="{{url + 'get-imagen-beat/' + lista.beats[1].beat.image }}" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="square-box" style="width: 50%;height:50%;float:left;">
+                                        <div class="square-content">
+                                            <img *ngIf="lista && lista.beats[0].beat" src="{{url + 'get-imagen-beat/' + lista.beats[2].beat.image }}" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="lista.beats.length >= 4" class="square-box" style="border-radius: 4px;">
+                                <div class="square-content">
+                                    <div class="square-box" style="width: 50%;height:50%;float:left;">
+                                        <div class="square-content">
+                                            <img *ngIf="lista && lista.beats[0].beat" src="{{url + 'get-imagen-beat/' + lista.beats[0].beat.image }}" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="square-box" style="width: 50%;height:50%;float:left;">
+                                        <div class="square-content">
+                                            <img *ngIf="lista && lista.beats[0].beat" src="{{url + 'get-imagen-beat/' + lista.beats[1].beat.image }}" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="square-box" style="width: 50%;height:50%;float:left;">
+                                        <div class="square-content">
+                                            <img *ngIf="lista && lista.beats[0].beat" src="{{url + 'get-imagen-beat/' + lista.beats[2].beat.image }}" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="square-box" style="width: 50%;height:50%;float:left;">
+                                        <div class="square-content">
+                                            <img *ngIf="lista && lista.beats[0].beat" src="{{url + 'get-imagen-beat/' + lista.beats[3].beat.image }}" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="card__content card__padding">        
+                            <article class="card__article">
+                                <h2 style="font-size: 1.1em;"><a href="#">{{lista.nombre}}</a></h2>
+                            </article>
+                        </div>
+        
+                        <div class="card__action">
+                            
+                            <div class="card__author">
+                                <img src="{{url + 'get-image-user/' + lista.user.image}}" alt="user">
+                                <div class="card__author-content">
+                                    <a href="#">{{lista.user.nick}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+        </div>
+	</div>
+	
+
+
+<!-- MODAL CREAR LISTA -->
+
+<div *ngIf="identity" class="mi-modal" [class.mi-modal-abierto]="modalCrearListaAbierto == true">
+    
+        <div class="modal__container padding-0 col-xl-7 col-lg-7 col-md-7" style="margin:auto;border-radius: 20px 5px 0 0;position: relative;bottom: 25px;">
+            <div class="modal__featured" style="border-bottom-left-radius: 0;border-top-left-radius: 15px;">
+                <button (click)="cerrarModal('crear-lista');" class="boton-cerrar-modal">
+                    <i class="fa fa-close"></i>
+                </button>
+                <div class="modal__circle" style="background: #6bafa4;"></div>
+                <img class="modal__product" src="../../assets/iconos/icono-listas-rapdise.png" style="opacity: 0.08;box-shadow: 0 0;border: none;width: 170px;height: 170px;border-radius: 0;">
+            </div>
+            <modal-crear-lista (sended)="refrescar($event);"></modal-crear-lista>
+        </div>
+</div>
+
+<!-- MODAL CREAR LISTA -->
+
+<div *ngIf="identity" class="mi-modal" [class.mi-modal-abierto]="modalEditarListaAbierto == true">
+    
+    <div class="modal__container padding-0 col-xl-7 col-lg-7 col-md-7" style="margin:auto;border-radius: 20px 5px 0 0;position: relative;bottom: 25px;">
+        <div class="modal__featured" style="border-bottom-left-radius: 0;border-top-left-radius: 15px;">
+            <button (click)="cerrarModal('editar-lista');" class="boton-cerrar-modal">
+                <i class="fa fa-close"></i>
+            </button>
+            <div class="modal__circle" style="background: #292929;"></div>
+            <img class="modal__product" src="../../assets/iconos/icono-listas-rapdise.png" style="box-shadow: 0 0;border: none;width: 170px;height: 170px;border-radius: 0;filter: invert(100%);">
+        </div>
+
+        <div class="modal__content" *ngIf="listaAEditar">
+            <h2 style="font-size: 1.5rem;margin-bottom: 20px;"> Editar <strong>{{listaAEditar.nombre}}</strong></h2>
+            <form #editarListaForm="ngForm" (ngSubmit)="editarLista(editarListaForm);" class="form-list">
+                <li class="form-list__row form-list__row--inline" style="float: left;width: 100%;">
+                    <div>
+                        <label>Nombre</label>
+                        <input required type="text" name="nombre" #nombre="ngModel" [(ngModel)]="listaAEditar.nombre">
+                    </div>
+                    <div>
+                        <label>Tipo</label>
+                        <select name="style" required name="tipo" #tipo="ngModel" [(ngModel)]="listaAEditar.tipo">
+                            <option disabled="" selected="" value="" ng-reflect-value="">Selecciona un tipo de lista</option>
+                            <option value="lista_general" ng-reflect-value="old-school">General</option>
+                            <option value="lista_propia" ng-reflect-value="trap">Beats própios</option>
+                        </select>
+                    </div>
+                    <div style="flex: 1;">
+                        <label>Visibilidad</label>
+                        <select required name="estado" #estado="ngModel" [(ngModel)]="listaAEditar.estado">
+                            <option disabled="" selected="" value="" ng-reflect-value="">Visibilidad de la lista</option>
+                            <option value="publica" ng-reflect-value="libre">Pública</option>
+                            <option value="privada" ng-reflect-value="limitado">Privada</option>
+                        </select>
+                    </div>
+                </li>
+                
+                <li class="form-list__row" style="float: left;width: 100%;">
+                    <label>Descripción de la lista <i style="text-transform: capitalize;">(Opcional)</i></label>
+                    <textarea name="descripcion" #descripcionS="ngModel" [(ngModel)]="listaAEditar.descripcion"></textarea>
+                </li>
+        
+                <div class="listado-beats-crear-lista">
+                    <div class="menu-filtro">
+                        <li (click)="mostrarBeatsLista();" [class.activo]="mostrandoBeats == 'beats-lista'">Contenido de la lista</li>
+                        <li (click)="mostrarTodosLosBeats();" [class.activo]="mostrandoBeats == 'todos'">Añadir beats</li>
+                    </div>
+                    <ul *ngIf="mostrandoBeats == 'beats-lista'">
+                        <li class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" *ngFor="let beatLista of beatsLista;">
+                            <div class="item-listado-beats-crear-lista" id="beat-{{beatLista.beat._id}}">
+                                <div class="detalles-beat-listado-crear-lista">
+                                    <img src="http://localhost:3700/api/get-image-user/Jx2kwOQywrVbeYj2V4kP3sZa.jpg">
+                                    <div class="flex flex-wrap">
+                                        <span>{{beatLista.beat.name}}</span>
+                                        <span>{{beatLista.beat.autor}}</span>
+                                    </div>
+                                </div>
+                                <div class="acciones-beat-listado-crear-lista">
+                                    <i class="fa fa-play-circle"></i>
+        
+                                    
+                                    <i class="fa fa-close" (click)="quitarBeatLista(beatLista)" style="border:none;"></i>
+                                </div>        
+                            </div>
+                        </li>
+                    </ul>
+
+                    <ul *ngIf="mostrandoBeats == 'todos'">
+                        <li class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" *ngFor="let beat of beats;">
+                            <div class="item-listado-beats-crear-lista" id="beat-{{beat._id}}">
+                                <div class="detalles-beat-listado-crear-lista">
+                                    <img src="http://localhost:3800/api/get-image-user/Jx2kwOQywrVbeYj2V4kP3sZa.jpg">
+                                    <div class="flex flex-wrap">
+                                        <span>{{beat.name}}</span>
+                                        <span>{{beat.autor}}</span>
+                                    </div>
+                                </div>
+                                <div class="acciones-beat-listado-crear-lista">
+                                    <i class="fa fa-play-circle"></i>
+                
+                                    
+                                    <i class="fa fa-plus" (click)="quitarBeatLista(beat)" style="border:none;"></i>
+                                </div>        
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+        
+                <li class="float-left">
+                    <button class="button" type="submit" [disabled]="!editarListaForm.form.valid">Guardar</button>
+                </li>
+        
+                <li class="form-list__row" style="width: auto;display: inline-block;padding: 10px;border: 1px solid #eee;margin-left: 15px;border-radius: 4px;">
+                    <label style="width: auto;display: inline-block;margin: 0;">Mostrar lista en mi biblioteca</label>
+                    <div class="flex float-left" style="margin-right: 15px;">
+                        <span (click)="elegirMostrarEnBiblioteca();" [class.mi-checked]="listaAEditar.enBiblioteca == 'SI'" class="mi-checkbox">
+                            <i class="fa fa-check"></i>
+                        </span>
+                    </div>
+                </li>
+            </form>
+        </div>
+        <!-- <modal-editar-lista *ngIf="modalEditarListaAbierto == true" [listaAEditar]="listaAEditar" (sended)="refrescar($event);"></modal-editar-lista> -->
+    </div>
+</div>

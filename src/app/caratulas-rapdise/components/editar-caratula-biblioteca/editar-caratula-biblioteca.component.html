@@ -1,0 +1,114 @@
+<div *ngIf="beat" className="fondo-caratula {{beat.ajustesCaratula.colorFondo}}">
+    <img *ngIf="!imagenRecortada && beat.ajustesCaratula.tipoCaratula == 'imagen'" [src]="url + 'get-imagen-beat/' + beat.image">
+    <img *ngIf="imagenRecortada" [src]="imagenRecortada">
+</div>
+
+<div *ngIf="!ajustesAbierto && beat" class="menu-top-caratula">
+    <div class="btn-ajustes-caratula" (click)="abrirCerrarAjustes();">
+        <mat-icon aria-hidden="false" aria-label="Example home icon">format_color_fill</mat-icon>
+    </div>
+    <div class="tipo-portada">
+        <span (click)="setTipoCaratula('rapdise')" className="{{beat.ajustesCaratula.colorFondo}}" [class.activo]="beat.ajustesCaratula.tipoCaratula == 'rapdise'">Rapdise</span>
+        <!-- <span (click)="setTipoCaratula('esfera')" [class.activo]="tipoCaratula == 'esfera'">Esfera</span> -->
+        <span (click)="setTipoCaratula('imagen')" className="{{beat.ajustesCaratula.colorFondo}}" [class.activo]="beat.ajustesCaratula.tipoCaratula == 'imagen'">Imagen</span>
+    </div>
+</div>
+
+<div class="panel-ajuste-caratula" [class.abierto]="ajustesAbierto">
+    <mat-icon (click)="abrirCerrarAjustes();" class="mat-icon-cerrar" aria-hidden="false" aria-label="Cerrar">close</mat-icon>
+    
+    <div class="items-ajuste-caratula" *ngIf="beat">
+        <div *ngIf="beat.ajustesCaratula.tipoCaratula == 'rapdise'" class="item-ajuste-caratula">
+            <p>Color de fondo</p>
+            <div class="circulos-colores">
+                <div class="circulo gris-oscuro" (click)="setColorFondo('gris-oscuro')" [class.activo]="beat.ajustesCaratula.colorFondo == 'gris-oscuro'"></div>
+                <div class="circulo naranja" (click)="setColorFondo('naranja')" [class.activo]="beat.ajustesCaratula.colorFondo == 'naranja'"></div>
+                <div class="circulo rojo" (click)="setColorFondo('rojo')" [class.activo]="beat.ajustesCaratula.colorFondo == 'rojo'"></div>
+                <div class="circulo fucsia" (click)="setColorFondo('fucsia')" [class.activo]="beat.ajustesCaratula.colorFondo == 'fucsia'"></div>
+            </div>
+        </div>
+
+        <div *ngIf="beat.ajustesCaratula.tipoCaratula == 'rapdise'" class="separador-item-ajuste-caratula"></div>
+
+        <div *ngIf="beat.ajustesCaratula.tipoCaratula == 'rapdise'" class="item-ajuste-caratula">
+            <p>Color de barras</p>
+            <div class="circulos-colores">
+                <div class="circulo blanco activo" (click)="setColorBarras('blanco')" [class.activo]="beat.ajustesCaratula.colorBarras == 'blanco'"></div>
+                <div *ngIf="colorFondo != 'naranja' && colorFondo != 'rojo' && colorFondo != 'fucsia'" class="circulo naranja" (click)="setColorBarras('naranja')" [class.activo]="beat.ajustesCaratula.colorBarras == 'naranja'"></div>
+                <div class="circulo amarillo" (click)="setColorBarras('amarillo')" [class.activo]="beat.ajustesCaratula.colorBarras == 'amarillo'"></div>
+                <div class="circulo negro" (click)="setColorBarras('negro')" [class.activo]="beat.ajustesCaratula.colorBarras == 'negro'"></div>
+            </div>
+            <div class="flex">
+                <i class="fa fa-adjust"></i>
+                <mat-slider (change)="setOpacidadBarras($event.value)" min="0.14" max="1" step="0.01" value="1"></mat-slider> 
+            </div>
+                 
+        </div>
+
+        <div class="separador-item-ajuste-caratula"></div>
+
+        <div class="mas-ajustes-caratula" [class.column]="beat.ajustesCaratula.tipoCaratula == 'rapdise'" [class.row]="beat.ajustesCaratula.tipoCaratula == 'imagen'">
+            <mat-slide-toggle (change)="setOndas1($event)" style="margin-right: 19px;" [checked]="beat.ajustesCaratula.ondas1">Ondas 1</mat-slide-toggle>
+            <mat-slide-toggle (change)="setOndas2($event)" [checked]="beat.ajustesCaratula.ondas2">Ondas 2</mat-slide-toggle>
+            <mat-slide-toggle *ngIf="beat.ajustesCaratula.tipoCaratula == 'imagen'" (change)="setLogoRapdise($event)" [checked]="beat.ajustesCaratula.mostrarLogo">Rapdise</mat-slide-toggle>
+        </div>
+    </div>
+</div>
+
+<div class='ondas1-caratula-rapdise' *ngIf="beat && beat.ajustesCaratula.ondas1 == true">
+    <div class='onda-caratula -primera'></div>
+    <div class='onda-caratula -segunda'></div>
+    <div class='onda-caratula -tercera'></div>
+</div>
+
+<div *ngIf="beat && beat.ajustesCaratula.
+mostrarLogo == true" class="logo-caratula floating">
+    <img alt="Improvisame" height="47px" src="assets/logo-blanco.svg">
+    <svg [ngStyle]="{'opacity': opacidadBarras}" height="80" viewBox="0 0 55 80" width="55" xmlns="http://www.w3.org/2000/svg"
+    class="barras-sonando"
+    [class.blanco]="beat.ajustesCaratula.colorBarras == 'blanco'"
+    [class.negro]="beat.ajustesCaratula.colorBarras == 'negro'"
+    [class.naranja]="beat.ajustesCaratula.colorBarras == 'naranja'"
+    [class.amarillo]="beat.ajustesCaratula.colorBarras == 'amarillo'">
+        <g transform="matrix(1 0 0 -1 0 80)">
+            <rect height="34" rx="3" width="10">
+                <animate attributeName="height" begin="0s" calcMode="linear" dur="4.3s" repeatCount="indefinite" values="20;45;57;80;64;32;66;45;64;23;66;13;64;56;34;34;2;23;76;79;20" class="ng-star-inserted"></animate>
+            </rect>
+            <rect height="12.3141" rx="3" width="10" x="15">
+                <animate attributeName="height" begin="0s" calcMode="linear" dur="2s" repeatCount="indefinite" values="80;55;33;5;75;23;73;33;12;14;60;80" class="ng-star-inserted"></animate>
+            </rect>
+            <rect height="49.262" rx="3" width="10" x="30">
+                <animate attributeName="height" begin="0s" calcMode="linear" dur="1.4s" repeatCount="indefinite" values="50;34;78;23;56;23;34;76;80;54;21;50" class="ng-star-inserted"></animate>
+            </rect>
+            <rect height="32.2722" rx="3" width="10" x="45">
+                <animate attributeName="height" begin="0s" calcMode="linear" dur="2s" repeatCount="indefinite" values="30;45;13;80;56;72;45;76;34;23;67;30" class="ng-star-inserted"></animate>
+            </rect>
+        </g>
+    </svg>
+</div>
+
+
+<div *ngIf="beat && beat.ajustesCaratula.tipoCaratula == 'esfera'" class="view">
+    <div class="plane main">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
+</div>
+
+<div *ngIf="beat && beat.ajustesCaratula.ondas2 == true" class="waveWrapper waveAnimation">
+    <div class="waveWrapperInner bgTop floating">
+        <div class="wave waveTop" style="background-image: url('assets/ondas-rapdise/ondas-movimiento-2.svg')"></div>
+    </div>
+    <div class="waveWrapperInner bgMiddle floating">
+        <div class="wave waveMiddle" style="background-image: url('assets/ondas-rapdise/ondas-movimiento.svg')"></div>
+    </div>
+    <div class="waveWrapperInner bgBottom floating">
+        <div class="wave waveBottom" style="background-image: url('assets/ondas-rapdise/ondas-top.svg')"></div>
+    </div>
+</div>
+
+<!-- http://front-end-noobs.com/jecko/img/wave-mid.png -->

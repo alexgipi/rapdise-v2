@@ -1,0 +1,28 @@
+<nav class="menu-cabecera-biblioteca">
+    <ul class="menu-biblioteca-panel-beats">
+        <li [routerLinkActive]="['activo']">
+            <a [routerLink]="['/bases-de-rap']">
+                {{ 'biblioteca.menu.bases' | translate }}
+            </a>
+        </li>
+        <li [routerLinkActive]="['activo']">
+            <a [routerLink]="['/productores-de-rap']">
+                {{ 'biblioteca.menu.productores' | translate }}
+            </a>
+        </li>
+        <li [routerLinkActive]="['activo']">
+            <a [routerLink]="['/bases/listas-de-reproduccion']">
+                {{ 'biblioteca.menu.listas' | translate }}
+                <span id="texto-de-reproduccion">
+                    &nbsp;{{ 'biblioteca.menu.de-reproduccion' | translate }}
+                </span>
+            </a>
+        </li>
+        
+        <li [routerLinkActive]="['activo']">
+            <a [routerLink]="['/subir-bases']">
+                {{ 'biblioteca.menu.subir-bases' | translate }}
+            </a>
+        </li>
+    </ul>
+</nav>

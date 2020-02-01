@@ -1,0 +1,99 @@
+
+    
+<div class="panel-grabadora flex relative">
+  
+    <nav class="menu-cabecera-biblioteca">
+      <ul class="menu-biblioteca-panel-beats">
+        
+        <li class="activo">
+          <a>Palabras</a>
+        </li>
+  
+        <li>
+            <a [routerLink]="['/entrenar-freestyle/imagenes']">Imágenes</a>
+        </li>
+  
+        <div style="display: flex;align-items: center;flex-wrap: wrap;justify-content: center;font-size: 1.2em;margin-left: 15px;">
+          
+            <p style="margin: 0;color: #fff;margin-right: 12px;">Cambiar <strong>palabra</strong> cada</p>
+            <span (click)="elegirTiempoCambio(5000);" class="entreno-5s boton-tiempo-cambio fondo-gris-claro">
+              5s
+            </span>
+            <span (click)="elegirTiempoCambio(10000);" class="entreno-10s active boton-tiempo-cambio fondo-gris-claro">
+              10s
+            </span>
+            <span (click)="elegirTiempoCambio(15000);"class="entreno-15s boton-tiempo-cambio fondo-gris-claro">
+              15s
+            </span>
+
+            <div class="relative">
+                <span (click)="mostrarEditarCambio();" id="entreno-tiempo-personalizado" class="boton-tiempo-cambio fondo-gris-claro">
+                  Editar
+                </span>
+      
+                <div id="input-editar-cambio" class="display-none" style="display:flex;align-items: center;color: #fff;position: absolute;left: 0;top: 0;height: 100%;">
+                  <input type="number" (input)="cambioPersonalizado($event.target.value)" placeholder="" style="width: 73.86px;height: 30px;padding: 0;background: #ebebeb;text-align: center;margin-right: 7px;">s
+                </div>
+            </div>
+            			
+        </div>
+      </ul>
+    </nav>
+
+  <div id="panel-grabadora-grabadora" class="relative">
+    <div style="text-align: center; padding: 0; width: 100%;">
+      <div>
+        <div class="botones-grabadora flex flex-wrap justify-center">
+          <svg *ngIf="entrenando == false" class="icono-panel-entreno" id="olymp-cono-icon" viewBox="0 0 100 100">
+            <path d="M47.998,58.392c11.951,0,21.955-4.061,22.561-9.362c-1.777-4.985-3.715-10.421-5.619-15.764   c-1.322,3.811-8.623,6.498-16.941,6.498c-8.316,0-15.617-2.688-16.941-6.497c-1.904,5.342-3.84,10.777-5.617,15.763   C26.045,54.331,36.047,58.392,47.998,58.392z M47.998,24.866c5.617,0,10.836-1.739,12.363-4.439   c-2.105-5.913-3.914-10.986-5.057-14.187c-0.759-2.133-4.201-3.241-7.306-3.241s-6.547,1.108-7.307,3.241   c-1.141,3.201-2.949,8.274-5.057,14.187C37.162,23.127,42.383,24.866,47.998,24.866z M91.902,63.331l-18.777-7.563l2.162,6.033   C75.178,68.195,62.766,73.29,47.998,73.29c-14.766,0-27.18-5.095-27.287-11.489l2.16-6.033L4.096,63.331   c-5.264,2.121-5.484,6.049-0.49,8.726l35.312,18.935c4.994,2.677,13.168,2.677,18.162,0l35.312-18.935   C97.387,69.38,97.166,65.452,91.902,63.331z"></path>
+          </svg>
+          <button class="boton-entrenar" id="boton-refrescar-grabadora" style="display:none;"><i class="fa fa-undo"></i></button>
+          <button *ngIf="entrenando != true" (click)="empezarEntreno();" class="boton-entrenar" id="boton-entrenar">
+              <!-- <svg class="olymp-cono-icon left-menu-icon"><use xlink:href="assets/icons/icons.svg#olymp-cono-icon"></use></svg> -->
+              Empezar
+          </button>
+          
+          <div [class.display-none]="entrenando != true" class="palabras-grabadora"></div>
+
+          <div class="contador-panel-entreno flex" *ngIf="entrenando == true">
+            <div class="tiempo-contador">
+              <span><strong id="contador-palabra">{{this.tiempoCambio / 1000}}</strong></span>
+            </div>
+            <button (click)="pararEntreno();" class="boton-stop" id="boton-stop">
+              <i class="fa fa-close"></i>
+            </button>
+          </div>
+        </div>
+        
+        <h1 *ngIf="entrenando != true" class="titulo-entreno-grabadora">Entrenamiento modo palabras</h1>
+
+        <p *ngIf="entrenando != true" class="texto-entreno-grabadora">
+            Se te propondrán una gran variedad de palabras aleatorias sin una temática específica. Adáptate a cada una de ellas y sácales el máximo jugo posible en tu freestyle.
+        </p>
+
+      </div>
+
+    </div>
+  </div>            
+</div>      
+
+<div class="panel-group anuncio-entreno-pc" style="width: 100%;margin: 20px 0;">
+  <div class="panel panel-default" style="width: 100%">
+  <div class="panel-heading">
+  <h4 class="h5 panel-title" style="display: flex;align-items: center;justify-content: space-between;font-size: 17px;">
+      Te puede interesar
+      <div>
+      <a aria-expanded="true" class="" data-toggle="collapse" href="#collapse1" style="width: 120px;font-weight: normal;padding: 5px 20px;margin-left: 20px;">
+      Ocultar <i class="fa fa-close"></i>
+      </a>
+      </div>
+  </h4>
+  </div>
+  <div id="collapse1" class="panel-collapse collapse show">
+  <div class="panel-body">
+      <img src="https://www.google.es/adsense/start/images/banners/scooter_1x.jpg" style="width: 100%;margin-top: 10px;border-radius: 10px;">
+  </div>
+  <div class="panel-footer"></div>
+  </div>
+  </div>
+</div>

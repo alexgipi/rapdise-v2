@@ -1,0 +1,36 @@
+<ul class="listado-freestyles">
+    <div *ngFor="let destacado of destacados" class="card-carousel padding-0" style="transition: all 0.3s ease 0s;">
+        <a [routerLink]="['/freestyle', destacado.freestyleDestacado._id]">
+            <div class="video-player">
+                <img *ngIf="destacado.freestyleDestacado.imagen != 'null'" alt="" id="" src="{{url + 'get-imagen-grabacion/' + destacado.freestyleDestacado.imagen}}">
+                <img *ngIf="destacado.freestyleDestacado.imagen == 'null'" alt="" id="" src="{{url + 'get-image-user/' + destacado.freestyleDestacado.user.image}}">
+                <div class="square" style="width: 50%;"></div>
+                <div class="square" style="width: 50%;"></div>
+
+                <div class="card-carousel__acciones-izq" style="position: absolute;z-index: 99;left: 10px;top: 10px;display: flex;align-items: center;justify-content: center;border-radius: 4px;/* opacity: 0; *//* visibility: hidden; */transition: all 0.3s;">
+                    <span *ngIf="destacado.freestyleDestacado.modo == 'Palabras'" style="display: flex;align-items: center;justify-content: center;border-radius: 4px;height: 20px;/* width: 25px; */padding: 0 6px;margin-right: 5px;color: #ffffff;background: #4d445e;font-size: 0.97em;">
+                        {{destacado.freestyleDestacado.modo}}
+                    </span>
+                    <span *ngIf="destacado.freestyleDestacado.modo == 'Imagenes'" style="display: flex;align-items: center;justify-content: center;border-radius: 4px;height: 20px;/* width: 25px; */padding: 0 6px;margin-right: 5px;color: #ffffff;background: #815250;font-size: 0.97em;">
+                        {{destacado.freestyleDestacado.modo}}
+                    </span>
+                </div>
+
+                <span style="position: absolute;z-index:99;bottom: 10px;right: 10px;padding: 0px 10px;background: rgba(0,0,0,0.8);color: #fff;border-radius:5px">
+                    {{formatearSegundos(destacado.freestyleDestacado.tiempoGrabacion)}}
+                </span>
+                <div class="overlay">
+
+                </div>
+            </div>
+            <div class="ui-block-content video-content">
+                <h2 class="h6" href="#">{{destacado.freestyleDestacado.nombre}}</h2>
+                <a [routerLink]="['/',destacado.freestyleDestacado.user.nick]" class="published" style="display: block;color: #989898;">{{destacado.freestyleDestacado.user.nick}}</a>
+                <span style="margin-right: 6px;display: inline-flex;align-items: center;">
+                {{destacado.freestyleDestacado.reproducciones}}<i class="fa fa-play" style="font-size: 0.67em;margin-left: 4px;color: #999;"></i>
+                </span>
+                <span class="hace-cuanto-tiempo" style="color: #8d8d8d;margin-left: 6px;font-size: 14px;">{{(destacado.freestyleDestacado.creado_el | amFromUnix) | amLocale:'es' | amTimeAgo }}</span>
+            </div>
+        </a>
+    </div>
+</ul>

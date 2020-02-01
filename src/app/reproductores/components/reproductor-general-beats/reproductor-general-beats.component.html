@@ -1,0 +1,82 @@
+
+<div class="reproductor-general-img-y-player">
+    <div style="float: left;width: 100%;height: 100%;background: #ccc;">
+        <img src="{{url + 'get-imagen-beat/' + beat.image }}" *ngIf="beat.image && beat.image != null">
+        <img src="{{url}}get-image-user/{{beat.user.image}}" *ngIf="beat.image == null" alt="">
+    </div>        
+    <div class="player-rep-general">
+        <div class="flex space-between" style="height: 30px;font-size: 14px;padding: 0 5px 0 0;background: rgba(10, 10, 10, 0.48);position: absolute;bottom: 50px;width: 100%;box-shadow: 30px 0 175px inset #000000b5;color: rgba(255,255,255,0.8);">
+            <div style="height: 100%;display: flex;align-items: center;margin-left: 10px;font-weight: bold;">
+                {{beat.name}}
+            </div>
+            <div style="font-size: 14px;">
+                <time id="tiempo-actual-beat-rep-general">0:00</time> / {{beat.duration}}
+            </div>
+            <div style="font-size: 1.2rem;padding: 0 10px;display: flex;align-items: center;">
+
+                <i class="fa fa-step-backward" style="font-weight: normal;margin-right: 10px;"></i>                
+                <i class="fa fa-pause" style="font-weight: normal;margin-right: 10px;"></i>
+                <i class="fa fa-step-forward" style="font-weight: normal;"></i>
+            </div>        
+        </div>
+        
+        <div id="player-rep-general-barra">
+            <span></span>
+            <!-- <div style="font-size: 16px;position: absolute;right: 20px;">
+                <time id="tiempo-actual-beat-rep-general">00:00</time> / {{beat.duration}}
+            </div> -->
+            <audio src="" id="audio-reproductor-general"></audio>
+        </div>
+
+        <div class="player-rep-general-botones">
+            <i (click)="cambiarBeat('anterior')" class="fa fa-random"></i>
+            <i (click)="cambiarBeat('anterior')" class="fa fa-step-backward"></i>
+            <i *ngIf="sonando != true" (click)="playReproductor();" class="fa fa-play"></i>
+            <i *ngIf="sonando == true" (click)="pauseReproductor();" class="fa fa-pause"></i>
+            <i (click)="cambiarBeat('siguiente')" class="fa fa-step-forward"></i>
+            <i (click)="activarDesactivarBeatEnBucle();" class="fa fa-retweet btn-bucle-rep-general"></i>
+            <i *ngIf="reproductorMovilAbierto == false" (click)="abrirCerrarReproductorMovil('abrir');" class="fa fa-bars" id="abrir-reproductor-beats-movil" style="display: none;"></i>
+            <i *ngIf="reproductorMovilAbierto == true" (click)="abrirCerrarReproductorMovil('cerrar');" class="fa fa-close" id="abrir-reproductor-beats-movil" style="display: none;"></i>
+        </div>
+    </div>
+</div>
+
+<div class="menu-reproductor-general">
+    <select (change)="cambiarEstiloBeats($event.target.value)" name="filtro-otros-beats" id="filtro-otros-beats">
+        <option value="todos">Todos los estilos</option>
+        <option value="old-school">Old School</option>
+        <option value="trap">Trap</option>
+        <option value="underground">Underground</option>
+        <option value="boom-bap">Boom Bap</option>
+        <option value="lofi">Lofi Rap</option>
+        <option value="jazzy">Jazzy</option>
+        <option value="reggae">Reggae</option>
+    </select>
+    <div class="relative" style="width: 50%;height: 100%;display: flex;align-items: center;">
+        <i class="fa fa-search"></i>
+        <input type="text" placeholder="Buscar beat o autor" name="filtroBeat" [(ngModel)]="filtroBeat">
+    </div>
+</div>
+
+<ul class="beats-crear-batalla">
+    <cdk-virtual-scroll-viewport class="scroll-virtual"  itemSize="60">
+        <li (click)="iniciarReproductor(beat);selecionarBeat(beat);" *cdkVirtualFor="let beat of beats | filtroBeats:filtroBeat; let i = index" [class.active]="i == 0" [attr.id]="i + 1" [attr.value]="beat._id" id="{{i+1}}" class="otro-beat-{{beat._id}}">
+        <div class="float-left">
+            <img src="{{url}}get-imagen-beat/{{beat.image}}" *ngIf="beat.image != null" alt="" style="height: 60px;width: 60px;height: 45px;width: 45px;border-radius: 10%;margin-left: 8px;">
+            <img src="{{url}}get-image-user/{{beat.user.image}}" *ngIf="beat.image == null" alt="" style="height: 60px;width: 60px;height: 45px;width: 45px;border-radius: 10%;margin-left: 8px;">
+        </div>
+        <div class="flex space-between crear-batalla-seleccionar-beat" [class.active]="beat._id == idBeat1">
+            <div class="crear-batalla-nombre-beat">
+            <span style="font-weight: bold;font-size: 15px;display: block;position: relative;top: 2px">
+                {{beat.name}}
+                <i *ngIf="beat._id == idBeat1" class="fa fa-check" style="margin-left:15px;color:#47a590;font-size: 18px;"></i>
+            </span>
+            <span style="display: block;position: relative;bottom: 1px;">{{beat.user.nick}}</span>
+            </div>
+            <div class="crear-batalla-info-beat">
+            <span>{{beat.duration}}</span>
+            </div>
+        </div>			
+        </li>
+    </cdk-virtual-scroll-viewport>	
+</ul>

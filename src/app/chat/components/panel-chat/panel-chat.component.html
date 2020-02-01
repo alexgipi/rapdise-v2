@@ -1,0 +1,140 @@
+<style>
+:host {
+    height: 24px;
+}
+</style>
+<mat-icon [matMenuTriggerFor]="menuMensajes" matBadge="2" matBadgeColor="warn" matTooltipClass="mi-tooltip" matTooltip="Mensajes" aria-hidden="false" aria-label="Example home icon">message</mat-icon>
+
+<mat-menu class="menu-perfil" #menuMensajes="matMenu" xPosition="before">
+    <div class="header-menu">
+      <mat-icon _ngcontent-dle-c0="" aria-hidden="false" aria-label="Example home icon" class="mat-icon notranslate material-icons mat-icon-no-color" mattooltip="Publicar en Rapdise" mattooltipclass="mi-tooltip" role="img" ng-reflect-message="Publicar en Rapdise" ng-reflect-tooltip-class="mi-tooltip" aria-describedby="cdk-describedby-message-2" cdk-describedby-host="" style="touch-action: none;user-select: none;-webkit-user-drag: none;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);width: 45px;height: 45px;display: flex;align-items: center;justify-content: center;background: #757575;color: #fff;border-radius: 99%;margin-right: 15px;">
+        message
+      </mat-icon>
+      <div class="detalles">
+        <div class="titulo">Mensajes</div>
+        <div class="subtitulo">{{identity.email}}</div>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="panel-mensajes">
+      <i class="material-icons">
+          menu
+      </i>
+      <ng-container *ngFor="let chat of chatsUsuario;let i = index;" >
+          <div class="contact" (click)="abrirChat(chat._id, chat.usuario2._id)" *ngIf="identity._id == chat.usuario1._id">
+              <div class="pic rogers"></div>
+              <div class="badge">
+                  14
+              </div>
+              <div class="name">
+                  {{chat.usuario2.nick}}
+              </div>
+              
+              <div class="message">
+                  Tu: That is America's ass 🇺🇸🍑
+              </div>
+          </div>
+
+          <div class="contact" *ngIf="identity._id == chat.usuario2._id && identity._id != chat.usuario1._id" (click)="abrirChat(chat._id, chat.usuario1._id)">
+              <div class="pic rogers"></div>
+              <div class="badge">
+                  14
+              </div>
+              <div class="name">
+                  {{chat.usuario1.nick}}
+              </div>
+              
+              <div class="message">
+                  Tu: That is America's ass 🇺🇸🍑
+              </div>
+          </div>
+      </ng-container>
+
+
+
+      <div class="contact">
+          <div class="pic stark"></div>
+          <div class="name">
+              Tony Stark
+          </div>
+          <div class="message">
+              Uh, he's from space, he came here to steal a necklace from a wizard.
+          </div>
+      </div>
+      <div class="contact">
+          <div class="pic banner"></div>
+          <div class="badge">
+              1
+          </div>
+          <div class="name">
+              Bruce Banner
+          </div>
+          <div class="message">
+              There's an Ant-Man *and* a Spider-Man?
+          </div>
+      </div>
+      <div class="contact">
+          <div class="pic thor"></div>
+          <div class="name">
+              Thor Odinson
+          </div>
+          <div class="badge">
+              3
+          </div>
+          <div class="message">
+              I like this one
+          </div>
+      </div>
+      <div class="contact">
+          <div class="pic danvers"></div>
+          <div class="badge">
+              2
+          </div>
+          <div class="name">
+              Carol Danvers
+          </div>
+          <div class="message">
+              Hey Peter Parker, you got something for me?
+          </div>
+      </div>
+  </div>
+</mat-menu>
+<div class="panel-chat">
+    <div class="chat">
+        <div class="contact bar">
+            <div class="pic stark"></div>
+            <div class="name">
+                Tony Stark
+            </div>
+            <div class="seen">
+                Today at 12:56
+            </div>
+        </div>
+
+        <div class="messages" id="chat">
+            <div class="contenido-messages">
+                <div class="time">
+                    Today at 11:41
+                </div>
+
+                <div *ngFor="let mensaje of mensajes; let i = index;" class="message parker">
+                    {{mensaje.texto}}
+                </div>
+
+
+                <div class="message stark">
+                    <div class="typing typing-1"></div>
+                    <div class="typing typing-2"></div>
+                    <div class="typing typing-3"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="input">
+            <i class="material-icons">camera_alt</i>
+            <i class="material-icons">tag_faces</i>
+            <input name="texto" [(ngModel)]="mensaje.texto" placeholder="Escribe aquí tu mensaje!" type="text">
+            <i class="material-icons" (click)="enviarMensaje(identity._id, receptor);">send</i>
+        </div>
+    </div>
+</div>

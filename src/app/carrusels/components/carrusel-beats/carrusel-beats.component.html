@@ -1,0 +1,48 @@
+<div class="relative">	
+    <!-- ::::::::::::::::::::: Cards Instrumentales ::::::::::::::::::::: -->
+    <div style="overflow: hidden;max-width: 1408.25px;display: flex;">       
+               
+        <div class="carousel-beats no-seleccionable" style="display: flex;transition: all 0.3s;overflow: auto;">
+
+            <div *ngFor="let destacado of destacados; let i = index" class="card-carousel card-beat radius shadowDepth1">
+                <i (click)="playPauseBeat(destacado.beatDestacado, 'play');" *ngIf="sonando == false || sonando && beatActivo._id != destacado.beatDestacado._id" class="fa fa-play btn-play-card"></i>
+                <i (click)="playPauseBeat(destacado.beatDestacado, 'pause');" *ngIf="sonando && beatActivo._id == destacado.beatDestacado._id" [class.activo]="sonando && beatActivo._id == destacado.beatDestacado._id" class="fa fa-pause btn-play-card"></i>
+                <div class="card__image border-tlr-radius">
+                    <div class="square-box" style="border-radius: 4px;">
+                        <div class="square-content">
+                            <img *ngIf="destacado.beatDestacado.image != null" alt="" src="{{url + 'get-imagen-beat/' + destacado.beatDestacado.image }}">
+                            <img *ngIf="destacado.beatDestacado.image == null" alt="" src="{{url + 'get-image-user/' + destacado.beatDestacado.user.image }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="card__content card__padding">
+                    <article class="card__article">
+                        <h2 style="font-size: 1.1em;"><a href="#">{{destacado.beatDestacado.name}}</a></h2>
+                    </article>
+                    <div id="player-card-beat-{{destacado.beatDestacado._id}}" class="card__player">
+                        
+                        <div class="contenedor-barra-player width-100" id="barra-beat-{{destacado.beatDestacado._id}}">
+                            <div class="barra-player">
+                                <span class="tiempo-actual-barra-player">
+                                    <div class="flex relative width-100"><i></i>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="card__action">
+                    <div class="card__author">
+                        <div class="card__author-content">
+                            <span style="color: #fff;">
+                                <i class="fa fa-play" style="margin-right: 10px;"></i> <span id="reproducciones-beat-{{destacado.beatDestacado._id}}">{{destacado.beatDestacado.reproducciones}}</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <audio id="audio-carrusel-beats" src=""></audio>
+        </div>
+    </div>
+</div>

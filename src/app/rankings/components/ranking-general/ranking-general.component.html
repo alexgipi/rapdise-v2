@@ -1,0 +1,177 @@
+<div class="card card-cascade narrower">
+	<!-- <div class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+
+		<div>
+			<button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2 waves-effect waves-light">
+			<i class="fas fa-th-large mt-0"></i>
+			</button>
+			<button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2 waves-effect waves-light">
+			<i class="fas fa-columns mt-0"></i>
+			</button>
+		</div>
+
+		<a href="" class="white-text mx-3">Table name</a>
+
+		<div>
+			<button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2 waves-effect waves-light">
+			<i class="fas fa-pencil-alt mt-0"></i>
+			</button>
+			<button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2 waves-effect waves-light">
+			<i class="far fa-trash-alt mt-0"></i>
+			</button>
+			<button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2 waves-effect waves-light">
+			<i class="fas fa-info-circle mt-0"></i>
+			</button>
+		</div>
+
+	</div> -->
+	<div class="table-wrapper">
+			<!--Table-->
+			<table class="table table-hover mb-0">
+	
+			<!--Table head-->
+			<thead>
+				<tr>
+				<th>
+					#
+				</th>
+				<th class="th-lg">
+					<a>Usuario
+					<i class="fas fa-sort ml-1"></i>
+					</a>
+				</th>
+				<th class="th-lg">
+					<a href="">Rep. Total
+					<i class="fas fa-sort ml-1"></i>
+					</a>
+				</th>
+				<th class="th-lg">
+					<a href="">Rep. Productor
+					<i class="fas fa-sort ml-1"></i>
+					</a>
+				</th>
+				<th class="th-lg">
+					<a href="">Rep. Batallas
+					<i class="fas fa-sort ml-1"></i>
+					</a>
+				</th>
+				<th class="th-lg">
+					<a href="">Rep. Freestyle
+					<i class="fas fa-sort ml-1"></i>
+					</a>
+				</th>
+				</tr>
+			</thead>
+			<!--Table head-->
+	
+			<!--Table body-->
+			<tbody>
+				<tr *ngFor="let user of users;let i = index;">
+				<th scope="row">
+					<div class="display-flex align-items-center">
+						<span>{{i+1}}</span>
+					</div>
+				</th>
+				<td>
+					<div class="display-flex align-items-center">
+						<img src="https://i1.sndcdn.com/artworks-000596445971-jh3py0-t500x500.jpg" style="height: 45px;width: 45px;object-fit: cover;border-radius: 99%;margin-right: 15px;">
+						<span>{{user.nick}}</span>
+					</div>
+				</td>
+				<td>{{user.reputation}}</td>
+				<td>@mdo</td>
+				<td>Mark</td>
+				<td>Otto</td>
+				</tr>
+				<tr>
+				<th scope="row">
+					2
+				</th>
+				<td>Jacob</td>
+				<td>Thornton</td>
+				<td>@fat</td>
+				<td>Jacob</td>
+				<td>Thornton</td>
+				</tr>
+				<tr>
+				<th scope="row">
+					3
+				</th>
+				<td>Larry</td>
+				<td>the Bird</td>
+				<td>@twitter</td>
+				<td>Larry</td>
+				<td>the Bird</td>
+				</tr>
+				<tr>
+				<th scope="row">
+					4
+				</th>
+				<td>Paul</td>
+				<td>Topolski</td>
+				<td>@P_Topolski</td>
+				<td>Paul</td>
+				<td>Topolski</td>
+				</tr>
+				<tr>
+				<th scope="row">
+					5
+				</th>
+				<td>Larry</td>
+				<td>the Bird</td>
+				<td>@twitter</td>
+				<td>Larry</td>
+				<td>the Bird</td>
+				</tr>
+			</tbody>
+			<!--Table body-->
+			</table>
+			<!--Table-->
+	</div>
+</div>
+	
+
+<!-- <h1 class="h4">{{titulo}}</h1>
+
+
+<div class="mi-tabla">
+	<ul class="mi-tabla-items">
+
+		<li class="mi-tabla-item-vertical mi-tabla-header">
+			<div>
+				<li>#</li>
+				<li>Usuario</li>				
+			</div>
+			<div>
+				<li>Rep. Total</li>
+				<li>Rep. Freestyle</li>
+				<li>Rep. Batallas</li>
+				<li>Rep. Producción</li>
+			</div>
+		</li>
+
+		<cdk-virtual-scroll-viewport class="viewport-section"  itemSize="55" style="height:500px;">
+			<li class="mi-tabla-item-vertical" *cdkVirtualFor="let user of users; let i = index">
+				<div>
+					<li>{{i+1}}</li>
+					<li>
+						<a [routerLink]="['/', user.nick]">
+							<img src="{{url + 'get-image-user/' + user.image }}" *ngIf="user.image" style="border-radius:5px;width: 35px;height: 35px;margin-right: 10px;" class="img-responsive">
+	
+							<img src="assets/avatars/160419_092630_md9c8c671c7_avatar.png" *ngIf="!user.image" style="border-radius:5px;width: 35px;height: 35px;margin-right: 10px;" class="img-responsive">
+						</a>
+						{{user.nick}}
+					</li>				
+				</div>
+				<div>
+					<li>{{user.reputation}}</li>
+					<li>{{user.victorias}}</li>
+					<li>{{user.derrotas}}</li>
+					<li>6</li>
+				</div>
+			</li>
+		</cdk-virtual-scroll-viewport>
+
+		
+	</ul>
+</div> -->

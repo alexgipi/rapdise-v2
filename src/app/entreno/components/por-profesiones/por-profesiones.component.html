@@ -1,0 +1,171 @@
+<div class="header-spacer header-spacer-small"></div>
+<div class="container">
+  <div class="row flex justify-center">    
+    <!-- ::::::::::::::::::::: MENU ESTILOS BEAT ::::::::::::::::::::: -->
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">      
+      <div class="ui-block responsive-flex1200" style="opacity:0.9;padding: 5px;">
+        <ul class="cat-list-bg-style flex sorting-menu">
+          <li class="cat-list__item" id="todos" [routerLinkActive]="['active']">
+            <a [routerLink]="['/entreno/palabras']" class="">TODOS</a>
+          </li>
+          <li class="cat-list__item" [routerLinkActive]="['active']">
+            <a [routerLink]="['/entreno/palabras/old-school']" class="">Old School</a>
+          </li>
+          <li class="cat-list__item" [routerLinkActive]="['active']">
+            <a [routerLink]="['/entreno/palabras/boom-bap']" class="">Boom Bap</a>
+          </li>
+          <li class="cat-list__item" [routerLinkActive]="['active']">
+            <a [routerLink]="['/entreno/palabras/jazzy']" class="">Jazzy</a>
+          </li>
+          <li class="cat-list__item" [routerLinkActive]="['active']">
+            <a [routerLink]="['/entreno/palabras/lofi-rap']" class="">Lofi Rap</a>
+          </li>
+          <li class="cat-list__item" [routerLinkActive]="['active']">
+            <a [routerLink]="['/entreno/palabras/trap']" class="">Trap</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- :: FIN MENU ESTILOS BEAT :: -->
+
+    <!-- <form class="form-estilo flex justify-center">
+      <div class="flex rondas">
+        <div class="form-group" >
+          <select (change)="elegirEstilo($event.target.value)" class="form-control" id="rondas-batalla" style="padding: 0 10px;">
+            <option id="estilo-todos" value="todos">Todos los beats</option>
+            <option id="estilo-old-school" value="old-school">Old School</option>
+            <option id="estilo-boom-bap" value="boom-bap">Boom Bap</option>
+            <option id="estilo-jazzy" value="jazzy">Jazzy</option>
+            <option id="estilo-lofi" value="lofi">Lofi Rap</option>
+            <option id="estilo-trap" value="trap">Trap</option>
+          </select>
+        </div>
+      </div>
+    </form> -->
+
+    <!-- ::::::::::::::::::::: Cards Instrumentales ::::::::::::::::::::: -->
+    <div class="container">
+        <div class="row">
+          <div class="cardFlipContainer card-instrumental pading-2-5  col-xl-3 col-lg-3 col-md-6 col-sm-12 col-xs-12" *ngFor="let beat of beatsEstilo; let i = index">
+            
+            <div class="card-flip">
+              <div class="card-flip-side card-flip-front">
+                <div class="img relative">
+                  <img id="" src="{{ url + 'get-imagen-beat/' + beat.image }}" alt="" *ngIf="beat.image">
+              
+                  <img id="" src="{{ url + 'get-image-user/' + beat.user.image }}" alt="" *ngIf="beat.image == null">
+    
+                  <i class="fa fa-music seleccionar-beat flex justify-center" id="{{beat._id}}"></i>
+    
+                  <div class="boton-empezar-entreno" id="boton-entreno-{{beat._id}}" data-toggle="modal" href="#modal-entreno" data-backdrop="static" data-keyboard="false">
+                    ESTOY LISTO <i class="fa fa-thumbs-o-up"></i>
+                  </div>
+                </div>
+                
+                <div class="card-flip-info flex justify-center">
+                  <h2>{{beat.name}}</h2>
+                </div>
+                <div class="capa-estoy-listo capa-{{beat._id}}" id="{{beat._id}}" (mouseover)="previewBeat($event.target.id)" (mouseout)="pararPreviewBeat($event.target.id)" (click)="seleccionarBeat($event.target.id);"  style="position:  absolute;height:  100%;width:  100%;top: 0;background: transparent;">
+                </div>
+              </div>
+            </div>
+    
+            <audio id="audio-{{beat._id}}" style="width: 180px;" src="{{ url + 'get-audio-beat/' + beat.file }}"></audio>
+          </div>
+        </div>
+    </div>
+    <!-- :: FIN Cards Instrumentales :: -->
+
+    <div class="container">
+        <div class="row">
+          <div *ngFor="let beat of beatsEstilo; let i = index" class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-xs-12">
+            <div class="ui-block video-item">
+              <div class="video-player">
+                <img id="" src="{{ url + 'get-imagen-beat/' + beat.image }}" alt="" *ngIf="beat.image">
+              
+                <img id="" src="{{ url + 'get-image-user/' + beat.user.image }}" alt="" *ngIf="beat.image == null">
+                <a href="https://youtube.com/watch?v=excVFQ2TWig" class="play-video">
+                  <svg class="olymp-play-icon"><use xlink:href="assets/icons/icons.svg#olymp-play-icon"></use></svg>
+                </a>
+                <div class="overlay overlay-dark"></div>
+      
+                <div class="more"><svg class="olymp-three-dots-icon"><use xlink:href="icons/icons.svg#olymp-three-dots-icon"></use></svg></div>
+              </div>
+      
+              <div class="ui-block-content video-content">
+                <a href="#" class="h6 title">Rock Garden Festival - Day 3</a>
+                <time class="published" datetime="2017-03-24T18:18">18:44</time>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-xs-12">
+            <div class="ui-block video-item">
+              <div class="video-player">
+                <img src="img/video11.jpg" alt="photo">
+                <a href="https://youtube.com/watch?v=excVFQ2TWig" class="play-video play-video--small">
+                  <svg class="olymp-play-icon"><use xlink:href="icons/icons.svg#olymp-play-icon"></use></svg>
+                </a>
+                <div class="overlay overlay-dark"></div>
+      
+                <div class="more"><svg class="olymp-three-dots-icon"><use xlink:href="icons/icons.svg#olymp-three-dots-icon"></use></svg></div>
+              </div>
+      
+              <div class="ui-block-content video-content">
+                <a href="#" class="h6 title">Rock Garden Festival - Day 2</a>
+                <time class="published" datetime="2017-03-24T18:18">13:19</time>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- ::::::::::::::::::::: VENTANA MODAL ENTRENO ::::::::::::::::::::: -->
+    <div class="modal fade" id="modal-entreno" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog ui-block window-popup modal-entreno">
+        <a aria-label="Close" class="close icon-close" data-dismiss="modal" (click)="pararEntreno()">
+          <svg class="olymp-close-icon"><use xlink:href="assets/icons/icons.svg#olymp-close-icon" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
+        </a>
+
+        <div class="ui-block-content">
+          <div class="row panel-entreno">
+            <div class="tiempo-palabra-entreno">
+              <ul class="cat-list-bg-style flex justify-center sorting-menu">
+                <li class="cat-list__item">
+                  <a (click)="cambiarTiempo($event.target.id)" id="5s">5s</a>
+                </li>
+                <li class="cat-list__item active">
+                  <a (click)="cambiarTiempo($event.target.id)" id="10s">10s</a>
+                </li>
+                <li class="cat-list__item">
+                  <a (click)="cambiarTiempo($event.target.id)" id="15s">15s</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="barra-progreso-entreno flex justify-center">
+              <div class="barra"></div>
+            </div>
+            <div class="contenedor-palabras"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- :: FIN VENTANA MODAL ENTRENO :: -->
+
+  </div>
+</div>
+
+<div class="main-header header-pagina header-entreno">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 m-auto col-md-8 col-sm-12 col-xs-12">
+          <div class="main-header-content main-header-content-azul sin-parrafo">
+            <h1>Entrena tu freestyle con profesiones</h1>
+            <!-- <p>Con tu participación en improvisame, irás consiguiendo puntos de reputación al mismo tiempo que coleccionas insignias por tus acciones dentro de la comunidad. Ya sea por ganar un cierto número de batallas, por tus participaciones, por alcanzar cierto nivel de reputación, o por tu antiguedad en improvisa.me. Con el tiempo, dado al crecimiento previsto iremos incorporando más logros, para darle ese toque interesante que merece tal tipo de comunidad. ¡A todos nos gustan las medallas! 
+            </p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,139 @@
+<div class="reproductor-general-img-y-player" *ngIf="beat" style="min-height: auto;height: auto;">
+    
+
+    <div class="player-rep-general" style="position: relative;z-index: 1;">
+        <div class="barra-control-player">
+            <div style="height: 100%;display: flex;align-items: center;padding: 0 16px 0 12px;font-weight: bold;">
+                <time id="tiempo-actual-beat-rep-general">0:00</time>
+            </div>
+            <!-- <div (click)="activarDesactivarBeatAleatorio();" style="height: 100%;display: flex;align-items: center;padding: 0 6px;font-weight: bold;padding-right: 16px;">
+                <i id="btn-beat-aleatorio" class="fa fa-random" style="font-weight: normal;font-size: 1.05em;"></i>
+            </div>
+            <div (click)="activarDesactivarBeatEnBucle();" style="height: 100%;display: flex;align-items: center;padding: 0 6px;font-weight: bold;padding-right: 16px;">
+                <i class="fa fa-retweet btn-bucle-rep-general" style="font-weight: normal;font-size: 1.05em;"></i>
+            </div> -->
+
+            <div class="mi-barra-player" id="mi-barra-player-1">
+                <div class="posicion-barra-cursor">
+                    <div id="tooltip-nuevo-tiempo-barra"></div>
+                </div>
+                    
+                <div class="mi-barra-tiempo-actual">
+                    <div style="position:relative;display:flex;height: 100%;align-items: center;">
+                        <span></span>
+                    </div>
+                </div>
+    
+                <audio src="" id="audio-reproductor-con-listado"></audio>
+                
+            </div>
+            <div style="font-size: 14px;padding: 0 12px 0 16px;min-width: 74px;">
+                {{beat.duration}}
+            </div>     
+        </div>
+    </div>
+</div>
+
+<div class="botones-player-listado-beats">
+    <i class="fa fa-random"></i>
+    <i (click)="cambiarBeat('anterior')" class="fa fa-step-backward"></i>
+    <i *ngIf="sonando == false" (click)="playReproductor()" class="fa fa-play"></i>
+    <i *ngIf="sonando" (click)="pauseReproductor()" class="fa fa-pause"></i>
+    <i (click)="cambiarBeat('siguiente')" class="fa fa-step-forward"></i>
+    <i (click)="activarDesactivarBeatEnBucle()" class="fa fa-retweet btn-bucle-player"></i>
+</div>
+
+<ul class="listado-panel-beats-biblioteca beats grid-beats">
+    <li *ngFor="let beat of beats | filtroBeats:filtroBeat; let i = index" [attr.id]="i + 1" [attr.value]="beat._id" class="otro-beat-{{beat._id}}" [class.active]="beat._id == idBeat1" [ngClass]="{'sonando': beat._id == idBeat1 && sonando, 'pausado': beat._id == idBeat1 && sonando == false}">
+
+        <div [class.active]="beat._id == idBeat1" class="flex space-between contenido-li-listado-beat">
+
+            <div class="caratula-beat-listado">
+                <i class="mdi mdi-play-circle-outline i-play-listado" (click)="getBeat(beat._id, true);"></i>
+                <i class="mdi mdi-pause-circle-outline i-pause-listado"></i>
+
+                <img *ngIf="beat.image != null" src="{{url + 'get-imagen-beat/' + beat.image}}">
+                <img *ngIf="beat.image == null" src="{{url + 'get-image-user/' + beat.user.image}}">
+                
+                <svg class="barras-sonando" *ngIf="beat._id == idBeat1" xmlns="http://www.w3.org/2000/svg" width="55" height="80" viewBox="0 0 55 80" fill="#222">
+                    <g transform="matrix(1 0 0 -1 0 80)">
+                        <rect width="10" height="5" rx="3">
+                            <animate *ngIf="sonando" attributeName="height" begin="0s" dur="4.3s" values="20;45;57;80;64;32;66;45;64;23;66;13;64;56;34;34;2;23;76;79;20" calcMode="linear" repeatCount="indefinite"/>
+                        </rect>
+                        <rect x="15" width="10" height="5" rx="3">
+                            <animate *ngIf="sonando" attributeName="height" begin="0s" dur="2s" values="80;55;33;5;75;23;73;33;12;14;60;80" calcMode="linear" repeatCount="indefinite"/>
+                        </rect>
+                        <rect x="30" width="10" height="5" rx="3">
+                            <animate *ngIf="sonando" attributeName="height" begin="0s" dur="1.4s" values="50;34;78;23;56;23;34;76;80;54;21;50" calcMode="linear" repeatCount="indefinite"/>
+                        </rect>
+                        <rect x="45" width="10" height="5" rx="3">
+                            <animate *ngIf="sonando" attributeName="height" begin="0s" dur="2s" values="30;45;13;80;56;72;45;76;34;23;67;30" calcMode="linear" repeatCount="indefinite"/>
+                        </rect>
+                    </g>
+                </svg>
+            </div>
+            <div class="contenido-listado-izq" (click)="getBeat(beat._id, true)">
+                <div class="float-left flex width-100 height-100">
+                    <div class="float-left">								
+                        <span class="titulo-beat" style="display: -webkit-box;-webkit-box-orient: vertical;text-overflow: ellipsis;-webkit-line-clamp: 2;">
+                            {{beat.name}}
+                        </span>
+                        <div class="autor-beat">
+                            {{beat.user.nick}}							
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="mas-info-beat-biblioteca">
+                
+                <div class="control-bottom" style="float: left;width: 100%;color: #fff;margin-right: 5px;">
+                    <div class="flex control-bottom-der">
+                        <i *ngIf="beat.uso == 'libre' && beat._id == idBeat1" (click)="descargar(beat.file)" class="mdi mdi-file-download"></i>
+                        <i *ngIf="beat.uso == 'limitado'" class="fa fa-usd" style="color:#59ab7e;margin: 0;/* margin-right: 8px; */font-size: 13px;width: 30px;height: 30px;display: flex;justify-content: center;align-items: center;"></i>
+                        <a *ngIf="beat.enlace" href="{{beat.enlace}}" rel="nofollow" target="_blank"><i class="fa fa-shopping-cart"></i></a>
+                        <i *ngIf="beat._id == idBeat1" class="mdi mdi-playlist-add"></i>
+                    </div>
+                </div>
+
+                
+                
+                
+                <div class="item-mas-info-beat info-reproducciones no-border">
+                    <div class="info-beat-num">{{beat.bpm || 120 }} BPM</div>
+                </div>
+                <div class="item-mas-info-beat info-reproducciones">
+                    <div class="info-beat-num" style="text-transform: capitalize;">{{beat.style}}</div>
+                </div>
+                <!-- <div class="item-mas-info-beat info-reproducciones">
+                    <i class="fa fa-play"></i>
+                    <div class="info-beat-num" id="reproducciones-beat-{{beat._id}}">{{beat.reproducciones}}</div>
+                </div> -->
+                <div *ngIf="identity" [class.activo]="likes.indexOf(beat._id) >= 0" class="item-mas-info-beat info-reputacion relative">
+                    <div aria-label="+1 Reputación" class="over-dar-repu naranja" id="{{beat._id}}">
+                        + 1
+                    </div>
+
+                    <div aria-label="-1 Reputación" class="over-dar-repu rojo"
+                    id="{{beat._id}}"
+                    *ngIf="likes && likes.indexOf(beat._id) >= 0">
+                        - 1
+                    </div>
+                    <svg height="511pt" version="1.1" viewBox="-38 0 511 511.99956" width="511pt" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-qsl-c0="" id="surface1"><path _ngcontent-qsl-c0="" d="M 413.476562 341.910156 C 399.714844 379.207031 378.902344 411.636719 351.609375 438.289062 C 320.542969 468.625 279.863281 492.730469 230.699219 509.925781 C 229.085938 510.488281 227.402344 510.949219 225.710938 511.289062 C 223.476562 511.730469 221.203125 511.96875 218.949219 512 L 218.507812 512 C 216.105469 512 213.691406 511.757812 211.296875 511.289062 C 209.605469 510.949219 207.945312 510.488281 206.339844 509.9375 C 157.117188 492.769531 116.386719 468.675781 85.289062 438.339844 C 57.984375 411.6875 37.175781 379.277344 23.433594 341.980469 C -1.554688 274.167969 -0.132812 199.464844 1.011719 139.433594 L 1.03125 138.511719 C 1.261719 133.554688 1.410156 128.347656 1.492188 122.597656 C 1.910156 94.367188 24.355469 71.011719 52.589844 69.4375 C 111.457031 66.152344 156.996094 46.953125 195.90625 9.027344 L 196.246094 8.714844 C 202.707031 2.789062 210.847656 -0.117188 218.949219 0.00390625 C 226.761719 0.105469 234.542969 3.007812 240.773438 8.714844 L 241.105469 9.027344 C 280.023438 46.953125 325.5625 66.152344 384.429688 69.4375 C 412.664062 71.011719 435.109375 94.367188 435.527344 122.597656 C 435.609375 128.386719 435.757812 133.585938 435.988281 138.511719 L 436 138.902344 C 437.140625 199.046875 438.554688 273.898438 413.476562 341.910156 Z M 413.476562 341.910156 " style="stroke:none;fill-rule:nonzero;fill: rgb(193, 193, 193);fill-opacity:1;"></path><path _ngcontent-qsl-c0="" d="M 413.476562 341.910156 C 399.714844 379.207031 378.902344 411.636719 351.609375 438.289062 C 320.542969 468.625 279.863281 492.730469 230.699219 509.925781 C 229.085938 510.488281 227.402344 510.949219 225.710938 511.289062 C 223.476562 511.730469 221.203125 511.96875 218.949219 512 L 218.949219 0.00390625 C 226.761719 0.105469 234.542969 3.007812 240.773438 8.714844 L 241.105469 9.027344 C 280.023438 46.953125 325.5625 66.152344 384.429688 69.4375 C 412.664062 71.011719 435.109375 94.367188 435.527344 122.597656 C 435.609375 128.386719 435.757812 133.585938 435.988281 138.511719 L 436 138.902344 C 437.140625 199.046875 438.554688 273.898438 413.476562 341.910156 Z M 413.476562 341.910156 " style="stroke:none;fill-rule:nonzero;fill: rgb(172, 172, 172);fill-opacity:1;"></path></g></svg>
+                    <div class="info-beat-num">{{beat.likes}}</div>
+                </div>
+
+                <div *ngIf="!identity" class="item-mas-info-beat info-reputacion relative">
+                    <div aria-label="+1 Reputación" class="over-dar-repu naranja" id="{{beat._id}}">
+                        + 1
+                    </div>
+                    <svg height="511pt" version="1.1" viewBox="-38 0 511 511.99956" width="511pt" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-qsl-c0="" id="surface1"><path _ngcontent-qsl-c0="" d="M 413.476562 341.910156 C 399.714844 379.207031 378.902344 411.636719 351.609375 438.289062 C 320.542969 468.625 279.863281 492.730469 230.699219 509.925781 C 229.085938 510.488281 227.402344 510.949219 225.710938 511.289062 C 223.476562 511.730469 221.203125 511.96875 218.949219 512 L 218.507812 512 C 216.105469 512 213.691406 511.757812 211.296875 511.289062 C 209.605469 510.949219 207.945312 510.488281 206.339844 509.9375 C 157.117188 492.769531 116.386719 468.675781 85.289062 438.339844 C 57.984375 411.6875 37.175781 379.277344 23.433594 341.980469 C -1.554688 274.167969 -0.132812 199.464844 1.011719 139.433594 L 1.03125 138.511719 C 1.261719 133.554688 1.410156 128.347656 1.492188 122.597656 C 1.910156 94.367188 24.355469 71.011719 52.589844 69.4375 C 111.457031 66.152344 156.996094 46.953125 195.90625 9.027344 L 196.246094 8.714844 C 202.707031 2.789062 210.847656 -0.117188 218.949219 0.00390625 C 226.761719 0.105469 234.542969 3.007812 240.773438 8.714844 L 241.105469 9.027344 C 280.023438 46.953125 325.5625 66.152344 384.429688 69.4375 C 412.664062 71.011719 435.109375 94.367188 435.527344 122.597656 C 435.609375 128.386719 435.757812 133.585938 435.988281 138.511719 L 436 138.902344 C 437.140625 199.046875 438.554688 273.898438 413.476562 341.910156 Z M 413.476562 341.910156 " style="stroke:none;fill-rule:nonzero;fill: rgb(193, 193, 193);fill-opacity:1;"></path><path _ngcontent-qsl-c0="" d="M 413.476562 341.910156 C 399.714844 379.207031 378.902344 411.636719 351.609375 438.289062 C 320.542969 468.625 279.863281 492.730469 230.699219 509.925781 C 229.085938 510.488281 227.402344 510.949219 225.710938 511.289062 C 223.476562 511.730469 221.203125 511.96875 218.949219 512 L 218.949219 0.00390625 C 226.761719 0.105469 234.542969 3.007812 240.773438 8.714844 L 241.105469 9.027344 C 280.023438 46.953125 325.5625 66.152344 384.429688 69.4375 C 412.664062 71.011719 435.109375 94.367188 435.527344 122.597656 C 435.609375 128.386719 435.757812 133.585938 435.988281 138.511719 L 436 138.902344 C 437.140625 199.046875 438.554688 273.898438 413.476562 341.910156 Z M 413.476562 341.910156 " style="stroke:none;fill-rule:nonzero;fill: rgb(172, 172, 172);fill-opacity:1;"></path></g></svg>
+                    <div class="info-beat-num">{{beat.likes}}</div>
+                </div>
+                <div class="etiqueta-estilo">{{beat.style}}</div>
+            </div>
+
+        </div>	
+    </li>
+</ul>

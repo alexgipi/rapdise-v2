@@ -1,0 +1,47 @@
+<!-- BATALLAS FINALIZADAS -->			
+<ul  id="finalizadas" class="listado-freestyles float-left">
+    <div *ngFor="let destacado of destacados; let i = index" class="card-carousel video-item padding-0" style="transition: all 0.3s ease 0s;">
+        <a [routerLink]="['/batalla', destacado.batallaDestacada._id]">
+            <div class="video-player">
+                <div class="square" style="width: 50%;">
+                    <img src="{{ url + 'get-image-user/' + destacado.batallaDestacada.usuario1.image }}" alt="" *ngIf="destacado.batallaDestacada.usuario1.image">
+                </div>
+                <div class="square" style="width: 50%;">
+                    <img src="{{ url + 'get-image-user/' + destacado.batallaDestacada.usuario2.image }}" alt="" *ngIf="destacado.batallaDestacada.usuario2.image">
+                </div>
+                
+                <span style="position: absolute;z-index:99;bottom: 10px;right: 10px;padding: 0px 10px;background: rgba(0,0,0,0.8);color: #fff;border-radius:5px">
+                    03:49
+                </span>
+                <div class="overlay">
+    
+                </div>
+            </div>
+            <div class="ui-block-content video-content">
+                <h2 class="h6" href="#">{{destacado.batallaDestacada.nombre}}</h2>
+                
+                <!-- Modos ronda batalla - 2 RONDAS -->
+                <div class="published" *ngIf="destacado.batallaDestacada.rondas == 2">
+                    <span style="color:#000;">
+                        {{destacado.batallaDestacada.rondas}} <span *ngIf="destacado.batallaDestacada.rondas == 1">Ronda - </span><span *ngIf="destacado.batallaDestacada.rondas > 1">Rondas - </span>
+                    </span>
+                    <!-- MODO Ronda 1 y 2 IGUALES -->
+                    <span *ngIf="destacado.batallaDestacada.modoRonda1 == destacado.batallaDestacada.modoRonda2" style="color: #519654;">
+                        Modo {{destacado.batallaDestacada.modoRonda1}}
+                    </span>
+                    <!-- MODO Ronda 1 y 2 DIFERENTES -->
+                    <span *ngIf="destacado.batallaDestacada.modoRonda1 != destacado.batallaDestacada.modoRonda2" style="color: #519654;text-transform: capitalize;">
+                        {{destacado.batallaDestacada.modoRonda1}} / {{destacado.batallaDestacada.modoRonda2}}
+                    </span>
+                </div>
+                <span style="margin-right: 12px;display: inline-flex;align-items: center;">
+                    <i class="fa fa-play" style="font-size: 0.67em;margin-right: 4px;color: #999;"></i>{{destacado.batallaDestacada.visualizaciones}}
+                </span>
+                <span style="margin-right: 6px;display: inline-flex;align-items: center;">
+                    <i class="fa fa-shield" style="font-size: 0.7em;margin-right: 4px;color: #999;"></i> {{destacado.batallaDestacada.likes}}
+                </span>
+                <span style="text-transform: capitalize;color: #8d8d8d;margin-left: 6px;font-size: 14px;">{{(destacado.batallaDestacada.modificado_el | amFromUnix) | amLocale:'es' | amTimeAgo }}</span>
+            </div>
+        </a>
+    </div>
+</ul>

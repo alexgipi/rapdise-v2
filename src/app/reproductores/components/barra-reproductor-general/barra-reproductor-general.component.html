@@ -1,0 +1,34 @@
+<div class="barra-reproductor-general">
+    <div class="contenedor">
+        <div class="detalles-elemento-reproductor">
+            <img alt="" src="https://i1.sndcdn.com/artworks-SLi3DRtVUIgd-0-t500x500.jpg">
+            <div class="info-basica">
+                <div class="autor-beat">
+                    alexgp895
+                </div>
+                <div class="nombre-beat">
+                    Stuck In A Dream (feat. Gunna)
+                </div>
+            </div>
+        </div>
+        <div class="contenido-central-reproductor">
+            <div class="controles-reproductor">
+                    <mat-icon (click)="cambiarBeat('anterior')" aria-hidden="false" aria-label="Example home icon">skip_previous</mat-icon>
+                    <mat-icon (click)="playAudio()" *ngIf="sonando == false" aria-hidden="false" aria-label="Example home icon">play_arrow</mat-icon>
+                    <mat-icon (click)="pauseAudio()" *ngIf="sonando" aria-hidden="false" aria-label="Example home icon">pause</mat-icon>
+                    <mat-icon (click)="cambiarBeat('siguiente')" aria-hidden="false" aria-label="Example home icon">skip_next</mat-icon>
+                    <mat-icon [class.activo]="beatEnBucle" (click)="activarDesactivarBeatEnBucle()" class="icono-repetir" aria-hidden="false" aria-label="Example home icon">repeat</mat-icon>
+                    <mat-icon [class.activo]="beatAleatorio" (click)="activarDesactivarBeatAleatorio()" class="icono-random" aria-hidden="false" aria-label="Example home icon">shuffle</mat-icon>
+                    <mat-icon class="icono-volumen" aria-hidden="false" aria-label="Example home icon">volume_up</mat-icon>
+            </div>
+            <span class="tiempo-actual">{{formatearTiempo(tiempoActual)}}</span>
+            <mat-slider (input)="onInputChange($event)" class="cursor-pointer flex-auto" min="0" max="{{duracion}}" value="{{tiempoActual}}"></mat-slider>
+            <span class="tiempo-total">{{formatearTiempo(duracion)}}</span>
+        </div>
+        <div class="acciones-beat-reproductor">
+            <mat-icon aria-hidden="false" aria-label="Example home icon">playlist_add</mat-icon>
+            <mat-icon aria-hidden="false" aria-label="Example home icon">download</mat-icon>
+            <mat-icon aria-hidden="false" aria-label="Example home icon">shopping_cart</mat-icon>
+        </div>
+    </div>
+</div>

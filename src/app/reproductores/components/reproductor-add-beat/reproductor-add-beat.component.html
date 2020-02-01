@@ -1,0 +1,239 @@
+<div>
+    <div class="reproductor-general-img-y-player" *ngIf="beat">
+        <crear-caratula-biblioteca *ngIf="editar == false" [tipoCaratula]="tipoCaratula" [imagenRecortada]="imagenRecortada" (PasarTipoCaratula)="recibirTipoCaratula($event)" (PasarAjustesCaratula)="recibirAjustesCaratula($event)"></crear-caratula-biblioteca>
+        <editar-caratula-biblioteca *ngIf="editar == true" [beat]="beat" (PasarAjustesCaratula)="recibirAjustesCaratula($event)" [imagenRecortada]="imagenRecortada"></editar-caratula-biblioteca>
+        <div class="player-rep-general">
+            <div class="barra-control-player">
+                <div style="height: 100%;display: flex;align-items: center;padding: 0 16px 0 12px;font-weight: bold;">
+                    <time id="tiempo-actual-beat-rep-general">0:00</time>
+                </div>
+                <div class="mi-barra-player" id="mi-barra-player-1">
+                    <div class="posicion-barra-cursor">
+                        <div id="tooltip-nuevo-tiempo-barra"></div>
+                    </div>
+                    <div class="mi-barra-tiempo-actual">
+                        <div style="position:relative;display:flex;height: 100%;align-items: center;">
+                            <span></span>
+                        </div>
+                    </div>
+                    <audio *ngIf="beat.file" id="audio-reproductor-general" src="{{url + 'get-audio-beat/' + beat.file}}"></audio>
+                </div>
+                <div style="font-size: 14px;padding: 0 12px 0 16px;min-width: 74px;"> {{beat.duration || '0:00' }}</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="botones-player-listado-beats">
+        <i class="fa fa-random"></i>
+        <i class="fa fa-step-backward"></i>
+        <i *ngIf="sonando == false" (click)="playReproductor()" class="fa fa-play"></i>
+        <i *ngIf="sonando" (click)="pauseReproductor()" class="fa fa-pause"></i>
+        <i class="fa fa-step-forward"></i>
+        <i class="fa fa-retweet btn-bucle-player"></i>
+    </div>
+    <div class="mas-info-beat-seleccionado-player">
+        <div *ngIf="beat" class="detalles-beat-seleccionado" style="float: left;">
+            <div class="nombre-beat-autor ">
+                <div class="flex">
+                    <img alt="alexgp895" src="http://localhost:3700/api/get-image-user/-OqoVdCPpCYBDrEvuausQp0A.gif">
+                    <div class="info-autor-beat-seleccionado">
+                        <div class="autor-beat">
+                            alexgp895<span class="seguir-productor siguiendo">Siguiendo</span>
+                        </div>
+                        <div class="flex">
+                            <span class="nombre-beat" style="display: -webkit-box;-webkit-box-orient: vertical;text-overflow: ellipsis;-webkit-line-clamp: 1;">
+                                    {{ beat.name || 'biblioteca.subir-bases.form.placeholder-titulo' | translate }}
+                            </span>
+                        </div>
+                        <div  class="mas-info-beat">
+                            <div *ngIf="beat.style && beat.style.length > 0" class="estilos-beat-reproductor">
+                                <span>{{beat.style[0]}}</span>
+                                <span *ngIf="beat.style.length == 2 || beat.style.length == 3">{{beat.style[1]}}</span>
+                                <span *ngIf="beat.style.length == 3">{{beat.style[2]}}</span>
+                            </div>
+                            <div *ngIf="!beat.style || beat.style.length <= 0" class="estilos-beat-reproductor">
+                                <p>Añade un máximo de 3 estilos</p>
+                            </div>
+                            <div class="etiquetas-beat-reproductor" style="font-size: 14px;display: flex !important;align-items: center;font-weight: normal;line-height: 1.4;">
+                                <span *ngFor="let etiqueta of beat.etiquetas; let i = index" style="margin-right: 6px;">
+                                    {{etiqueta.valor}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="control-bottom" style="float: left;width: 100%;padding: 20px 0 0 20px;">
+            <div class="flex control-bottom-der">
+                <div aria-label="Descargar" class="btn-accion-reproductor">
+                    <i class="fa fa-download"></i><span>Descargar</span>
+                </div>
+                <div class="btn-accion-reproductor">
+                    <i class="mdi mdi-playlist-add"></i>
+                    <span>Guardar</span>
+                </div>
+            </div>
+        </div>
+        <div class="mas-beats-reproductor-biblioteca">
+            <div class="flex" style="margin-bottom: 15px;">
+                <h3 class="h5"> Ultimos beats de alexgp895 </h3>
+                <span>Ver todos</span>
+            </div>
+            <ul class="items-mas-beats-reproductor">
+                <div class="card card-carousel card-beat radius shadowDepth1 activo">
+                    <i class="fa fa-pause btn-play-card activo" style="font-size: 22px;"></i>
+                    <div class="card__image border-tlr-radius">
+                        <div class="square-box" style="border-radius: 4px;">
+                            <div class="square-content">
+                                <img alt="" src="http://localhost:3700/api/get-imagen-beat/ulCjutPXS1eZ0HonB0tZZ2bg.gif">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card__content card__padding">
+                        <article class="card__article">
+                            <h2 style="font-size: 1.1em;">
+                                <a href="#">gdfgdfg</a>
+                            </h2>
+                        </article>
+                        <div class="card__player" id="player-card-beat-5d731c28d86ce32a0404e726">
+                            <div class="contenedor-barra-player width-100" id="barra-beat-5d731c28d86ce32a0404e726">
+                                <div class="barra-player">
+                                    <span class="tiempo-actual-barra-player">
+                                        <div class="flex relative width-100">
+                                            <i></i>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card__action">
+                        <div class="card__author">
+                            <div class="card__author-content">
+                                <span style="color: #fff;">
+                                    <i class="fa fa-play" style="margin-right: 10px;"></i>
+                                    <span id="reproducciones-beat-5d731c28d86ce32a0404e726">35</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-carousel card-beat radius shadowDepth1">
+                    <i class="fa fa-play btn-play-card" style="font-size: 22px;"></i>
+                    <div class="card__image border-tlr-radius">
+                        <div class="square-box" style="border-radius: 4px;">
+                            <div class="square-content">
+                                <img alt="" src="http://localhost:3700/api/get-imagen-beat/4ZvalMcpiGKcVvSBsLmxmoTF.jpg">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card__content card__padding">
+                        <article class="card__article">
+                            <h2 style="font-size: 1.1em;">
+                                <a href="#">sadasd</a>
+                            </h2>
+                        </article>
+                        <div class="card__player" id="player-card-beat-5d71662bbb8e083f8c02be54">
+                            <div class="contenedor-barra-player width-100" id="barra-beat-5d71662bbb8e083f8c02be54">
+                                <div class="barra-player">
+                                    <span class="tiempo-actual-barra-player">
+                                        <div class="flex relative width-100">
+                                            <i></i>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card__action">
+                        <div class="card__author">
+                            <div class="card__author-content">
+                                <span style="color: #fff;">
+                                    <i class="fa fa-play" style="margin-right: 10px;"></i>
+                                    <span id="reproducciones-beat-5d71662bbb8e083f8c02be54">9</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-carousel card-beat radius shadowDepth1">
+                    <i class="fa fa-play btn-play-card" style="font-size: 22px;"></i>
+                    <div class="card__image border-tlr-radius">
+                        <div class="square-box" style="border-radius: 4px;">
+                            <div class="square-content">
+                                <img alt="" src="http://localhost:3700/api/get-image-user/-OqoVdCPpCYBDrEvuausQp0A.gif">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card__content card__padding">
+                        <article class="card__article">
+                            <h2 style="font-size: 1.1em;">
+                                <a href="#">sdsd</a>
+                            </h2>
+                        </article>
+                        <div class="card__player" id="player-card-beat-5d7165a4a02fa52a50458f86">
+                            <div class="contenedor-barra-player width-100" id="barra-beat-5d7165a4a02fa52a50458f86">
+                                <div class="barra-player">
+                                    <span class="tiempo-actual-barra-player">
+                                        <div class="flex relative width-100">
+                                            <i></i>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card__action">
+                        <div class="card__author">
+                            <div class="card__author-content">
+                                <span style="color: #fff;">
+                                    <i class="fa fa-play" style="margin-right: 10px;"></i>
+                                    <span id="reproducciones-beat-5d7165a4a02fa52a50458f86">0</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-carousel card-beat radius shadowDepth1">
+                    <i class="fa fa-play btn-play-card" style="font-size: 22px;"></i>
+                    <div class="card__image border-tlr-radius">
+                        <div class="square-box" style="border-radius: 4px;">
+                            <div class="square-content">
+                                <img alt="" src="http://localhost:3700/api/get-image-user/-OqoVdCPpCYBDrEvuausQp0A.gif">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card__content card__padding">
+                        <article class="card__article">
+                            <h2 style="font-size: 1.1em;">
+                                <a href="#">adadadad</a>
+                            </h2>
+                        </article>
+                        <div class="card__player" id="player-card-beat-5d716452a02fa52a50458f85">
+                            <div class="contenedor-barra-player width-100" id="barra-beat-5d716452a02fa52a50458f85">
+                                <div class="barra-player">
+                                    <span class="tiempo-actual-barra-player">
+                                        <div class="flex relative width-100">
+                                            <i></i>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card__action">
+                        <div class="card__author">
+                            <div class="card__author-content">
+                                <span style="color: #fff;">
+                                    <i class="fa fa-play" style="margin-right: 10px;"></i>
+                                    <span id="reproducciones-beat-5d716452a02fa52a50458f85">1</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </div>
+</div>

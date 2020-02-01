@@ -1,0 +1,31 @@
+<div>
+
+    <button *ngIf="esDestacado == false" (click)="destacarUsuario();" class="btn-admin-destacar azul">
+        <i class="fa fa-star icono-btn-destacar"></i>
+        <i class="fa fa-user"></i>
+        <span *ngIf="usuarioDestacadoEn == 'productor'">
+            Destacar {{usuarioDestacadoEn}}
+        </span>
+        
+        <span *ngIf="usuarioDestacadoEn != 'productor'">Destacar a {{usuario.nick}}</span>
+    </button>
+
+    <button *ngIf="esDestacado == true" (click)="borrarUsuarioDestacado();" class="btn-admin-destacar verde destacado">
+        <i class="fa fa-star icono-btn-destacar"></i>
+        <i class="fa fa-check"></i>
+        {{usuario.nick}} Destacado
+    </button>
+
+    <p *ngIf="esDestacado == false" style="margin: 0;font-size: 13px !important;color: #777;margin-top: 5px;font-weight: bold;">
+        <span *ngIf="usuarioDestacadoEn == 'batallas'">
+            Destacar usuario en {{usuarioDestacadoEn}}
+        </span>
+        <span *ngIf="usuarioDestacadoEn == 'freestyle'">
+            Destacar usuario como {{usuarioDestacadoEn}}r
+        </span>
+    </p>
+    
+    <p *ngIf="esDestacado == true" style="margin: 0;font-size: 13px !important;color: #999;margin-top: 5px;font-weight: bold;">
+        {{(destacado.destacado_el | amFromUnix) | amLocale:'es' | amTimeAgo }}
+    </p>
+</div>

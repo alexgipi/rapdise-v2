@@ -1,0 +1,95 @@
+<div class="zona-mi-toast bottom-derecha">
+
+</div>
+
+<div class="ui-block" style="margin-top: 15px;">
+  <div class="news-feed-form">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item" (click)="cambiarTipoPub('texto');">
+        <a class="nav-link active inline-items" data-toggle="tab" href="#home-1" role="tab" aria-expanded="true">
+
+          <i class="fa fa-pencil-square-o"></i>
+
+          <span>Texto</span>
+        </a>
+      </li>
+
+      <li class="nav-item" (click)="cambiarTipoPub('imagen');">
+        <a class="nav-link inline-items" data-toggle="tab" href="#home-1" role="tab" aria-expanded="true">
+
+          <i class="fa fa-camera"></i>
+          <!-- <svg class="olymp-camera-icon" data-toggle="modal" data-target="#update-header-photo"><use xlink:href="assets/icons/icons.svg#olymp-camera-icon"></use></svg> -->
+
+          <span>Imagen</span>
+        </a>
+      </li>
+
+      <li class="nav-item" (click)="cambiarTipoPub('video');">
+        <a class="nav-link inline-items" data-toggle="tab" href="#home-1" role="tab" aria-expanded="true">
+
+          <i class="fa fa-youtube-play"></i>
+
+          <span>Video</span>
+        </a>
+      </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div class="tab-pane active" id="home-1" role="tabpanel" aria-expanded="true" *ngIf="tipoPublicacion == 'texto'">
+        <form [formGroup]="formPubTexto"  (ngSubmit)="onSubmit(nuevaPubForm, $event);" style="display: flex;align-items: center;justify-content: space-between;">
+
+            <div class="flex width-100">  
+              <input type="text" placeholder="Escribe lo que te apetezca..." name="text" formControlName="publicationTextoText" required style="float: left;height: 65px;border-radius: 0 0 0 5px;border: none;width: 70%;">
+            </div>
+            <button type="submit" [disabled]="!formPubTexto.valid"  style="margin-right: 20px;padding: 6px 17px;border: none;border-radius: 5px;color: #fff;background: #515365;">
+              Publicar
+            </button>
+
+        </form>
+      </div>
+
+      <div class="tab-pane" id="home-1" role="tabpanel" aria-expanded="true" *ngIf="tipoPublicacion == 'imagen'">
+
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit(nuevaPubForm, $event);" style="display: flex;align-items: center;justify-content: space-between;">
+            
+          <div class="flex width-100">
+            <label *ngIf="hayImagen != true" for="add-foto-pub" class="options-message flex" data-toggle="tooltip" data-placement="top"   data-original-title="ADD PHOTOS" style="padding: 5px 12px;background: #609062;color: #fff;border-radius: 6px;margin-left: 10px;">
+              <span>Subir imagen</span>
+            </label>
+
+            <input class="display-none" type="file" id="add-foto-pub" (change)="fileChangeEvent($event)">
+
+            <div *ngIf="imageSrc && hayImagen == true"  id="vista-previa-img-pub">
+                <img id="blah" [src]="imageSrc" style="height: 65px;width: 65px;object-fit: cover;">
+            </div>
+
+            <input type="text" placeholder="Escribe algo sobre la imagen..." formControlName="publicationImagenText" class="form-control" required style="float: left;height: 65px;border-radius: 0 0 0 5px;border: none;width: 70%;">
+          </div>
+            
+          <button [class.display-none]="hayImagen != true"  type="submit" style="margin-right: 20px;padding: 6px 17px;border: none;border-radius: 5px;color: #fff;background: #515365;">Publicar</button>
+
+        </form>
+      </div>
+
+      <div class="tab-pane" id="home-1" role="tabpanel" aria-expanded="true" *ngIf="tipoPublicacion == 'video'">
+        <form [formGroup]="form" (ngSubmit)="onSubmit(nuevaPubForm, $event);" style="display: flex;align-items: center;justify-content: space-between;">
+            <img id="img-miniatura-yt" [class.display-none]="!srcMiniaturaVideo" [src]="srcMiniaturaVideo" alt="" style="height: 70px;margin-left: 10px;border-radius: 4px;">
+            <input [class.display-none]="videoYoutube" type="url" id="s_url" formControlName="s_url" (keyup)="valueEnlaceYoutube($event.target.value)" placeholder="Introduce un enlace de YouTube" style="float: left;height: 65px;border-radius: 0 0 0 5px;border: none;width: 70%;">
+            <div style="color:red" *ngIf="s_url.value && s_url.invalid">
+                not a valid URL
+              </div>
+
+    
+            <textarea *ngIf="videoYoutube" formControlName="publicationVideoText" id="text" type="text" placeholder="Escribe algo sobre el video..." name="text"  class="form-control" required style="float: left;height: 65px;border-radius: 0 0 0 5px;border: none;width: 70%;resize: none;min-height: 100px;">
+            </textarea>
+            
+            <button type="submit" *ngIf="videoYoutube" style="margin-right: 20px;padding: 6px 17px;border: none;border-radius: 5px;color: #fff;background: #515365;">Publicar</button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

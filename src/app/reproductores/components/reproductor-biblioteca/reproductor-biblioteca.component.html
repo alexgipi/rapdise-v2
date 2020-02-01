@@ -1,0 +1,271 @@
+
+<div class="reproductor-general-img-y-player" *ngIf="beat">
+    <caratula-biblioteca (click)="playPauseReproductor();" [ajustesCaratula]="beat.ajustesCaratula" [imagenBeat]="beat.image"></caratula-biblioteca>
+    
+    <div class="capa-controles-player capa-activa" [class.capa-activa]="sonando != true">
+        <div class="control-top">
+            <div class="flex control-top-izq">
+                <div style="display: flex;" *ngIf="identity && identity.role == 'ROL_ADMIN'">
+                    <boton-destacar-contenido [tipo]="'beat'" [beat]="beat"></boton-destacar-contenido>
+            
+                    <boton-destacar-usuario [usuarioDestacadoEn]="'productor'" [usuario]="beat.user"></boton-destacar-usuario>
+                </div>
+            </div>
+
+            <div class="flex control-top-der">
+                <i class="fa fa-ellipsis-v"></i>
+            </div>
+        </div>
+        
+        <div class="control-central">
+            <i (click)="cambiarBeat('anterior')" class="fa fa-step-backward"></i>
+            <i *ngIf="sonando != true" (click)="playReproductor();" class="fa fa-play"></i>
+            <i *ngIf="sonando" (click)="pauseReproductor();" class="fa fa-pause"></i>
+            <i (click)="cambiarBeat('siguiente')" class="fa fa-step-forward"></i>
+        </div>
+
+        <div class="control-bottom">
+            <div class="flex control-bottom-izq">
+                <div aria-label="+1 Reputación" class="btn-pub-reputacion flex hint--bottom hint--rounded hint--bounce">
+                    <i class="fa fa-shield"></i>
+                    <span>
+                        <i class="fa fa-plus" style="font-size: 11px;"></i>1 
+                    </span>
+                </div>
+            </div>
+            <div class="flex control-bottom-der">
+                <i (click)="descargar(beat.file)" class="fa fa-download"></i>
+                <i class="fa fa-shopping-cart"></i>
+                <i class="mdi mdi-playlist-add"></i>
+                <i class="fa fa-user"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="player-rep-general">
+        <div class="barra-control-player">
+            <div style="height: 100%;display: flex;align-items: center;padding: 0 16px 0 12px;font-weight: bold;">
+                <time id="tiempo-actual-beat-rep-general">0:00</time>
+            </div>
+            <!-- <div (click)="activarDesactivarBeatAleatorio();" style="height: 100%;display: flex;align-items: center;padding: 0 6px;font-weight: bold;padding-right: 16px;">
+                <i id="btn-beat-aleatorio" class="fa fa-random" style="font-weight: normal;font-size: 1.05em;"></i>
+            </div>
+            <div (click)="activarDesactivarBeatEnBucle();" style="height: 100%;display: flex;align-items: center;padding: 0 6px;font-weight: bold;padding-right: 16px;">
+                <i class="fa fa-retweet btn-bucle-rep-general" style="font-weight: normal;font-size: 1.05em;"></i>
+            </div> -->
+
+            <div class="mi-barra-player" id="mi-barra-player-1">
+                <div class="posicion-barra-cursor">
+                    <div id="tooltip-nuevo-tiempo-barra"></div>
+                </div>
+                    
+                <div class="mi-barra-tiempo-actual">
+                    <div style="position:relative;display:flex;height: 100%;align-items: center;">
+                        <span></span>
+                    </div>
+                </div>
+    
+                <audio src="" id="audio-reproductor-general"></audio>
+                
+            </div>
+            <div style="font-size: 14px;padding: 0 12px 0 16px;min-width: 74px;">
+                {{beat.duration}}
+            </div>     
+        </div>
+    </div>
+</div>
+
+<div class="botones-player-listado-beats">
+    <i class="fa fa-random"></i>
+    <i (click)="cambiarBeat('anterior')" class="fa fa-step-backward"></i>
+    <i *ngIf="sonando == false" (click)="playReproductor()" class="fa fa-play"></i>
+    <i *ngIf="sonando" (click)="pauseReproductor()" class="fa fa-pause"></i>
+    <i (click)="cambiarBeat('siguiente')" class="fa fa-step-forward"></i>
+    <i (click)="activarDesactivarBeatEnBucle()" class="fa fa-retweet btn-bucle-player"></i>
+</div>
+
+<div class="mas-info-beat-seleccionado-player" *ngIf="beat">
+
+    <div class="detalles-beat-seleccionado" style="float: left;">
+        <div class="nombre-beat-autor ">
+            <div class="flex">
+                <img *ngIf="beat.user.image" alt="{{beat.user.nick}}" src="{{url + 'get-image-user/' + beat.user.image}}">
+                <div class="info-autor-beat-seleccionado">
+                    <div class="autor-beat">
+                        {{beat.user.nick}}
+                        <span *ngIf="siguiendo == false" (click)="seguirUsuario(beat.user._id)" class="seguir-productor">Seguir</span>
+                        <span *ngIf="siguiendo" (click)="dejarDeSeguirUsuario(beat.user._id)" class="seguir-productor siguiendo">Siguiendo</span>
+                    </div>
+                    <div class="flex">
+                        <span class="nombre-beat" style="display: -webkit-box;-webkit-box-orient: vertical;text-overflow: ellipsis;-webkit-line-clamp: 1;">
+                                {{ beat.name || 'biblioteca.subir-bases.form.placeholder-titulo' | translate }}
+                        </span>
+                    </div>
+                    <div class="mas-info-beat">
+                        <!-- <div style="display: flex;align-items: center;justify-content: center;left: 50%;top: -39px;background: #fff;padding: 4px 12px 4px 5px;border-radius: 60px;border: 1px solid #ddd;">
+                            <svg _ngcontent-qsl-c0="" height="511pt" style="height: 18px;width: 18px;margin-right: 8px;/* margin-left: 10px; */" version="1.1" viewBox="-38 0 511 511.99956" width="511pt" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-qsl-c0="" id="surface1"><path _ngcontent-qsl-c0="" d="M 413.476562 341.910156 C 399.714844 379.207031 378.902344 411.636719 351.609375 438.289062 C 320.542969 468.625 279.863281 492.730469 230.699219 509.925781 C 229.085938 510.488281 227.402344 510.949219 225.710938 511.289062 C 223.476562 511.730469 221.203125 511.96875 218.949219 512 L 218.507812 512 C 216.105469 512 213.691406 511.757812 211.296875 511.289062 C 209.605469 510.949219 207.945312 510.488281 206.339844 509.9375 C 157.117188 492.769531 116.386719 468.675781 85.289062 438.339844 C 57.984375 411.6875 37.175781 379.277344 23.433594 341.980469 C -1.554688 274.167969 -0.132812 199.464844 1.011719 139.433594 L 1.03125 138.511719 C 1.261719 133.554688 1.410156 128.347656 1.492188 122.597656 C 1.910156 94.367188 24.355469 71.011719 52.589844 69.4375 C 111.457031 66.152344 156.996094 46.953125 195.90625 9.027344 L 196.246094 8.714844 C 202.707031 2.789062 210.847656 -0.117188 218.949219 0.00390625 C 226.761719 0.105469 234.542969 3.007812 240.773438 8.714844 L 241.105469 9.027344 C 280.023438 46.953125 325.5625 66.152344 384.429688 69.4375 C 412.664062 71.011719 435.109375 94.367188 435.527344 122.597656 C 435.609375 128.386719 435.757812 133.585938 435.988281 138.511719 L 436 138.902344 C 437.140625 199.046875 438.554688 273.898438 413.476562 341.910156 Z M 413.476562 341.910156 " style="stroke:none;fill-rule:nonzero;fill: rgb(193, 193, 193);fill-opacity:1;"></path><path _ngcontent-qsl-c0="" d="M 413.476562 341.910156 C 399.714844 379.207031 378.902344 411.636719 351.609375 438.289062 C 320.542969 468.625 279.863281 492.730469 230.699219 509.925781 C 229.085938 510.488281 227.402344 510.949219 225.710938 511.289062 C 223.476562 511.730469 221.203125 511.96875 218.949219 512 L 218.949219 0.00390625 C 226.761719 0.105469 234.542969 3.007812 240.773438 8.714844 L 241.105469 9.027344 C 280.023438 46.953125 325.5625 66.152344 384.429688 69.4375 C 412.664062 71.011719 435.109375 94.367188 435.527344 122.597656 C 435.609375 128.386719 435.757812 133.585938 435.988281 138.511719 L 436 138.902344 C 437.140625 199.046875 438.554688 273.898438 413.476562 341.910156 Z M 413.476562 341.910156 " style="stroke:none;fill-rule:nonzero;fill: rgb(172, 172, 172);fill-opacity:1;"></path></g></svg>
+                            <b style="font-size: 1.1em;line-height: 1;color: #777;">{{beat.likes}}</b>
+                        </div> -->
+
+                        <div *ngIf="beat.style && beat.style.length > 0" class="estilos-beat-reproductor">
+                            <span>{{beat.style[0]}}</span>
+                            <span *ngIf="beat.style.length == 2 || beat.style.length == 3">{{beat.style[1]}}</span>
+                            <span *ngIf="beat.style.length == 3">{{beat.style[2]}}</span>
+                        </div>
+                        <div class="etiquetas-beat-reproductor" style="font-size: 14px;display: flex !important;align-items: center;font-weight: normal;line-height: 1.4;">
+                            <span *ngFor="let etiqueta of beat.etiquetas; let i = index" style="margin-right: 6px;">
+                               {{etiqueta.valor}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="control-bottom" style="float: left;width: 100%;padding: 20px 0 0 20px;">
+        <div class="flex control-bottom-der">
+            
+            <div *ngIf="beat.uso == 'libre'" aria-label="Descargar" (click)="descargar(beat.file)" class="btn-accion-reproductor">
+                <i class="fa fa-download"></i>
+                <span>Descargar</span>
+            </div>
+            
+            <a *ngIf="beat.enlace != null" [href]="beat.enlace" rel="nofollow" target="_blank"  aria-label="Comprar beat" class="hint--top hint--rounded hint--bounce">
+                <div class="btn-accion-reproductor">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span>Comprar</span>
+                </div>
+            </a>
+
+            <div class="btn-accion-reproductor" (click)="abrirCerrarModalAddLista();">
+                <i class="mdi mdi-playlist-add"></i>
+                <span>Guardar</span>
+            </div>
+        
+        </div>
+    </div>
+
+    <div class="mas-beats-reproductor-biblioteca">
+        <div class="flex" style="margin-bottom: 15px;">
+            <h3 class="h5">
+                Ultimos beats de {{beat.user.nick}}
+            </h3>
+            <span>Ver todos</span>
+        </div>
+        <ul class="items-mas-beats-reproductor">
+            
+            <div *ngFor="let beatUsuario of beatsUsuario" class="card card-carousel card-beat radius shadowDepth1" [class.activo]="sonando && beatUsuario._id === beat._id">
+                <i (click)="getBeat(beatUsuario._id, true);" *ngIf="sonando == false || sonando && beat._id != beatUsuario._id"  class="fa fa-play btn-play-card" style="font-size: 22px;"></i>
+                <i (click)="pauseReproductor();" *ngIf="sonando && beat._id == beatUsuario._id" [class.activo]="sonando && beat._id == beatUsuario._id" class="fa fa-pause btn-play-card" style="font-size: 22px;"></i>
+                
+                <div class="card__image border-tlr-radius">
+                    <div class="square-box" style="border-radius: 4px;">
+                        <div class="square-content">
+                            <img *ngIf="beatUsuario.image != null" alt="" src="{{url + 'get-imagen-beat/' + beatUsuario.image }}">
+                            <img *ngIf="beatUsuario.image == null" alt="" src="{{url + 'get-image-user/' + beatUsuario.user.image }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="card__content card__padding">
+                    <article class="card__article">
+                        <h2 style="font-size: 1.1em;"><a href="#">{{beatUsuario.name}}</a></h2>
+                    </article>
+                    <div id="player-card-beat-{{beatUsuario._id}}" class="card__player">
+                        
+                        <div class="contenedor-barra-player width-100" id="barra-beat-{{beatUsuario._id}}">
+                            <div class="barra-player">
+                                <span class="tiempo-actual-barra-player">
+                                    <div class="flex relative width-100"><i></i>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="card__action">
+                    <div class="card__author">
+                        <div class="card__author-content">
+                            <span style="color: #fff;">
+                                <i class="fa fa-play" style="margin-right: 10px;"></i> <span id="reproducciones-beat-{{beatUsuario._id}}">{{beatUsuario.reproducciones}}</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </ul>
+    </div>
+
+</div>
+
+
+<div class="modal-guardar-beat-lista">
+    <div class="ofuscador-modal-lista" (click)="abrirCerrarModalAddLista();"></div>
+
+    <div style="display: flex;justify-content: center;align-items: center;z-index: 9;">
+        <div class="guardar-beat-lista">
+            <div class="cabecera-add-lista">
+                <span>Guardar beat en...</span>
+                <i class="fa fa-close" (click)="abrirCerrarModalAddLista();"></i>
+            </div>
+            
+            <ul class="listado-listas-add" *ngIf="totalListasUsuario > 0">
+                <li *ngFor="let lista of listasUsuario; let i = index" [title]="lista.nombre" (click)="seleccionarDeseleccionarLista(lista);" id="lista-{{lista._id}}">
+                    <div class="flex">								
+                        <span class="mi-checkbox verde" style="margin:0 15px 0 0;">
+                            <i class="fa fa-check"></i>
+                        </span>
+                        {{lista.nombre}}
+                    </div>
+                    <i *ngIf="lista.estado == 'publica'" class="fa fa-globe"></i>
+                    <i *ngIf="lista.estado == 'privada'" class="fa fa-lock"></i>
+                </li>
+    
+                
+            </ul>
+    
+            <div (click)="abrirFormCrearLista();" class="crear-lista-guardar-beat-lista">
+                <i class="fa fa-plus"></i>	<span>Crear nueva lista</span>	
+            </div>
+    
+            <form #listaForm="ngForm" (ngSubmit)="crearLista(listaForm);" class="form-crear-lista-guardar-beat-lista" autocomplete="off">
+                <div class="flex flex-wrap" style="margin-bottom: 15px;">
+                    <label for="nombre-lista">Nombre</label>
+                    <input type="text" required name="nombre" #nombre="ngModel" [(ngModel)]="lista.nombre" placeholder="Escribe el nombre de la nueva lista" id="nombre-lista" autocomplete="off" pattern="[^<>]*" maxlength="100">
+                </div>
+
+                <!-- <div class="flex flex-wrap" style="margin-bottom: 15px;">
+                    <label for="privacidad-lista">Tipo de lista</label>
+                    <div class="mi-select">
+                        <input type="text" required name="tipo" #tipo="ngModel" [(ngModel)]="lista.tipo" value="General" id="tipo-lista" autocomplete="off" autocorrect="off" readonly>
+                        <i class="fa fa-sort"></i>
+                    </div>								
+                </div> -->
+
+                <div class="flex flex-wrap" style="margin-bottom: 15px;">
+                    <label for="privacidad-lista">Privacidad</label>
+                    <div class="mi-select">
+                        <input type="text" required name="estado" #estado="ngModel" [(ngModel)]="lista.estado" value="Pública" id="privacidad-lista" autocomplete="off" autocorrect="off" readonly>
+                        <i class="fa fa-sort"></i>
+                    </div>								
+                </div>
+    
+                <div class="flex flex-wrap" style="margin-bottom: 15px;">
+                    <label for="descripcion-lista">Descripción (Opcional)</label>
+                    <input type="text" name="descripcion" #descripcion="ngModel" [(ngModel)]="lista.descripcion" placeholder="Puedes añadir una descripción" id="descripcion-lista" autocomplete="off" autocorrect="off">
+                </div>
+    
+                <div>
+                    <button type="submit" [disabled]="!listaForm.form.valid">Crear</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<div class="zona-mi-toast bottom-izquierda">
+
+</div>

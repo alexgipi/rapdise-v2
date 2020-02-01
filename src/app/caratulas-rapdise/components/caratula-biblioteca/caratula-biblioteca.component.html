@@ -1,0 +1,49 @@
+<div className="fondo-caratula {{ajustesCaratula.colorFondo}}">
+    <img *ngIf="imagenBeat != null" [src]="url + 'get-imagen-beat/' + imagenBeat">
+</div>
+
+<div class='ondas1-caratula-rapdise' *ngIf="ajustesCaratula.ondas1 == true">
+    <div class='onda-caratula -primera'></div>
+    <div class='onda-caratula -segunda'></div>
+    <div class='onda-caratula -tercera'></div>
+</div>
+
+<div *ngIf="ajustesCaratula.mostrarLogo == true" class="logo-caratula floating">
+    <img alt="Improvisame" height="47px" src="assets/logo-blanco.svg">
+    <svg [ngStyle]="{'opacity': ajustesCaratula.opacidadBarras}" height="80" viewBox="0 0 55 80" width="55" xmlns="http://www.w3.org/2000/svg"
+    class="barras-sonando"
+    [class.blanco]="ajustesCaratula.colorBarras == 'blanco'"
+    [class.negro]="ajustesCaratula.colorBarras == 'negro'"
+    [class.naranja]="ajustesCaratula.colorBarras == 'naranja'"
+    [class.amarillo]="ajustesCaratula.colorBarras == 'amarillo'">
+        <g transform="matrix(1 0 0 -1 0 80)">
+            <rect height="34" rx="3" width="10">
+                <animate attributeName="height" begin="0s" calcMode="linear" dur="4.3s" repeatCount="indefinite" values="20;45;57;80;64;32;66;45;64;23;66;13;64;56;34;34;2;23;76;79;20" class="ng-star-inserted"></animate>
+            </rect>
+            <rect height="12.3141" rx="3" width="10" x="15">
+                <animate attributeName="height" begin="0s" calcMode="linear" dur="2s" repeatCount="indefinite" values="80;55;33;5;75;23;73;33;12;14;60;80" class="ng-star-inserted"></animate>
+            </rect>
+            <rect height="49.262" rx="3" width="10" x="30">
+                <animate attributeName="height" begin="0s" calcMode="linear" dur="1.4s" repeatCount="indefinite" values="50;34;78;23;56;23;34;76;80;54;21;50" class="ng-star-inserted"></animate>
+            </rect>
+            <rect height="32.2722" rx="3" width="10" x="45">
+                <animate attributeName="height" begin="0s" calcMode="linear" dur="2s" repeatCount="indefinite" values="30;45;13;80;56;72;45;76;34;23;67;30" class="ng-star-inserted"></animate>
+            </rect>
+        </g>
+    </svg>
+</div>
+
+
+<div *ngIf="ajustesCaratula.ondas2 == true" class="waveWrapper waveAnimation">
+    <div class="waveWrapperInner bgTop floating">
+        <div class="wave waveTop" style="background-image: url('assets/ondas-rapdise/ondas-movimiento-2.svg')"></div>
+    </div>
+    <div class="waveWrapperInner bgMiddle floating">
+        <div class="wave waveMiddle" style="background-image: url('assets/ondas-rapdise/ondas-movimiento.svg')"></div>
+    </div>
+    <div class="waveWrapperInner bgBottom floating">
+        <div class="wave waveBottom" style="background-image: url('assets/ondas-rapdise/ondas-top.svg')"></div>
+    </div>
+</div>
+
+<!-- http://front-end-noobs.com/jecko/img/wave-mid.png -->

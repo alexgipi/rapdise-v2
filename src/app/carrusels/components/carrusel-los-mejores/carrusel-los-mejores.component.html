@@ -1,0 +1,92 @@
+<ul class="los-mejores">
+    <div class="card-el-mejor" *ngIf="mejorEnFreestyle">
+        <div class="additional">
+            <div class="user-card-el-mejor">
+                <div class="level center" style="background: transparent;">
+                        <svg xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" _ngcontent-ahs-c1="" height="472.521px" id="Capa_1" style="fill: #fff;height: 33px;width: 33px;display: flex;justify-content: center;position: relative;" version="1.1" viewBox="0 0 472.521 472.521" width="472.521px" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px"><g _ngcontent-bat-c2="" _ngcontent-ahs-c1=""><path _ngcontent-bat-c2="" _ngcontent-ahs-c1="" d="M436.578,159.876c-35.857-6.394-69.801-23.349-96.838-50.344c-27.008-27.022-43.944-60.947-50.315-96.812   c36.306-22.745,88.937-14.689,125.391,21.753C451.246,70.915,459.297,123.555,436.578,159.876z M411.525,184.934   c-34.438-9.625-66.721-27.482-93.226-53.96c-26.476-26.505-44.337-58.787-53.914-93.211   c-22.714,36.321-14.659,88.934,21.754,125.374C322.594,199.563,375.191,207.632,411.525,184.934z M267.331,346.338   c-45.294,0-77.679,28.306-106.255,53.271c-31.571,27.601-58.936,51.533-99.197,39.124c-7.966-5.866-8.202-10.66-8.291-12.288   c-0.564-10.902,12.644-25.529,19.131-30.92c0.8-0.653,1.255-1.54,1.881-2.338c10.631,3.701,22.845,1.563,31.362-6.931   L312.2,216.486c-17.058-7.241-33.313-17.723-47.482-31.911c-14.192-14.186-24.643-30.459-31.872-47.485L63.093,343.347   c-7.552,7.551-9.743,18.001-7.685,27.713c-0.637,0.388-1.349,0.564-1.941,1.041c-3.244,2.665-31.584,26.771-30.177,55.762   c0.504,10.193,4.947,24.908,23.352,37.229l3.629,1.773c11.803,3.939,22.803,5.656,33.141,5.656   c40.335,0,70.424-26.294,97.626-50.077c26.934-23.546,52.386-45.784,86.294-45.784c78.159,0,138.659,83.751,139.279,84.577   c4.826,6.902,14.338,8.438,21.119,3.589c6.842-4.831,8.438-14.281,3.612-21.114C428.527,439.74,361.274,346.338,267.331,346.338z"></path></g></svg>
+                </div>
+                <!-- <div class="points center" style="background: white;color: #ee786e;font-weight: bold;font-size: 1em;">
+                    Seguir
+                </div> -->
+                <a [routerLink]="['/',mejorEnFreestyle.nick]">
+                    <img src="{{url + 'get-image-user/' + mejorEnFreestyle.image}}" class="center" alt="{{mejorEnFreestyle.nick}}">
+                </a>
+            </div>
+        </div>
+        <div class="general">
+            <a [routerLink]="['/',mejorEnFreestyle.nick]"><h3>{{mejorEnFreestyle.nick}}</h3></a>
+            <i  class="fa fa-star" style="position: absolute;right: 12px;top: 12px;width: 25px;height: 25px;display: flex;align-items: center;justify-content: center;border-radius: 99%;background: #fff;border: 2px solid;color: #d2d2d2;font-size: 16px;font-weight: normal;"></i>
+            <p>
+                <strong>Nº de Freestyles:</strong> {{mejorEnFreestyle.totalFreestyles}}
+            </p>
+            <p>
+                <strong>Reproducciones:</strong> 129
+            </p>
+            <p>
+                <strong>Reputación:</strong> {{mejorEnFreestyle.reputacionFreestyle}}
+            </p>
+            <span class="titulo-el-mejor">El mejor freestyler de Rapdise</span>
+        </div>
+    </div>
+
+    <div class="card-el-mejor" *ngIf="mejorEnBatallas">
+        <div class="additional">
+            <div class="user-card-el-mejor">
+                <div class="level center" style="background: transparent;">
+                        <svg xml:space="preserve" xmlns:xml="http://www.w3.org/XML/1998/namespace" id="Capa_1" style="height: 35px;width: 35px;display: flex;justify-content: center;position: relative;left: 5px;top: 3px;/* margin-left: 15px; */fill: #fff;" version="1.1" viewBox="0 0 512.003 512.003" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px"><g _ngcontent-bat-c2="" _ngcontent-c1="" transform="matrix(1 0 0 -1 0 45)"><polygon _ngcontent-bat-c2="" _ngcontent-c1="" points="68.267,30.31 11.378,30.31 11.378,-26.579 273.068,-288.269 329.957,-231.38"></polygon><polygon _ngcontent-bat-c2="" _ngcontent-c1="" points="11.378,30.311 11.378,-26.578 273.067,-288.268 301.512,-259.824"></polygon><g _ngcontent-bat-c2="" _ngcontent-c1=""><path _ngcontent-bat-c2="" _ngcontent-c1="" d="M 365.711 -345.48 c 8.886 -8.886 20.89 -11.287 26.817 -5.37 c 5.928 5.928 3.527 17.932 -5.359 26.829 l -59.006 69.723 c -8.875 8.886 -20.901 11.287 -26.806 5.359 l -10.74 -10.718 c -5.916 -5.939 -3.515 -17.932 5.37 -26.817 L 365.711 -345.48 Z"></path><path _ngcontent-bat-c2="" _ngcontent-c1="" d="M 255.757 -302.569 c 6.668 -6.668 17.477 -6.668 24.133 0 l 64.376 64.353 c 6.668 6.668 6.656 17.477 0 24.144 c -6.668 6.656 -17.477 6.668 -24.144 0 l -64.364 -64.364 C 249.101 -285.104 249.101 -295.913 255.757 -302.569"></path><path _ngcontent-bat-c2="" _ngcontent-c1="" d="M 356.336 -362.912 c 6.656 -6.668 17.465 -6.668 24.133 0 l 24.133 24.133 c 6.668 6.668 6.668 17.477 0 24.144 c -6.668 6.656 -17.465 6.668 -24.133 0 l -24.133 -24.144 C 349.669 -345.437 349.669 -356.246 356.336 -362.912"></path><polygon _ngcontent-bat-c2="" _ngcontent-c1="" points="79.639,-231.38 136.525,-288.269 398.224,-26.579 398.224,30.31 341.34,30.31"></polygon></g><polygon _ngcontent-bat-c2="" _ngcontent-c1="" points="108.087,-259.827 136.534,-288.269 398.224,-26.579 398.224,30.31"></polygon><g _ngcontent-bat-c2="" _ngcontent-c1=""><g _ngcontent-bat-c2="" _ngcontent-c1=""><polygon _ngcontent-bat-c2="" _ngcontent-c1="" points="17.071,-350.85 17.072,-350.851 17.071,-350.849"></polygon><polygon _ngcontent-bat-c2="" _ngcontent-c1="" points="113.611,-286.475 81.433,-254.302 29.807,-315.305 52.6,-338.108"></polygon></g><path _ngcontent-bat-c2="" _ngcontent-c1="" d="M 129.707 -302.568 c 6.656 -6.668 17.477 -6.668 24.133 0 c 6.656 6.656 6.656 17.465 0 24.133 l -64.364 64.364 c -6.668 6.668 -17.465 6.656 -24.133 0 c -6.668 -6.668 -6.668 -17.477 0 -24.144 l 16.09 -16.086 l 32.179 -32.173 L 129.707 -302.568 Z"></path><path _ngcontent-bat-c2="" _ngcontent-c1="" d="M 53.272 -338.781 l -0.673 0.673 l -22.792 22.803 l -0.668 0.668 c -6.668 6.668 -17.477 6.656 -24.144 0 c -3.325 -3.331 -4.992 -7.695 -4.996 -12.06 v -0.024 c 0.002 -4.365 1.666 -8.729 4.996 -12.06 l 12.075 -12.069 l 0.001 -0.001 l 12.068 -12.062 c 6.656 -6.668 17.477 -6.668 24.133 0 C 59.928 -356.246 59.928 -345.437 53.272 -338.781 Z"></path></g></g></svg>
+                </div>
+                <!-- <div class="points center" style="background: white;color: #ee786e;font-weight: bold;font-size: 1em;">
+                    Seguir
+                </div> -->
+                <a [routerLink]="['/',mejorEnBatallas.nick]">
+                    <img src="{{url + 'get-image-user/' + mejorEnBatallas.image}}" class="center" alt="{{mejorEnBatallas.nick}}">
+                </a>
+            </div>
+        </div>
+        <div class="general">
+            <i class="fa fa-star" style="position: absolute;right: 12px;top: 12px;width: 25px;height: 25px;display: flex;align-items: center;justify-content: center;border-radius: 99%;background: #fff;border: 2px solid;color: #d2d2d2;font-size: 16px;font-weight: normal;"></i>
+            
+            <a [routerLink]="['/',mejorEnBatallas.nick]"><h3>{{mejorEnBatallas.nick}}</h3></a>
+            <p>
+                <strong>Nº de Batallas:</strong> {{mejorEnBatallas.totalBatallas}}
+            </p>
+            <p>
+                <strong>Votos:</strong> 129
+            </p>
+            <p>
+                <strong>Reputación:</strong> {{mejorEnBatallas.reputacionBatallas}}
+            </p>
+            <span class="titulo-el-mejor">El mejor en batallas de Rapdise</span>
+        </div>
+    </div>
+
+    <div class="card-el-mejor" *ngIf="mejorEnBeats">
+        <div class="additional">
+            <div class="user-card-el-mejor">
+                <div class="level center" style="background: transparent;">
+                    <svg height="511.99899pt" style="height: 35px;width: 35px;display: flex;justify-content: center;position: relative;fill: #fff;" viewBox="1 1 511.99899 511.99899" width="511.99899pt" xmlns="http://www.w3.org/2000/svg"><path _ngcontent-bat-c2="" d="m437.019531 74.980469c-48.351562-48.351563-112.640625-74.980469-181.019531-74.980469s-132.667969 26.628906-181.019531 74.980469c-48.351563 48.351562-74.980469 112.640625-74.980469 181.019531s26.628906 132.667969 74.980469 181.019531c48.351562 48.351563 112.640625 74.980469 181.019531 74.980469s132.667969-26.628906 181.019531-74.980469c48.351563-48.351562 74.980469-112.640625 74.980469-181.019531s-26.628906-132.667969-74.980469-181.019531zm-181.019531 406.785156c-124.488281 0-225.765625-101.277344-225.765625-225.765625s101.277344-225.765625 225.765625-225.765625 225.765625 101.277344 225.765625 225.765625-101.277344 225.765625-225.765625 225.765625zm0 0"></path><path _ngcontent-bat-c2="" d="m256 207.621094c-26.675781 0-48.375 21.703125-48.375 48.378906s21.699219 48.375 48.375 48.375 48.378906-21.699219 48.378906-48.375-21.703125-48.378906-48.378906-48.378906zm0 66.519531c-10.003906 0-18.140625-8.136719-18.140625-18.140625s8.136719-18.140625 18.140625-18.140625 18.140625 8.136719 18.140625 18.140625-8.136719 18.140625-18.140625 18.140625zm0 0"></path><path _ngcontent-bat-c2="" d="m256 139.085938c-64.464844 0-116.910156 52.449218-116.910156 116.914062s52.445312 116.910156 116.910156 116.910156 116.914062-52.445312 116.914062-116.910156-52.449218-116.914062-116.914062-116.914062zm0 203.589843c-47.792969 0-86.675781-38.882812-86.675781-86.675781s38.882812-86.675781 86.675781-86.675781 86.675781 38.882812 86.675781 86.675781-38.882812 86.675781-86.675781 86.675781zm0 0"></path><path _ngcontent-bat-c2="" d="m256 69.546875c-8.347656 0-15.117188 6.765625-15.117188 15.117187 0 8.347657 6.769532 15.117188 15.117188 15.117188 86.140625 0 156.21875 70.078125 156.21875 156.21875 0 8.347656 6.769531 15.117188 15.117188 15.117188 8.351562 0 15.117187-6.769532 15.117187-15.117188 0-102.8125-83.640625-186.453125-186.453125-186.453125zm0 0"></path><path _ngcontent-bat-c2="" d="m256 412.21875c-86.136719 0-156.21875-70.082031-156.21875-156.21875 0-8.351562-6.769531-15.117188-15.117188-15.117188-8.347656 0-15.117187 6.765626-15.117187 15.117188 0 102.808594 83.644531 186.453125 186.453125 186.453125 8.351562 0 15.117188-6.769531 15.117188-15.117187 0-8.347657-6.765626-15.117188-15.117188-15.117188zm0 0"></path></svg>
+                </div>
+                <!-- <div class="points center" style="background: white;color: #ee786e;font-weight: bold;font-size: 1em;">
+                    Seguir
+                </div> -->
+                <a [routerLink]="['/',mejorEnBeats.nick]">
+                    <img src="{{url + 'get-image-user/' + mejorEnBeats.image}}" class="center" alt="{{mejorEnBeats.nick}}">
+                </a>
+            </div>
+        </div>
+        <div class="general">
+            <i class="fa fa-star" style="position: absolute;right: 12px;top: 12px;width: 25px;height: 25px;display: flex;align-items: center;justify-content: center;border-radius: 99%;background: #fff;border: 2px solid;color: #d2d2d2;font-size: 16px;font-weight: normal;"></i>
+            <a [routerLink]="['/',mejorEnBeats.nick]"><h3>{{mejorEnBeats.nick}}</h3></a>
+            <p>
+                <strong>Nº de Bases:</strong> {{mejorEnBeats.totalBeats}}
+            </p>
+            <p>
+                <strong>Reproducciones:</strong> 129
+            </p>
+            <p>
+                <strong>Reputación:</strong> {{mejorEnBeats.reputacionBeats}}
+            </p>
+            <span class="titulo-el-mejor">El mejor productor de Rapdise</span>
+        </div>
+    </div>
+</ul>

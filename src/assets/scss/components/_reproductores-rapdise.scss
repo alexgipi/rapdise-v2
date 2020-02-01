@@ -1,0 +1,256 @@
+vg-scrub-bar-current-time .background {
+  background-color: #ff6b22 !important;
+}
+
+vg-scrub-bar-current-time {
+  z-index: 3;
+}
+
+vg-scrub-bar-buffering-time {
+  z-index: 2;
+}
+
+
+#reproductor-freestyle-rapdise {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+
+    .vjs-control-bar {
+      background: rgba(53, 53, 53, 0);
+      z-index: 999;
+      box-shadow: 0 0 370px inset #00000096, 0 0 30px #000000f5;
+    }
+}
+
+#reproductor-beat-freestyle-rapdise {
+  display: none;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: inherit;
+}
+.icon-angle-left:before {
+    content: "\f048";
+}
+.icon-angle-right:before {
+    content: "\f051";
+}
+
+.video-js .icon-angle-right, .video-js .icon-angle-left {
+    cursor: pointer;
+    -webkit-box-flex: none;
+    -moz-box-flex: none;
+    -webkit-flex: none;
+    -ms-flex: none;
+    flex: none;
+}
+
+.vjs-button > .vjs-icon-placeholder:before {
+  font-size: 14px !important;
+}
+
+
+.vjs-icon-play:before, .video-js .vjs-play-control .vjs-icon-placeholder:before, .video-js .vjs-big-play-button .vjs-icon-placeholder:before {
+  font-size: 20px !important;
+}
+
+.vjs-btn-anterior .icon-angle-left:before, 
+.vjs-btn-anterior .icon-angle-left:before {
+  font-size: 14px !important;
+}
+
+.vjs-mute-control span:before {
+  font-size: 17px;
+}
+
+
+
+//OVER SIGUIENTE
+.vjs-ended .over-reproduccion-siguiente {
+  visibility: visible;
+  opacity: 1;
+}
+.over-reproduccion-siguiente {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s;
+
+  &:after {
+    content:"";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 2;
+  }
+
+  &.activo {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .img-fondo-over-reproduccion {
+    object-fit: cover;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .contenido-over-reproduccion {
+    z-index: 3;
+    font-size: 1.8em;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+
+    .cuenta-atras-over-reproduccion {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      span {
+        width: 50px;
+        height: 50px;
+        justify-content: center;
+        align-items: center;
+        background: rgba(171, 171, 171, 0.4);
+        border-radius: 99%;
+        font-size: 20px;
+        display: none;
+
+        &.activo {
+          display: flex;
+        }
+      }
+    }
+
+    .titulo-over-siguiente {
+      margin-bottom: 30px;
+      font-size: 22px;
+    }
+
+    @media screen and (max-width: 600px) {
+      font-size: 20px;
+    }
+
+    .btn-over-reproduccion-siguiente {
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.71);
+      color: rgba(0, 0, 0, 0.64);
+      font-weight: bold;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+
+    .btn-over-reproduccion-cancelar {
+      padding: 10px 20px;
+      background: rgba(0, 0, 0, 0.33);
+      color: rgba(255, 255, 255, 0.64);
+      font-weight: bold;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+// PLUGINS
+.video-js .vjs-title-bar {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    opacity: 0;
+    font-size: 1.8em;
+    padding: .5em;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transition: all 0.3s;
+}
+  
+  /* 
+    Only show the title bar after playback has begun (so as not to hide
+    the big play button) and only when paused or when the user is 
+    interacting with the player.
+  */
+  .video-js.vjs-paused.vjs-has-started .vjs-title-bar,
+  .video-js.vjs-user-active.vjs-has-started .vjs-title-bar{
+    opacity: 1;
+  }
+
+
+  .vjs-modal-dialog .vjs-modal-dialog-content, .video-js .vjs-modal-dialog, .vjs-button > .vjs-icon-placeholder:before, .video-js .vjs-big-play-button .vjs-icon-placeholder:before {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.btn-guardar-player {
+  border-radius: 4px;
+  margin-left: 20px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.2em;
+  justify-content: center;
+  font-family: Roboto,-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+  color: #fff;
+  margin: 0;
+  padding: 0 20px;
+  border-right: 1px solid rgba(0,0,0,0.7);
+  border-left: 1px solid rgba(0,0,0,0.7);
+
+  i {
+    margin-right: 10px;
+  }
+}
+
+ul.listado-lista-reproduccion {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+
+  li {
+      padding: 10px;
+      cursor: pointer;
+
+      &.selected {
+          background-color: #dddddd;
+      }
+
+      &:hover {
+          background-color: #cce6ee;
+      }
+  }
+}

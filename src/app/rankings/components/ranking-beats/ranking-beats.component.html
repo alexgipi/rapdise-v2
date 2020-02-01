@@ -1,0 +1,40 @@
+<h1 class="h4">{{titulo}}</h1>
+<div class="mi-tabla">
+	<ul class="mi-tabla-items">
+
+		<li class="mi-tabla-item-vertical mi-tabla-header">
+			<div>
+				<li>#</li>
+				<li>Usuario</li>				
+			</div>
+			<div>
+				<li>Reputación de Beats</li>
+				<li>Nº Beats</li>
+				<li>Reproducciones</li>
+			</div>
+		</li>
+
+		<cdk-virtual-scroll-viewport class="viewport-section"  itemSize="55" style="height:500px;">
+			<li class="mi-tabla-item-vertical" *cdkVirtualFor="let user of users; let i = index">
+				<div>
+					<li>{{i+1}}</li>
+					<li>
+						<a [routerLink]="['/perfil', user.nick]">
+							<img src="{{url + 'get-image-user/' + user.image }}" *ngIf="user.image" style="border-radius:5px;width: 35px;height: 35px;margin-right: 10px;" class="img-responsive">
+	
+							<img src="assets/avatars/160419_092630_md9c8c671c7_avatar.png" *ngIf="!user.image" style="border-radius:5px;width: 35px;height: 35px;margin-right: 10px;" class="img-responsive">
+						</a>
+						{{user.nick}}
+					</li>				
+				</div>
+				<div>
+					<li>{{user.reputation}}</li>
+					<li>{{user.victorias}}</li>
+					<li>{{user.derrotas}}</li>
+				</div>
+			</li>
+		</cdk-virtual-scroll-viewport>
+
+		
+	</ul>
+</div>

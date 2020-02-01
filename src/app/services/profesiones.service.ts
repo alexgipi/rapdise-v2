@@ -1,0 +1,125 @@
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { GLOBAL } from './global';
+
+@Injectable()
+export class ProfesionesService {
+	public url:string;
+	public profesiones;
+
+	constructor(public _http: HttpClient){		
+		this.profesiones = [
+			'Abogado',
+            'Actriz',
+            'Administrador de fincas',
+            'Administrativo comercial',
+            'Administrativo de bancas',
+            'Agente de bolsa',
+            'Agente de seguros',
+            'Agente de viajes',
+            'Agrónomo',
+            'Analista de mercados',
+            'Animador sociocultural',
+            'Antropólogo',
+            'Archivero',
+            'Arqueólogo',
+            'Arquitecto',
+            'Asesor de empresas',
+            'Auxiliar de ayudas a domicilio',
+            'Bailarín',
+            'Bibliotecaria',
+            'Bióloga',
+            'Bombera',
+            'Botánica',
+            'Cámara',
+            'Cantante',
+            'Carpintero',
+            'Cartógrafo',
+            'Cocinero',
+            'Compositor',
+            'Consultor empresarial',
+            'Contable',
+            'Coreógrafo',
+            'Criminólogo',
+            'Decorador',
+            'Delineante',
+            'Deportista',
+            'Dietista',
+            'Director de cine',
+            'Director de teatro',
+            'Director de orquesta',
+            'Diseñador de ropa',
+            'Diseñador gráfico',
+            'Documentalista',
+            'Economista',
+            'Educador infantil',
+            'Electricista',
+            'Enfermera',
+            'Enfermero',
+            'Escenógrafa',
+            'Escritor',
+            'Escultor',
+            'Estadística',
+            'Esteticista',
+            'Estilista',
+            'Farmaceútica',
+            'Filóloga',
+            'Filósofa',
+            'Física',
+            'Fisioterapeuta',
+            'Fontanera',
+            'Fotógrafa',
+            'Funcionaria',
+            'Geógrafa',
+            'Geóloga',
+            'Gerente de empresas',
+            'Guardia de seguridad',
+            'Guardia forestal',
+            'Guionista',
+            'Higienista dental',
+            'Historiador',
+            'Hostelera',
+            'Ilustrador',
+            'Informador',
+            'Informático',
+            'Ingeniero',
+            'juez',
+            'jardinero',
+            'Locutor',
+            'Logopeda',
+            'Maquillador',
+            'Matemática',
+            'Mecánica',
+            'Médica',
+            'Metalúrgica',
+            'Militar',
+            'Modelo',
+            'Músico',
+            'Notario',
+            'Nutricionista',
+            'Pedagoga',
+            'Pediatra',
+            'Peluquera',
+            'Periodista',
+            'Pintor',
+            'Podóloga',
+            'Policía',
+            'Preparador',
+            'Procurador',
+            'Profesor',
+            'Psicóloga',
+            'Psiquiatra',
+            'Publicitaria',
+		];
+
+		//ultimo id 94
+	}
+
+	getProfesiones():Observable<any>{
+		let headers = new HttpHeaders().set('Content-Type', 'application/json')
+
+		return this.profesiones;
+	}
+	
+}

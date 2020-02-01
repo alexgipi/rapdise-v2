@@ -1,0 +1,70 @@
+{
+    "app": {
+        "barra-busqueda": {
+            "placeholder": "Buscar"
+        },
+        "select-idiomas" : {
+            "ingles": "Inglés",
+            "español": "Español"
+        }
+    },
+    "menu-izquierda": {
+        "inicio": "Inicio",
+        "batallas": "Batallas",
+        "freestyle": "Freestyle",
+        "bases": "Bases",
+        "entrenar": "Entrenar",
+        "rankings": "Rankings",
+        "mi-perfil": "Mi perfil",
+        "ajustes": "Ajustes"
+    },
+    "portada": {
+
+    },
+    "inicio": {
+
+    },
+    "biblioteca": {
+        "menu": {
+            "bases":"Bases",
+            "productores": "Productores",
+            "listas": "Listas",
+            "de-reproduccion": "de reproducción",
+            "subir-bases": "Subir bases"
+        },
+        "subir-bases": {
+            "titulo-pagina": "Sube tus bases a Rapdise y muestra tu talento como productor",
+            "form": {
+                "label-subir-archivo": "Subir archivo",
+                "btn-add-imagen": "Añadir imagen",
+                "btn-cambiar-imagen": "Cambiar imagen",
+                "btn-ajustar-recorte": "Ajustar recorte",
+                "label-titulo": "Título",
+                "placeholder-titulo": "Nombre de tu nueva base",
+                "label-estilos": "Estilos",
+                "option-estilos-otros": "Otros",
+                "placeholder-bpm": "Beats por minuto",
+                "placeholder-add-etiquetas": "Añadir etiquetas / Intro",
+                "placeholder-add-etiqueta": "Añadir etiqueta",
+                "label-limitacion-uso": "Tipo de uso",
+                "uso-libre": "Libre",
+                "uso-limitado": "Limitado",
+                "placeholder-limitacion-uso": "Especificar uso del beat",
+                "label-permitir-uso-en": "Permitir uso en:",
+                "uso-batallas": "Batallas",
+                "uso-freestyles": "Freestyles",
+                "uso-entreno": "Entrenos",
+                "label-enlace-compra": "Enlace de compra (Opcional)",
+                "label-descripcion": "Descripción (Opcional)",
+                "btn-publicar-base": "Publicar base",
+                "btn-guardar-cambios": "Guardar cambios"
+            },
+            "modal-recortar-imagen": {
+                "titulo": "Ajustar recorte de la imagen",
+                "btn-cerrar": "Cerrar",
+                "btn-cancelar": "Cancelar",
+                "btn-aceptar": "Aceptar"
+            }
+        }
+    }
+}

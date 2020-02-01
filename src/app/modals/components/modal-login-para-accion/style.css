@@ -1,0 +1,87 @@
+.contenido-modal-compartir {
+    background: #fff;
+    width: 343px;
+    padding: 20px;
+    position: relative;
+    border-radius: 10px;
+}
+
+.contenido-modal-compartir h3 {
+    font-size: 1.25em;
+    color: #444;
+}
+
+.botones-compartir {
+    margin-top: 15px;
+    display: flex;
+}
+
+    .btn-red-compartir {
+        display: inline-block;
+        padding: 8px;
+        background: rgba(247, 247, 247, 0);
+        border-radius: 4px;
+        border: 1px solid rgba(0,0,0,0.07);
+        margin-right: 10px;
+        cursor: pointer;
+        transition: all 0.1s;
+    }
+    .btn-red-compartir:hover {
+        transform: scale(1.1);
+    }
+    .btn-red-compartir:last-child {
+        margin-right:0;
+    }
+        .icono-red-compartir {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 1px 2px 12px #0000001f;
+            border-radius: 99%;            
+        }
+
+            .icono-red-compartir i {
+                font-weight: normal;
+                font-size: 1.9em;
+            }
+    
+        .btn-red-compartir span {
+            margin-top: 7px;
+            display: block;
+            text-align: center;
+        }
+
+    
+        .copiar-url {
+            margin-top: 15px;
+            position: relative;
+            display: -webkit-box;
+            display: flex;
+            -webkit-box-align: center;
+            align-items: center;
+        }
+        .copiar-url input {
+            padding: 0px 10px 0px 60px;
+            height: 50px;
+        }
+        .copiar-url span {
+            position: absolute;
+            left: 0;
+            padding: 0 15px;
+            background: #cecece21;
+            border-radius: 4px 0 0 4px;
+            cursor: pointer;
+            color: #cccccc;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            font-size: 21px;
+        }
+
+        .copiar-url span i {
+            font-weight: normal;
+        }

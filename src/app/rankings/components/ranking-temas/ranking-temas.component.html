@@ -1,0 +1,30 @@
+<h1 class="h4">{{titulo}}</h1>
+<div class="table-responsive">		
+	<table class="table fondo-blanco">
+		<thead>
+			<tr>
+			<th scope="col">#</th>
+			<th scope="col">Usuario</th>
+			<th scope="col">Reputación</th>
+			<th scope="col">Nº Temas</th>
+			<th scope="col">Reproducciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let user of users; let i = index">
+				<th scope="row">{{i+1}}</th>
+				<td>
+					<a [routerLink]="['/perfil', user.nick]">
+						<img src="{{url + 'get-image-user/' + user.image }}" *ngIf="user.image" style="border-radius:5px;width: 35px;height: 35px;margin-right: 10px;" class="img-responsive">
+
+						<img src="assets/avatars/160419_092630_md9c8c671c7_avatar.png" *ngIf="!user.image" style="border-radius:5px;width: 35px;height: 35px;margin-right: 10px;" class="img-responsive">
+						<span>{{user.nick}}</span>
+					</a>
+				</td>
+				<td>{{user.reputation}}</td>
+				<td>{{user.victorias}}</td>
+				<td>{{user.derrotas}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

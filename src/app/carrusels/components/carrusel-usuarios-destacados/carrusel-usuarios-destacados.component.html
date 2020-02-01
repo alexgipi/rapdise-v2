@@ -1,0 +1,16 @@
+<ul class="usuarios-destacados" *ngIf="destacados">
+    <li *ngFor="let destacado of destacados; let i = index" class="__item-tajeta-usuario-destacado no-seleccionable">
+            <i class="fa fa-star" style="position: absolute;right: 5px;top: 5px;width: 20px;height: 20px;display: flex;align-items: center;justify-content: center;border-radius: 99%;background: #fff;border: 1px solid #eee;color: #d8d8d8;font-size: 13px;font-weight: normal;"></i>
+        <div class="square-box">
+            <div class="square-content">
+                <img style="border-radius: 6px;height: 100%;object-fit: cover;" alt="" src="{{url + 'get-image-user/' + destacado.usuarioDestacado.image}}">
+            </div>                    
+        </div>
+        <div class="info-tarjeta">
+            <strong>{{destacado.usuarioDestacado.nick}}</strong>
+            <div style="font-size: 0.9em;">
+                <span style="text-transform:capitalize; color: #444;font-weight: bold;">{{destacado.usuarioDestacadoEn}}</span>
+            </div>
+        </div>
+    </li>
+</ul>

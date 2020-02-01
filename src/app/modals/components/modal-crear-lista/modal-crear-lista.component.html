@@ -1,0 +1,94 @@
+<div class="modal__content">
+    <h2 style="font-size: 1.5rem;margin-bottom: 20px;"> Crear nueva <strong>lista de reproducción</strong></h2>
+    <form #listaForm="ngForm" (ngSubmit)="crearLista(listaForm);sendLista($event);" class="form-list">
+        <li class="form-list__row form-list__row--inline" style="float: left;width: 100%;">
+            <div>
+                <label>Nombre</label>
+                <input required type="text" name="nombre" #nombre="ngModel" [(ngModel)]="lista.nombre">
+            </div>
+            <div>
+                <label>Tipo</label>
+                <select name="style" required name="tipo" #tipo="ngModel" [(ngModel)]="lista.tipo">
+                    <option disabled="" selected="" value="" ng-reflect-value="">Selecciona un tipo de lista</option>
+                    <option value="lista_general" ng-reflect-value="old-school">General</option>
+                    <option value="lista_propia" ng-reflect-value="trap">Beats própios</option>
+                </select>
+            </div>
+            <div style="flex: 1;">
+                <label>Visibilidad</label>
+                <select required name="estado" #estado="ngModel" [(ngModel)]="lista.estado">
+                    <option disabled="" selected="" value="" ng-reflect-value="">Visibilidad de la lista</option>
+                    <option value="publica" ng-reflect-value="libre">Pública</option>
+                    <option value="privada" ng-reflect-value="limitado">Privada</option>
+                </select>
+            </div>
+        </li>
+        
+        <li class="form-list__row" style="float: left;width: 100%;">
+            <label>Descripción de la lista <i style="text-transform: capitalize;">(Opcional)</i></label>
+            <textarea name="descripcion" #descripcion="ngModel" [(ngModel)]="lista.descripcion"></textarea>
+        </li>
+
+        <div class="listado-beats-crear-lista">
+            <div class="menu-filtro">
+                <li (click)="mostrarMisBeats();" [class.activo]="mostrandoBeats == 'mis-beats'">Mis beats</li>
+                <li (click)="mostrarTodosLosBeats();" [class.activo]="mostrandoBeats == 'todos'">Todos los beats</li>
+            </div>
+            <ul>
+                <li class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" *ngFor="let beat of beats;">
+                    <div class="item-listado-beats-crear-lista" id="beat-{{beat._id}}">
+                        <div class="detalles-beat-listado-crear-lista">
+                            <img *ngIf="beat && beat.image != null" src="{{url + 'get-imagen-beat/' + beat.image}}">
+                            <img *ngIf="beat && beat.image == null" src="{{url + 'get-image-user/' + beat.user.image}}">
+                            <div class="flex flex-wrap">
+                                <span>{{beat.name}}</span>
+                                <span>{{beat.user.nick}}</span>
+                            </div>
+                        </div>
+                        <div class="acciones-beat-listado-crear-lista">
+                            <i class="fa fa-play-circle"></i>
+
+                            <div class="btn-beat-lista-add" id="btn-beat-lista-add-{{beat._id}}">
+                                <img src="../../../assets/iconos/icono-add-lista.png" (click)="pushBeatLista(beat)">
+                                <i class="fa fa-check display-none" (click)="quitarBeatLista(beat)"></i>
+                            </div>
+                        </div>        
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <li class="float-left">
+            <button class="button" type="submit" [disabled]="!listaForm.form.valid">Crear lista</button>
+        </li>
+
+        <li class="form-list__row" style="width: auto;display: inline-block;padding: 10px;border: 1px solid #eee;margin-left: 15px;border-radius: 4px;">
+            <label style="width: auto;display: inline-block;margin: 0;">Mostrar lista en mi biblioteca</label>
+            <div class="flex float-left" style="margin-right: 15px;">
+                <span (click)="elegirMostrarEnBiblioteca();" [class.mi-checked]="lista.enBiblioteca == 'SI'" class="mi-checkbox">
+                    <i class="fa fa-check"></i>
+                </span>
+            </div>
+        </li>
+    </form>
+</div>
+
+<!-- <div class="reproductor-modal">
+    <img class="imagen-beat-autor" src="http://localhost:3800/api/get-imagen-beat/bwPCmjmuUFJRSXB9Y0fdjoOZ.jpg">
+    <div class="detalles-beat">
+        <span class="nombre-beat">El nombre del beat</span>
+        <span class="autor-beat">nickAutor</span>
+    </div>
+    <div class="botones-reproductor-modal">
+        <i class="fa fa-step-backward"></i>
+        <i *ngIf="sonando == false" class="fa fa-play-circle-o"></i>
+        <i *ngIf="sonando == true" class="fa fa-pause"></i>
+        <i class="fa fa-step-forward"></i>
+    </div>
+
+    <div class="barra-reproductor-modal">
+        <div class="barra">
+            <span></span>
+        </div>
+    </div>
+</div> -->

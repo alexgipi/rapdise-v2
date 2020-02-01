@@ -1,0 +1,85 @@
+<div class="btn-compartir" (click)="abrirCerrarModal()">
+    <i class="fa fa-share"></i>
+    Compartir
+</div>
+
+<div class="mi-modal modal-compartir" [class.mi-modal-abierto]="modalAbierto == true">
+                    
+    
+
+    <!-- <div class="contenido-modal-compartir">
+        <span (click)="abrirCerrarModal();" class="boton-cerrar-modal">
+            <i class="fa fa-close"></i>
+        </span>
+
+        <h3>Compartir batalla</h3>
+
+        <div class="botones-compartir">
+            <div class="btn-red-compartir">
+                <div class="icono-red-compartir">
+                    <i class="fa fa-code"></i>
+                </div>
+                <span>Insertar</span>
+            </div>
+            <div class="btn-red-compartir">
+                <div class="icono-red-compartir facebook">
+                    <i class="fa fa-facebook"></i>
+                </div>
+                <span>Facebook</span>
+            </div>
+
+            <div class="btn-red-compartir">
+                <div class="icono-red-compartir twitter">
+                    <i class="fa fa-twitter"></i>
+                </div>
+                <span>Twitter</span>
+            </div>
+
+            <div class="btn-red-compartir">
+                <div class="icono-red-compartir pinterest">
+                    <i class="fa fa-pinterest"></i>
+                </div>
+                <span>Pinterest</span>
+            </div>
+            <div class="btn-red-compartir">
+                <div class="icono-red-compartir reddit">
+                    <i class="fa fa-reddit"></i>
+                </div>
+                <span>Reddit</span>
+            </div>
+            <div class="btn-red-compartir">
+                <div class="icono-red-compartir tumblr">
+                    <i class="fa fa-tumblr"></i>
+                </div>
+                <span>Tumblr</span>
+            </div>
+        </div>
+
+        <div class="copiar-url">
+            <input id="share-url" value="https://rapdise.com{{rutaActual}}" readonly="" size="45">
+            <span>Copiar</span>
+        </div>
+
+    </div> -->
+
+    <div class="contenido-modal-compartir">
+        <span class="boton-cerrar-modal">
+            <i class="fa fa-close"></i>
+        </span>
+        <img alt="Improvisame" height="47px" src="assets/logo-01.svg" style="margin: 0px 0 20px;">
+        <p id="texto-debes-loguearte-para" style="line-height: 1.3;color: rgba(0,0,0,0.5);">Debes iniciar sesión para emezar a descargar bases...</p>
+        <div class="copiar-url">
+            <input id="email" type="text" placeholder="Correo electrónico" size="45">
+            <span><i style="font-weight: normal;">@</i></span>
+        </div>
+        <div class="copiar-url">
+            <input id="password" placeholder="Contraseña" type="password" size="45">
+            <span><i class="fa fa-eye" style="font-weight: normal;"></i></span>
+        </div>
+    
+        <button style="border: none;padding: 5px 20px;background: #ff5c29;color: #fff;border-radius: 4px;margin-top: 20px;border: 1px solid transparent;">Iniciar sesión</button>
+        
+        <button style="border: none;padding: 5px 20px;background: #ff572200;color: #ff5c29;border-radius: 4px;margin-top: 20px;border: 1px solid #ff5c29;margin-left: 7px;">Crear cuenta</button>
+    </div>
+    
+</div>

@@ -1,0 +1,291 @@
+<div class="slider slider-rankings">
+	<div class="slider__warpper">
+		<div class="flex__container flex--zekrom flex--active" data-slide="1">
+			<div class="flex__content">
+				<div style="width: 55%">
+				<p class="text--sub">Bases de rap cocinadas a fuego lento</p>
+				<h1 class="text--big">Biblioteca</h1>
+				<p class="text--normal">Pikachu is an Electric-type Pokémon introduced in Generation I. Pikachu are
+					small, chubby, and incredibly cute mouse-like Pokémon. They are almost completely covered by
+					yellow fur.
+				</p>
+				<p class="text__background">Rankings</p>
+				</div>
+			</div>
+			<div class="flex__item flex__item--left"></div>
+			<div class="flex__item flex__item--right"></div>
+			<img class="img-vinilo-slider" src="assets/img/5856b3d14f6ae202fedf2793.png">
+		</div>
+
+		<div class="flex__container flex--piplup animate--start" data-slide="2">
+			<div class="flex__content">
+				<p class="text--sub">Pokemon Gen IV</p>
+				<h1 class="text--big">Piplup</h1>
+				<p class="text--normal">Piplup is the Water-type Starter Pokémon of the Sinnoh region. It was
+					introduced in Generation IV. Piplup has a strong sense of self-esteem. It seldom accepts food
+					that people give because of its pride.
+				</p>
+				<p class="text__background">Piplup</p>
+			</div>
+			<div class="flex__item flex__item--left"></div>
+			<div class="flex__item flex__item--right"></div>
+			<img class="pokemon__img" src="https://s4.postimg.org/sa9dl4825/pilup.png" />
+		</div>
+		<div class="flex__container flex--blaziken animate--start" data-slide="3">
+			<div class="flex__content">
+				<p class="text--sub">Pokemon Gen III</p>
+				<h1 class="text--big">Blaziken</h1>
+				<p class="text--normal">Blaziken is the Fire/Fighting-type Starter Pokémon of the Hoenn region,
+					introduced in Generation III. Blaziken is a large, bipedal, humanoid bird-like Pokémon that
+					resembles a rooster.
+				</p>
+				<p class="text__background">Blaziken</p>
+			</div>
+			<div class="flex__item flex__item--left"></div>
+			<div class="flex__item flex__item--right"></div>
+			<img class="pokemon__img" src="https://s4.postimg.org/6795hnlql/blaziken.png" />
+		</div>
+		<div class="flex__container flex--dialga animate--start" data-slide="4">
+			<div class="flex__content">
+				<p class="text--sub">Pokemon Gen IV</p>
+				<h1 class="text--big">Dialga</h1>
+				<p class="text--normal">Dialga is a Steel/Dragon-type Legendary Pokémon. Dialga is a sauropod-like
+					Pokémon. It is mainly blue with some gray, metallic portions, such as its chest plate, which has
+					a diamond in the center. It also has various, light blue lines all over
+					its body.
+				</p>
+				<p class="text__background">Dialga</p>
+			</div>
+			<div class="flex__item flex__item--left"></div>
+			<div class="flex__item flex__item--right"></div>
+			<img class="pokemon__img" src="https://s4.postimg.org/43yq9zlxp/dialga.png" />
+		</div>
+		<div class="flex__container flex--pikachu animate--start" data-slide="5">
+			<div class="flex__content">
+				<p class="text--sub">Los mejores de Rapdise</p>
+				<h1 class="text--big">Rankings</h1>
+				<p class="text--normal">Zekrom is a Dragon/Electric-type Legendary Pokémon. It is part of the Tao
+					Trio, along with Reshiram and Kyurem. Zekrom is a large, black draconian Pokémon that seems to
+					share its theme with its counterpart, Reshiram. It has piercing red eyes and
+					dark gray to black skin that seems to be armor-like.
+				</p>
+				<p class="text__background">Zekrom</p>
+			</div>
+			<div class="flex__item flex__item--left"></div>
+			<div class="flex__item flex__item--right"></div>
+			<img class="pokemon__img" src="https://s4.postimg.org/malmhgn9p/zekrom.png" />
+		</div>
+	</div>
+
+	<div class="slider__navi">
+		<a href="#" class="slide-nav active" data-slide="1">pikachu</a>
+		<a href="#" class="slide-nav" data-slide="2">piplup</a>
+		<a href="#" class="slide-nav" data-slide="3">blaziken</a>
+		<a href="#" class="slide-nav" data-slide="4">dialga</a>
+		<a href="#" class="slide-nav" data-slide="5">zekrom</a>
+	</div>
+</div>
+
+<div class="content">	
+	
+	<div class="contenedor-subir-beats">
+		<form class="formulario-subir-beats" #beatForm="ngForm" enctype="multipart/form-data">
+	
+			<div class="contenido-formulario">
+				
+				<div class="modal__content">
+					<div class="titulo-separador">
+						<h1>Sube tus bases a Rapdise</h1>
+						<div class="spacer"></div>
+					</div>							
+					<ul class="form-list">
+						<li class="form-list__row form-list__row--inline" style="float: left;width: 100%;">						
+							<div style="padding-right: 6px !important;">
+								<input id="subir-audio-beat" type="file" name="file" placeholder="Subir fichero" (change)="audioFileChange($event)" required style="display:none !important;opacity: 0;position: absolute; top: -400px;">
+								<mat-form-field class="cursor-pointer flex-auto width-100" [formGroup]="myGroup" appearance="outline">
+									<mat-label>{{ 'biblioteca.subir-bases.form.label-subir-archivo' | translate }}</mat-label>
+									<ngx-mat-file-input [accept]="'.mp3'" formControlName="archivoAudio" placeholder="Sube el archivo del beat" (change)="audioFileChange($event)" required></ngx-mat-file-input>
+									<mat-icon matSuffix style="background: #c2c2c2;border-radius: 29px;height: 30px;width: 30px;display: flex;align-items: center;justify-content: center;color: #fff;">audiotrack</mat-icon>
+								</mat-form-field>
+								<audio id="audio-subir-beat" controls [src]="urlAudioBeat"></audio>
+							</div>
+
+							<div style="padding-left: 6px !important;">
+								<mat-form-field class="cursor-pointer flex-auto width-100" [formGroup]="myGroup" appearance="outline">
+									<mat-label>Añadir imágen</mat-label>
+									<ngx-mat-file-input formControlName="archivoImagen" placeholder="Basic outline placeholder" (change)="imagenFileChange($event)"></ngx-mat-file-input>
+									<mat-icon matSuffix style="background: #c2c2c2;border-radius: 29px;height: 30px;width: 30px;display: flex;align-items: center;justify-content: center;color: #fff;">image</mat-icon>
+								</mat-form-field>
+								<div class="archivo-seleccionado">
+									<!-- <div class="imagen-beat-subida">
+										<i (click)="abrirInputFileImagen();" *ngIf="!imagenRecortada" class="fa fa-image"></i>
+										<div (click)="setTipoCaratula('imagen')" *ngIf="imagenesASubir && tipoCaratula == 'rapdise'" class="over-usar">Usar</div>
+										<img *ngIf="imagenRecortada" [src]="imagenRecortada">
+									</div> -->
+									<div class="botones-archivo-seleccionado">
+										<button mat-raised-button color="warn" (click)="abrirCerrarModalAddImagen();" [disabled]="!imagenRecortada || imagenesASubir && tipoCaratula == 'rapdise'" class="mi-btn mi-btn-secundario">
+											{{ 'biblioteca.subir-bases.form.btn-ajustar-recorte' | translate }}
+										</button>										
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="form-list__row form-list__row--inline" style="float: left;width: 100%;">						
+							<div>
+								<mat-form-field class="width-100" appearance="outline">
+									<mat-label>{{ 'biblioteca.subir-bases.form.label-titulo' | translate }}</mat-label>
+									<input matInput #input maxlength="25" name="name" #name="ngModel" [(ngModel)]="beat.name" required placeholder="{{ 'biblioteca.subir-bases.form.placeholder-titulo' | translate }}">
+									<mat-hint align="start">{{input.value?.length || 0}}/25</mat-hint>
+								</mat-form-field>
+								<!-- <label></label>
+								<input type="text" > -->
+							</div>
+
+							<div style="padding-right: 10px;">							
+
+								<mat-form-field class="width-100" appearance="outline">
+									<mat-label>{{ 'biblioteca.subir-bases.form.label-estilos' | translate }}</mat-label>
+									<mat-select [formControl]="estiloBeat" name="style" required (selectionChange)="changed()" multiple>
+										<mat-option *ngFor="let estilo of estilosDisponibles" [value]="estilo">{{estilo}}</mat-option>
+										<mat-option value="otros">{{ 'biblioteca.subir-bases.form.option-estilos-otros' | translate }}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+							<div>
+								<mat-form-field appearance="outline">
+									<mat-label>BPM</mat-label>
+									<input matInput placeholder="{{ 'biblioteca.subir-bases.form.placeholder-bpm' | translate }}" type="number" range="" name="bpm" #bpm="ngModel" [(ngModel)]="beat.bpm"  max="250">
+								</mat-form-field>
+							</div>
+												
+						</li>
+						<!-- ETIQUETAS !!!!!!!!!! <li class="form-list__row form-list__row--inline flex width-100" style="margin-bottom: 20px;">
+							<tag-input
+								[maxItems]='4'
+								[(ngModel)]='etiquetas'
+								[identifyBy]="'valor'"
+								(onAdd)="addEtiqueta($event);"
+								(onRemove)="quitarEtiqueta($event)"
+								[onAdding]="onAdding"
+								[onRemoving]="onRemoving"
+								[displayBy]="'valor'"
+								[placeholder]="'biblioteca.subir-bases.form.placeholder-add-etiqueta' | translate"
+								[secondaryPlaceholder]="'biblioteca.subir-bases.form.placeholder-add-etiquetas' | translate"
+								theme='bootstrap'
+								[ngModelOptions]="{standalone: true}">
+							</tag-input>
+						</li> -->
+
+						<li class="form-list__row form-list__row--inline flex width-100" style="margin-bottom: 20px;">
+							<div>
+								<mat-form-field class="width-100" appearance="outline">
+										<mat-label>{{ 'biblioteca.subir-bases.form.label-limitacion-uso' | translate }}</mat-label>
+									<mat-select name="uso" #uso="ngModel" [(ngModel)]="beat.uso" required (selectionChange)="especificarUsos(uso.value);">
+										<mat-option value="libre">{{ 'biblioteca.subir-bases.form.uso-libre' | translate }}</mat-option>
+										<mat-option value="limitado">{{ 'biblioteca.subir-bases.form.uso-limitado' | translate }}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+
+							<div class="permisos-beat no-seleccionable" [class.disabled]="beat.uso == 'libre' || !beat.uso">
+								<label>{{ 'biblioteca.subir-bases.form.label-permitir-uso-en' | translate }}</label>
+								
+								<mat-checkbox [disabled]="beat.uso == 'libre' || !beat.uso" class="example-margin" name="permitirBatalla" #permitirBatalla="ngModel" [(ngModel)]="beat.permitirBatalla">
+									{{ 'biblioteca.subir-bases.form.uso-batallas' | translate }}
+								</mat-checkbox>
+								<mat-checkbox [disabled]="beat.uso == 'libre' || !beat.uso" class="example-margin" name="permitirGrabacion" #permitirGrabacion="ngModel" [(ngModel)]="beat.permitirGrabacion">
+									{{ 'biblioteca.subir-bases.form.uso-freestyles' | translate }}
+								</mat-checkbox>
+								<mat-checkbox [disabled]="beat.uso == 'libre' || !beat.uso" class="example-margin" name="permitirEntreno" #permitirEntreno="ngModel" [(ngModel)]="beat.permitirEntreno">
+									{{ 'biblioteca.subir-bases.form.uso-entreno' | translate }}
+								</mat-checkbox>
+							</div>
+						</li>
+
+						<li class="form-list__row" style="float: left;width: 100%;">
+							<label>{{ 'biblioteca.subir-bases.form.label-enlace-compra' | translate }}</label>
+							<input name="enlace" #enlace="ngModel" [(ngModel)]="beat.enlace" type="text">
+						</li>
+						<li class="form-list__row" style="float: left;width: 100%;">
+							<label>{{ 'biblioteca.subir-bases.form.label-descripcion' | translate }}</label>
+							<textarea name="descripcion" #descripcion="ngModel" [(ngModel)]="beat.descripcion">                
+							</textarea>
+						</li>             
+							
+						<li>
+						<button (click)="onSubmit(beatForm);listadoBeats.getBeatsUsuario();" class="button" type="submit" [disabled]="!beatForm.form.valid || !this.audiosASubir">
+							{{ 'biblioteca.subir-bases.form.btn-publicar-base' | translate }}
+						</button>
+						</li>
+					</ul>
+				</div> 
+			</div>
+		</form>
+
+		<!-- <beat-edit *ngIf="beatAEditar" [beatAEditar]="beatAEditar"></beat-edit> -->
+		<aside class="sidebar">
+			
+			<div class="contenido-sidebar">
+				<div class="titulo-separador">
+					<h2>Vista previa</h2>
+				</div>
+
+				<div class="panel-sidebar">
+					<div class="card-beat" (click)="reproducirBeat()">
+						<div  style="position: absolute;z-index:4;top: 0;left: 0;width: 100%;width: 100%;display: flex;align-items: center;opacity: 1;transition: all 0.3s;padding: 10px;white-space: nowrap;flex-wrap: wrap;">
+							<div style="display: inline-flex;background: rgba(0, 0, 0, 0.64);color: #fff;font-size: 0.8rem;padding: 3px 9px 3px 3px;align-items: center;/* position: absolute; *//* left: 8px; *//* top: 8px; */border-radius: 4px;text-align: center;/* font-weight: bold; */margin-right: 5px;margin-bottom: 5px;">
+							<img src="https://yt3.ggpht.com/a/AGF-l7-usCpVpi4SwaUO9oRNZbnOpHpcSPKQ-SRWww=s48-c-k-c0xffffffff-no-rj-mo" style="height: 22px;width: 22px;object-fit: cover;margin-right: 9px;border-radius: 2px;">Kapo 013 Barcelona</div>
+						</div>
+						<img class="caratula" src="https://i1.sndcdn.com/artworks-000627582724-p835rv-t500x500.jpg" alt="">
+						<mat-icon class="icono-play redondeado" aria-hidden="false" aria-label="Example home icon">play_arrow</mat-icon>
+						<div class="titulo-card">
+							<div class="autor">#BoomBap #Jazzy</div>
+							<div class="nombre">Stuck In A Dream (feat. Gunna)</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</aside>
+		<listado-beats-subidos #listadoBeats></listado-beats-subidos>
+	</div>
+	
+</div>
+
+<!-- Modal -->
+<div class="modal-rapdise padding-0" [class.abierto]="modalAddImagenAbierto">
+	<div (click)="abrirCerrarModalAddImagen()" style="position: absolute;width: 100%;height: 100%;background: #4d4d4df5;"></div>
+	<div class="modal-dialog width-100" style="width: 100% !important">
+		<div class="modal-content">
+			<div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">{{ 'biblioteca.subir-bases.modal-recortar-imagen.titulo' | translate }}</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="abrirCerrarModalAddImagen()">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			</div>
+			<div class="modal-body">
+				
+				<image-cropper
+					[imageChangedEvent]="imageChangedEvent"
+					[maintainAspectRatio]="true"
+					[aspectRatio]="4 / 4"
+					[resizeToWidth]="600"
+					[cropperMinWidth]="600"
+					(imageCropped)="imageCropped($event)"
+					(imageLoaded)="imageLoaded()"
+					(cropperReady)="cropperReady()"
+					(loadImageFailed)="loadImageFailed()">
+				</image-cropper>
+
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" (click)="abrirCerrarModalAddImagen()" class="mi-btn mi-btn-secundario">
+					{{ 'biblioteca.subir-bases.modal-recortar-imagen.btn-cerrar' | translate }}
+				</button>
+				<button type="button" class="mi-btn mi-btn-primario" (click)="abrirCerrarModalAddImagen()">
+					{{ 'biblioteca.subir-bases.modal-recortar-imagen.btn-aceptar' | translate }}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

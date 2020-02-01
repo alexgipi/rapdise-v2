@@ -1,0 +1,365 @@
+
+<div class="container-timeline">
+  <div>
+    <section class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+      <sidebar (sended)="refresh($event)"></sidebar>
+
+      <section id="cd-timeline" *ngIf="publications" class="seccion-muro">
+          <div>
+            <div class="cd-timeline-block" *ngFor="let publication of publications">        
+              <!-- PUBLICACION TIPO TEXTO -->
+              <div class="cd-timeline-content timeline-1-col pub-timeline-texto" *ngIf="publication && publication.tipo == 'texto'">
+                <div class="flex">
+                  <img src="{{ url + 'get-image-user/' + publication.user.image }}" *ngIf="publication && publication.user.image">		
+                  <img src="assets/avatars/160419_092630_md9c8c671c7_avatar.png" *ngIf="!publication.user.image">				
+                  <h2>{{publication.user.nick}}</h2>
+                  <span style="text-transform: initial;" class="pub-fecha">{{(publication.created_at | amFromUnix) | amLocale:'es' | amTimeAgo }}</span>
+                </div>			
+                <p>{{publication.text}}</p>
+                <div class="post-additional-info inline-items flex space-between">
+                  <div class="flex">                  
+                    <div *ngIf="likes.indexOf(publication._id) < 0" (click)="addLikePublicacion(publication);" aria-label="+1 Reputación" class="btn-pub-reputacion flex hint--top hint--rounded hint--bounce" >
+                      <!-- <svg class="olymp-heart-icon"><use xlink:href="assets/icons/icons.svg#olymp-heart-icon"></use></svg> -->
+                      <i class="fa fa-shield"></i>
+                      <span>
+                        <i class="fa fa-plus"></i>1
+                      </span>
+                    </div>
+              
+                    <div id="{{publication._id}}"
+                      *ngIf="likes.indexOf(publication._id) >= 0"
+                      (mouseenter)="mouseEnter(publication._id)"
+                      (mouseleave)="mouseLeave(publication._id)"
+                      (click)="borrarLikePublicacion(publication._id);">
+
+
+                          <div  aria-label="-1 Reputación" class="btn-pub-reputacion flex activo  hint--top hint--rounded hint--bounce">
+                            <!-- <svg class="olymp-heart-icon"><use xlink:href="assets/icons/icons.svg#olymp-heart-icon"></use></svg> -->
+                            <i class="fa fa-shield"></i>
+                            <span>
+                              <i class="fa fa-check"></i>
+                              <i class="fa fa-close"></i>
+                            </span>
+                          </div>
+    
+                    </div>                
+          
+                    <div class="names-people-likes likes-pub-{{publication._id}}"></div>
+                  </div>
+        
+                  <div class="comments-shared">
+                    <a href="#" class="post-add-icon inline-items">
+                      <svg class="olymp-speech-balloon-icon"><use xlink:href="assets/icons/icons.svg#olymp-speech-balloon-icon"></use></svg>
+        
+                      <span>0</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+        
+              <!-- PUBLICACION TIPO IMAGEN -->
+              <div class="cd-timeline-content timeline-1-col" *ngIf="publication.tipo == 'imagen'">
+                <div class="flex">
+                  <img src="{{ url + 'get-image-user/' + publication.user.image }}" *ngIf="publication && publication.user.image">		
+                  <img src="assets/avatars/160419_092630_md9c8c671c7_avatar.png" *ngIf="!publication.user.image">				
+                  <h2>{{publication.user.nick}}</h2>
+                  <span style="text-transform: initial;" class="pub-fecha">{{(publication.created_at | amFromUnix) | amLocale:'es' | amTimeAgo }}</span>
+                </div>			
+                <p>{{publication.text}}</p>
+                <img style="border-radius: 10px;
+                  width: 100%;
+                  height: auto;
+                  margin-bottom: 10px;
+                  margin: 0;
+                  background: #f6f6f6;
+                  max-height: 680px;
+                  object-fit: cover;" src="{{ url + 'get-image-pub/' + publication.file }}" alt="">
+                <div class="post-additional-info inline-items flex space-between">
+                  <div class="flex">                  
+                    <div *ngIf="likes.indexOf(publication._id) < 0" (click)="addLikePublicacion(publication);" aria-label="+1 Reputación" class="btn-pub-reputacion flex hint--top hint--rounded hint--bounce" >
+                      <!-- <svg class="olymp-heart-icon"><use xlink:href="assets/icons/icons.svg#olymp-heart-icon"></use></svg> -->
+                      <i class="fa fa-shield"></i>
+                      <span>
+                        <i class="fa fa-plus"></i>1
+                      </span>
+                    </div>
+              
+                    <div id="{{publication._id}}"
+                      *ngIf="likes.indexOf(publication._id) >= 0"
+                      (mouseenter)="mouseEnter(publication._id)"
+                      (mouseleave)="mouseLeave(publication._id)"
+                      (click)="borrarLikePublicacion(publication._id);">
+
+
+                          <div  aria-label="-1 Reputación" class="btn-pub-reputacion flex activo  hint--top hint--rounded hint--bounce">
+                            <!-- <svg class="olymp-heart-icon"><use xlink:href="assets/icons/icons.svg#olymp-heart-icon"></use></svg> -->
+                            <i class="fa fa-shield"></i>
+                            <span>
+                              <i class="fa fa-check"></i>
+                              <i class="fa fa-close"></i>
+                            </span>
+                          </div>
+    
+                    </div>                
+
+                    <div class="names-people-likes likes-pub-{{publication._id}}"></div>
+                  </div>
+                  <div class="comments-shared">
+                    <a href="#" class="post-add-icon inline-items">
+                      <svg class="olymp-speech-balloon-icon"><use xlink:href="assets/icons/icons.svg#olymp-speech-balloon-icon"></use></svg>
+        
+                      <span>0</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PUBLICACION TIPO VIDEO -->
+              <div class="cd-timeline-content timeline-1-col pub-timeline-video" id="pub-video-{{publication._id}}" *ngIf="publication && publication.tipo == 'video'">
+                <div class="flex">
+                  <img src="{{ url + 'get-image-user/' + publication.user.image }}" *ngIf="publication && publication.user.image">		
+                  <img src="assets/avatars/160419_092630_md9c8c671c7_avatar.png" *ngIf="!publication.user.image">				
+                  <h2>{{publication.user.nick}}</h2>
+                  <span style="text-transform: initial;" class="pub-fecha">{{(publication.created_at | amFromUnix) | amLocale:'es' | amTimeAgo }}</span>
+                </div>			
+                <p>{{publication.text}}</p>
+                <div id="video-youtube-{{publication._id}}"  class="iframe-video video-youtube">
+                  <!-- <img [src]="'http://i.ytimg.com/vi/' + 'VnIObXdmYCk' + '/hqdefault.jpg'" alt=""> -->
+                  {{publication.videoYT}}
+                </div>
+                
+                <div class="post-additional-info inline-items flex space-between">
+                  <div class="flex">                  
+                    <div *ngIf="likes.indexOf(publication._id) < 0" (click)="addLikePublicacion(publication);" aria-label="+1 Reputación" class="btn-pub-reputacion flex hint--top hint--rounded hint--bounce" >
+                      <!-- <svg class="olymp-heart-icon"><use xlink:href="assets/icons/icons.svg#olymp-heart-icon"></use></svg> -->
+                      <i class="fa fa-shield"></i>
+                      <span>
+                        <i class="fa fa-plus"></i>1
+                      </span>
+                    </div>
+              
+                    <div id="{{publication._id}}"
+                      *ngIf="likes.indexOf(publication._id) >= 0"
+                      (mouseenter)="mouseEnter(publication._id)"
+                      (mouseleave)="mouseLeave(publication._id)"
+                      (click)="borrarLikePublicacion(publication._id);">
+
+
+                          <div aria-label="-1 Reputación" class="btn-pub-reputacion flex activo  hint--top hint--rounded hint--bounce">
+                            <!-- <svg class="olymp-heart-icon"><use xlink:href="assets/icons/icons.svg#olymp-heart-icon"></use></svg> -->
+                            <i class="fa fa-shield"></i>
+                            <span>
+                              <i class="fa fa-check"></i>
+                              <i class="fa fa-close"></i>
+                            </span>
+                          </div>
+    
+                    </div>                
+
+                    <div class="names-people-likes likes-pub-{{publication._id}}"></div>
+                  </div>
+        
+                  <div class="comments-shared">
+                    <a href="#" class="post-add-icon inline-items">
+                      <svg class="olymp-speech-balloon-icon"><use xlink:href="assets/icons/icons.svg#olymp-speech-balloon-icon"></use></svg>
+        
+                      <span>{{publication.comentarios}}</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Publicacion TIPO BEAT -->
+              <div class="blog-slider" *ngIf="publication.tipo == 'beat'">
+                <div class="blog-slider__wrp swiper-wrapper">
+                  <div class="blog-slider__item swiper-slide">
+                  <div class="blog-slider__img">
+                    
+                    <img alt="" src="http://localhost:3800/api/get-image-user/ypJu1nwNO0TcrG47LUFAPpDN.jpg">
+                  </div>
+                  <div class="blog-slider__content">
+                    <span class="blog-slider__code">26 December 2019</span>
+                    <div class="blog-slider__title">Lorem Ipsum Dolor</div>
+                    <div class="blog-slider__text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae voluptate repellendus magni illo ea animi? </div>
+                    <a class="blog-slider__button" href="#">ESCUCHAR</a>
+                  </div>
+                  </div>
+                </div>
+                <div class="blog-slider__pagination"></div>
+              </div>
+
+              
+        
+              <!-- PUBLICACION TIPO BATALLA -->
+              <div class="cd-timeline-content timeline-1-col pub-timeline-texto" *ngIf="publication && publication.tipo == 'batalla'">
+                <div class="flex">
+                  <img src="{{ url + 'get-image-user/' + publication.user.image }}" *ngIf="publication && publication.user.image">		
+                  <img src="assets/avatars/160419_092630_md9c8c671c7_avatar.png" *ngIf="!publication.user.image">				
+                  <h2>{{publication.user.nick}}</h2>
+                  <span style="text-transform: initial;" class="pub-fecha">{{(publication.created_at | amFromUnix) | amLocale:'es' | amTimeAgo }}</span>
+                </div>			
+                <div class="contenedor-item-batalla" style="margin-top:15px;margin-bottom:0;width:100%;padding: 0;">
+                  <a [routerLink]="['/ver-batalla', publication.batalla._id]">
+                    <div class="item-batalla">
+                      <div class="usuarios-batalla">
+                          <img src="{{ url + 'get-image-user/' + publication.batalla.usuario1.image }}" alt="" *ngIf="publication.batalla.usuario1.image && publication.batalla.usuario2 != null" style="width: 50%;">
+                          <img id="" src="{{ url + 'get-image-user/' + publication.batalla.usuario2.image }}" alt="" *ngIf="publication.batalla.usuario2 && publication.batalla.usuario2.image" style="width: 50%;">
+                          <img *ngIf="publication.batalla.usuario2 == null" src="{{ url + 'get-image-user/' + publication.batalla.usuario1.image }}" style="width: 100%;">
+                          <!-- <a class="play-video flex justify-center" [routerLink]="['/batallas-de-gallos/batalla', batalla._id]">
+                            <svg class="olymp-play-icon"><use xlink:href="assets/icons/icons.svg#olymp-play-icon"></use></svg>
+                          </a> -->
+                          <a class="vs-listado-batalla flex justify-center"  style="font-size: 20px;">
+                            VS
+                          </a>
+                        <div class="overlay overlay-dark"></div>
+                      </div>
+              
+                      <div class="titulo-item-batalla">
+                        <div class="flex" style="width: 100%;height: 36px;">
+                          <div style="width:50%;height: 100%;display: flex;align-items: center;justify-content: center;background: #2d2d2d;color: #ffffff;font-size: 1.15em;font-weight: bold;">
+                            {{publication.batalla.usuario1.nick}}
+                          </div>
+                          <div style="width: 50%;height: 100%;display: flex;align-items: center;justify-content: center;background: #ffffff !important;color: #141414c4;font-size: 1.15em;font-weight: bold;">
+                            {{publication.batalla.usuario2.nick}}
+                          </div>
+                        </div>                        
+                      </div>
+                    </div>
+                    <div style="padding: 5px 0px;">
+                      <div style="color: #0a0a0a;">
+                          <span style="color:#000;">
+                            {{publication.batalla.rondas}} <span *ngIf="publication.batalla.rondas == 1">Ronda - </span><span *ngIf="publication.batalla.rondas > 1">Rondas - </span>
+                          </span>
+      
+                          <!-- Modos ronda batalla - 2 RONDAS -->
+                          <div *ngIf="publication.batalla.rondas == 2" style="display:inline-flex">
+                            <!-- MODO Ronda 1 y 2 IGUALES -->
+                            <span *ngIf="publication.batalla.modoRonda1 == publication.batalla.modoRonda2" style="color: #519654;">
+                              Modo {{publication.batalla.modoRonda1}}
+                            </span>
+                            <!-- MODO Ronda 1 y 2 DIFERENTES -->
+                            <span *ngIf="publication.batalla.modoRonda1 != publication.batalla.modoRonda2" style="color: #519654;text-transform: capitalize;">
+                              {{publication.batalla.modoRonda1}} / {{publication.batalla.modoRonda2}}
+                            </span>
+                          </div>
+                          
+      
+                          <span *ngIf="publication.batalla.sangreRonda1 == 'si' || publication.batalla.sangreRonda2 == 'si' || publication.batalla.sangreRonda3 == 'si' || publication.batalla.sangreRonda4 == 'si'" style="float:right;padding: 0 7px;background: #c52d2d;color: #fff;border-radius: 5px;margin-left: 7px;">Sangre</span>
+                          <span *ngIf="publication.batalla.sangreRonda1 == 'si' || publication.batalla.sangreRonda2 == 'si' || publication.batalla.sangreRonda3 == 'si' || publication.batalla.sangreRonda4 == 'si'" style="float:right;padding: 0 7px;background: #679db5;color: #fff;border-radius: 5px;">Acapela</span>
+                      </div>
+                      <div>
+                        <span style="/* padding: 5px 8px; *//* background: #ababab; */margin-right: 7px;border-radius: 5px;color: #5a5a5a;display: inline-flex;align-items: center;/* line-height: 1; */height: 23px;">
+                          <i class="fa fa-play" style="margin-right: 5px;font-size: 0.8em;display: flex;align-items: center;"></i>
+                          {{publication.batalla.visualizaciones}}
+                        </span> 
+                        <time>
+                          {{(publication.batalla.modificado_el | amFromUnix) | amLocale:'es' | amTimeAgo }}
+                        </time>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div class="post-additional-info inline-items flex space-between">
+                  <div class="flex">                  
+                    <div *ngIf="likes.indexOf(publication._id) < 0" (click)="addLikePublicacion(publication);" aria-label="+1 Reputación" class="btn-pub-reputacion flex hint--top hint--rounded hint--bounce" >
+                      <!-- <svg class="olymp-heart-icon"><use xlink:href="assets/icons/icons.svg#olymp-heart-icon"></use></svg> -->
+                      <i class="fa fa-shield"></i>
+                      <span>
+                        <i class="fa fa-plus"></i>1
+                      </span>
+                    </div>
+              
+                    <div id="{{publication._id}}"
+                      *ngIf="likes.indexOf(publication._id) >= 0"
+                      (mouseenter)="mouseEnter(publication._id)"
+                      (mouseleave)="mouseLeave(publication._id)"
+                      (click)="borrarLikePublicacion(publication._id);">
+
+
+                          <div aria-label="-1 Reputación" class="btn-pub-reputacion flex activo  hint--top hint--rounded hint--bounce">
+                            <!-- <svg class="olymp-heart-icon"><use xlink:href="assets/icons/icons.svg#olymp-heart-icon"></use></svg> -->
+                            <i class="fa fa-shield"></i>
+                            <span>
+                              <i class="fa fa-check"></i>
+                              <i class="fa fa-close"></i>
+                            </span>
+                          </div>
+    
+                    </div>                
+          
+                    <div class="names-people-likes likes-pub-{{publication._id}}"></div>
+                  </div>
+        
+                  <div class="comments-shared">
+                    <a href="#" class="post-add-icon inline-items">
+                      <svg class="olymp-speech-balloon-icon"><use xlink:href="assets/icons/icons.svg#olymp-speech-balloon-icon"></use></svg>
+        
+                      <span>0</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- PUBLICACION TIPO FREESTYLE -->
+              <div class="cd-timeline-content timeline-1-col" *ngIf="publication.tipo == 'freestyle'">
+                <div class="flex">
+                  <img src="{{ url + 'get-image-user/' + publication.user.image }}" *ngIf="publication && publication.user.image">		
+                  <img src="assets/avatars/160419_092630_md9c8c671c7_avatar.png" *ngIf="!publication.user.image">				
+                  <h2>{{publication.user.nick}}</h2>
+                  <span style="text-transform: initial;" class="pub-fecha">{{(publication.created_at | amFromUnix) | amLocale:'es' | amTimeAgo }}</span>
+                </div>			
+                <p>{{publication.text}}</p>
+                <div class="post-additional-info inline-items flex space-between">
+                  <div class="flex">                  
+                    <div *ngIf="likes.indexOf(publication._id) < 0" (click)="addLikePublicacion(publication);" aria-label="+1 Reputación" class="btn-pub-reputacion flex hint--top hint--rounded hint--bounce" >
+                      <!-- <svg class="olymp-heart-icon"><use xlink:href="assets/icons/icons.svg#olymp-heart-icon"></use></svg> -->
+                      <i class="fa fa-shield"></i>
+                      <span>
+                        <i class="fa fa-plus"></i>1
+                      </span>
+                    </div>
+              
+                    <div id="{{publication._id}}"
+                      *ngIf="likes.indexOf(publication._id) >= 0"
+                      (mouseenter)="mouseEnter(publication._id)"
+                      (mouseleave)="mouseLeave(publication._id)"
+                      (click)="borrarLikePublicacion(publication._id);">
+
+
+                          <div aria-label="-1 Reputación" class="btn-pub-reputacion flex activo  hint--top hint--rounded hint--bounce">
+                            <!-- <svg class="olymp-heart-icon"><use xlink:href="assets/icons/icons.svg#olymp-heart-icon"></use></svg> -->
+                            <i class="fa fa-shield"></i>
+                            <span>
+                              <i class="fa fa-check"></i>
+                              <i class="fa fa-close"></i>
+                            </span>
+                          </div>
+    
+                    </div>                
+          
+                    <div class="names-people-likes likes-pub-{{publication._id}}"></div>
+                  </div>
+        
+                  <div class="comments-shared">
+                    <a href="#" class="post-add-icon inline-items">
+                      <svg class="olymp-speech-balloon-icon"><use xlink:href="assets/icons/icons.svg#olymp-speech-balloon-icon"></use></svg>
+        
+                      <span>0</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              
+            </div> <!-- cd-timeline-block -->
+          </div>
+          
+      </section> <!-- cd-timeline -->
+
+        <a id="load-more-button" (click)="verMas()" *ngIf="!noMas" class="btn btn-control btn-more" data-load-link="items-to-load.html" data-container="newsfeed-items-grid">
+          <svg class="olymp-three-dots-icon"><use xlink:href="assets/icons/icons.svg#olymp-three-dots-icon"></use></svg>
+        </a>
+
+    </section>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+
+
+<div class="" style="margin-top: 125px;">
+	<div class="modal-dialog modal-dialog-centered modal-md" role="document">
+		<div class="modal-content">
+			<div *ngIf="status == 'error'" class="alert red" style="color: #fff;font-size: 18px;border-radius: 0;">
+				Error al iniciar sesión
+			</div>
+			<div class="modal-header-pro">
+				<h2>Iniciar sesión</h2>
+			</div>
+			<div class="modal-body-pro social-login-modal-body-pro">
+				
+				<div class="registration-social-login-container">
+					<form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+						<div class="form-group">
+							<input type="email" class="form-control" placeholder="Correo electrónico" name="email" #email="ngModel" [(ngModel)]="user.email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control" name="password" #password="ngModel" [(ngModel)]="user.password" required placeholder="Contraseña">
+						</div>
+						<div class="form-group">
+							<button type="submit" [disabled]="!loginForm.form.valid" class="btn btn-green-pro btn-display-block">Iniciar sesión</button>
+						</div>
+						<div class="container-fluid">
+							<div class="row no-gutters">
+								<div class="col forgot-your-password"><a href="#!">Olvidaste tu contraseña?</a></div>
+							</div>
+						</div><!-- close .container-fluid -->
+					
+					</form>
+					
+				</div><!-- close .registration-social-login-container -->
+				
+				<div class="clearfix"></div>
+				
+
+			</div><!-- close .modal-body -->
+			
+		<a class="not-a-member-pro" [routerLink]="['/registro']">Aún no tienes una cuenta? <span>Registrate ya!</span></a>
+		</div><!-- close .modal-content -->
+	</div><!-- close .modal-dialog -->
+</div>

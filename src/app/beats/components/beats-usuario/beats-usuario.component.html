@@ -1,0 +1,758 @@
+
+<div class="contenido-biblioteca sticky">
+	<div class="cabecera-biblioteca">
+		<nav class="menu-cabecera-biblioteca">
+			<ul class="menu-biblioteca-panel-beats">
+				<li class="margin-0">
+					<a [routerLink]="['/productores-de-rap']">
+						<i class="fa fa-arrow-left"></i>
+					</a>
+				</li>
+				<li>
+					<a>
+						<div class="flex">
+							<span>Viendo:</span>
+							<span style="margin-left: 10px;font-weight: bold;color: #868686;cursor: pointer;">
+								Perfil de productor
+								<!-- <i class="fa fa-angle-down" style="margin-left: 9px;"></i> -->
+							</span>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</nav>
+
+		<div class="submenu-top-pagina submenu-top-estilos">
+			<li>
+				<a class="activo" [routerLink]="['/bases-de-rap']">Todas</a>
+			</li>
+			<li><a [routerLink]="['old-school']">Old School</a></li>
+			<li><a [routerLink]="['trap']">Trap</a></li>
+			<li><a [routerLink]="['boom-bap']">Boom Bap</a></li>
+			<li><a [routerLink]="['underground']">Underground</a></li>
+			<li><a [routerLink]="['lofi']">Lofi</a></li>
+			<li><a [routerLink]="['jazzy']">Jazzy</a></li>
+			<li><a [routerLink]="['old-school']">Reggae</a></li>
+		</div>		
+	</div>
+
+	<div class="reproductor-biblio">
+		<reproductor-biblioteca #reproductorBiblioteca [beat]="beat" (ReproductorSonando)="getReproductorSonando($event)" (PasameBeatEnBucle)="activarDesactivarBeatEnBucle($event)" (DireccionCambioBeat)="cambiarBeat($event)" (PasameElBeat)="recibirBeat($event)"></reproductor-biblioteca>
+	</div>
+
+	<article class="entry user featured-image" id="user-2">
+				
+			<div class="entry-header-container">
+				<header class="entry-header" *ngIf="user">
+					<div class="flex" style="margin-bottom: 25px;">
+						<a [routerLink]="['/', user.nick]">
+							<img alt="alexgp895" src="{{url + 'get-image-user/' + user.image}}" style="height: 80px;width: 80px;object-fit: cover;margin-right: 25px;border-radius: 100%;box-shadow: 0 0 0 7px #ffffff1c;">
+						</a>
+						
+						<h1 class="entry-title">{{user.nick}}</h1>
+					</div>
+					<p class="entry-description">
+						{{user.bio || "Sigue a "+user.nick+" para no perderte ningúna de sus publicaciones"}}
+					</p>
+					<div class="entry-meta">
+						<!-- <button class="btn-play" data-user-id="2">
+							<i class="fa fa-paper-plane-o icono-abrir-chat"></i>
+						</button> -->
+						<button class="btn-follow button-rounded " data-id="2" data-action="follow">
+							<span *ngIf="siguiendo == false" (click)="seguirUsuario(user._id)" class="follow">Seguir</span>
+							<span *ngIf="siguiendo" (click)="dejarDeSeguirUsuario(user._id)" class="following">Siguiendo</span>
+						</button>
+						<div *ngIf="user && user.youtube || user.soundCloud || user.instagram || user.twitter || user.facebook" class="redes-perfil" style="position:relative;left:0;top:auto;margin: 0;margin-right: 15px;">
+							<!-- <img alt="" src="https://s2.googleusercontent.com/s2/favicons?feature=youtube_channel&amp;domain_url=https%3A%2F%2Fwww.victorroblesweb.es" style="height: 17px;margin-right: 8px;">
+							<span style="margin-right: 15px;">alexgipi.com</span> -->
+							<a *ngIf="user && user.youtube" target="_blank" rel="nofollow" href="{{user.youtube}}">
+								<img alt="" src="assets/iconos-redes/youtube.png" style="height: 17px;margin-right: 15px;">
+							</a>
+							<a *ngIf="user.soundCloud" target="_blank" rel="nofollow" href="{{user.soundCloud}}">
+								<img alt="" src="assets/iconos-redes/soundcloud.png" style="height: 17px;margin-right: 15px;">
+							</a>
+							<!-- <a *ngIf="user.youtube" href="">
+								<img alt="" src="https://s2.googleusercontent.com/s2/favicons?feature=youtube_channel&amp;domain_url=https%3A%2F%2Fwww.spotify.com" style="height: 17px;margin-right: 15px;">
+							</a> -->
+							
+							<!-- <a href="">
+								<img alt="" src="https://s2.googleusercontent.com/s2/favicons?feature=youtube_channel&amp;domain_url=https%3A%2F%2Fwww.beatstars.com" style="height: 17px;margin-right: 15px;">
+							</a> -->
+							<a *ngIf="user.instagram" target="_blank" rel="nofollow" href="{{user.instagram}}">
+								<img alt="" src="assets/iconos-redes/instagram.png" style="height: 17px;margin-right: 15px;">
+							</a>
+							<a *ngIf="user.twitter" target="_blank" rel="nofollow" href="{{user.twitter}}">
+								<img alt="" src="assets/iconos-redes/twitter.png" style="height: 17px;margin-right: 15px;">
+							</a>
+							<a *ngIf="user.facebook" target="_blank" rel="nofollow" href="{{user.facebook}}">
+								<img alt="" src="assets/iconos-redes/facebook.png">
+							</a>
+						</div>
+						<div class="info-perfil-productor">
+							<span><b style="margin-right: 10px;">{{totalBeats}}</b>Bases</span>
+							<span>
+								<i class="fa fa-play"></i>
+								<b id="total-reproducciones-productor">{{totalReproducciones}}</b>
+							</span>
+							<span>
+								<svg height="511pt" class="icono-reputacion-perfil-productor" version="1.1" viewBox="-38 0 511 511.99956" width="511pt" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-ubl-c0="" id="surface1"><path _ngcontent-ubl-c0="" d="M 413.476562 341.910156 C 399.714844 379.207031 378.902344 411.636719 351.609375 438.289062 C 320.542969 468.625 279.863281 492.730469 230.699219 509.925781 C 229.085938 510.488281 227.402344 510.949219 225.710938 511.289062 C 223.476562 511.730469 221.203125 511.96875 218.949219 512 L 218.507812 512 C 216.105469 512 213.691406 511.757812 211.296875 511.289062 C 209.605469 510.949219 207.945312 510.488281 206.339844 509.9375 C 157.117188 492.769531 116.386719 468.675781 85.289062 438.339844 C 57.984375 411.6875 37.175781 379.277344 23.433594 341.980469 C -1.554688 274.167969 -0.132812 199.464844 1.011719 139.433594 L 1.03125 138.511719 C 1.261719 133.554688 1.410156 128.347656 1.492188 122.597656 C 1.910156 94.367188 24.355469 71.011719 52.589844 69.4375 C 111.457031 66.152344 156.996094 46.953125 195.90625 9.027344 L 196.246094 8.714844 C 202.707031 2.789062 210.847656 -0.117188 218.949219 0.00390625 C 226.761719 0.105469 234.542969 3.007812 240.773438 8.714844 L 241.105469 9.027344 C 280.023438 46.953125 325.5625 66.152344 384.429688 69.4375 C 412.664062 71.011719 435.109375 94.367188 435.527344 122.597656 C 435.609375 128.386719 435.757812 133.585938 435.988281 138.511719 L 436 138.902344 C 437.140625 199.046875 438.554688 273.898438 413.476562 341.910156 Z M 413.476562 341.910156 " style="stroke:none;fill-rule:nonzero;fill: rgb(193, 193, 193);fill-opacity:1;"></path><path _ngcontent-ubl-c0="" d="M 413.476562 341.910156 C 399.714844 379.207031 378.902344 411.636719 351.609375 438.289062 C 320.542969 468.625 279.863281 492.730469 230.699219 509.925781 C 229.085938 510.488281 227.402344 510.949219 225.710938 511.289062 C 223.476562 511.730469 221.203125 511.96875 218.949219 512 L 218.949219 0.00390625 C 226.761719 0.105469 234.542969 3.007812 240.773438 8.714844 L 241.105469 9.027344 C 280.023438 46.953125 325.5625 66.152344 384.429688 69.4375 C 412.664062 71.011719 435.109375 94.367188 435.527344 122.597656 C 435.609375 128.386719 435.757812 133.585938 435.988281 138.511719 L 436 138.902344 C 437.140625 199.046875 438.554688 273.898438 413.476562 341.910156 Z M 413.476562 341.910156 " style="stroke:none;fill-rule:nonzero;fill: rgb(172, 172, 172);fill-opacity:1;"></path></g></svg>
+								<b>{{user.reputation}}</b>
+							</span>
+						</div>
+					</div>
+				</header>
+				<figure class="post-thumbnail">
+					<!-- <img alt="" src="https://cdn.pixabay.com/photo/2017/08/04/20/10/dj-2581269_960_720.jpg" style="object-position: 50% 7%"> -->
+					<img alt="" src="https://www.onlygfx.com/wp-content/uploads/2018/03/orange-polygonal-background-fade-3.png" style="object-position: 50% 7%">
+				</figure>
+			</div>
+			<div class="page-header">
+				<nav class="user-navigation">
+					<div class="container-perfil-productor">
+						<ul class="nav">
+							<li class="">
+								<a class="sub-ajax" [class.activo]="viendoTab == 'bases'" (click)="cambiarTab('bases')">
+									Bases
+								</a>
+							</li>
+							<li class="">
+								<a class="sub-ajax" [class.activo]="viendoTab == 'listas'" (click)="cambiarTab('listas')">
+									Listas de reproducción
+								</a>
+							</li>
+							<li class="">
+								<a class="sub-ajax" [class.activo]="viendoTab == 'comprar'" (click)="cambiarTab('comprar')">
+									Comprar bases
+								</a>
+							</li>
+							<li class="">
+								<a class="sub-ajax" [class.activo]="viendoTab == 'mas-info'" (click)="cambiarTab('mas-info')">
+									Más información
+								</a>
+							</li>
+							<!-- <li class="">
+								<a class="sub-ajax" href="#">
+									Seguidores
+								</a>
+							</li>
+							<li class="">
+								<a class="sub-ajax" href="#">
+									Siguiendo
+								</a>
+							</li> -->
+						</ul>
+					</div>
+				</nav>
+			</div>
+			
+	</article>
+
+	
+	<!-- TABS PERFIL PRODUCTOR -->
+	<div class="panel-beats-biblioteca" *ngIf="viendoTab == 'bases'">		
+		
+		<div class="flex">
+			<div class="barra-filtros-biblioteca">
+				<div style="display: flex;height: 32px;">
+					<div id="dropdown-estilos" class="mi-dropdown" style="margin-right: 10px;">
+						<div  class="btn-mi-dropdown naranja">
+							Todos los estilos
+							<div (click)="activarDesactivarDropdown('estilo')" style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;z-index: 999;"></div>
+							<i class="fa fa-angle-down"></i>
+						</div>
+						<ul class="menu-mi-dropdown" id="menu-dropdown-estilos">
+							<a [routerLink]="['/bases-de-rap']"><li class="activo">Todos</li></a>
+							<a [routerLink]="['/bases-de-rap/old-school']"><li>Old School</li></a>
+							<a [routerLink]="['/bases-de-rap/trap']"><li>Trap</li></a>
+							<a [routerLink]="['/bases-de-rap/underground']"><li>Underground</li></a>
+							<a [routerLink]="['/bases-de-rap/boom-bap']"><li>Boom Bap</li></a>
+							<a [routerLink]="['/bases-de-rap/lofi']"><li>Lofi Rap</li></a>
+							<a [routerLink]="['/bases-de-rap/jazzy']"><li>Jazzy</li></a>
+							<a [routerLink]="['/bases-de-rap/reggae']"><li>Reggae</li></a>						
+						</ul>
+					</div>
+					<div id="dropdown-filtros" class="mi-dropdown">
+						<div  class="btn-mi-dropdown naranja-blanco">
+							{{filtroSeleccionado}}
+	
+							<div (click)="activarDesactivarDropdown('filtros')" style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;z-index: 999;"></div>
+	
+							<i class="fa fa-angle-down"></i>
+		
+							
+						</div>
+						<ul class="menu-mi-dropdown" id="menu-dropdown-filtros">
+							<li (click)="getBeatsOrdenadosPor('-created_at');" [class.activo]="filtroSeleccionado == 'Más recientes'">Más recientes</li>
+							<li (click)="getBeatsOrdenadosPor('created_at');" [class.activo]="filtroSeleccionado == 'Más antiguas'">Más antiguas</li>
+							<li (click)="getBeatsOrdenadosPor('-likes');" [class.activo]="filtroSeleccionado == 'Más reputadas'">Más reputadas</li>
+							<li (click)="getBeatsOrdenadosPor('-reproducciones');" [class.activo]="filtroSeleccionado == 'Más reproducidas'">Más reproducidas</li>						
+						</ul>
+					</div>
+					
+				</div>
+				
+				<div style="display: inline-flex;justify-content: flex-end;align-items: center;">
+					<h1 *ngIf="user" class="h5" style="margin: 0;margin-left: 15px;color: rgba(0,0,0,0.4);margin-right: 10px;">Bases de rap de {{user.nick}}</h1>
+					<div class="busqueda-filtros-biblioteca">
+						<input type="text" placeholder="Buscar..." name="filtroBeat" [(ngModel)]="filtroBeat">
+						<i class="fa fa-search"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="contenedor-beats-biblioteca">
+			<ul class="listado-panel-beats-biblioteca beats grid-beats"  *ngIf="identity">
+				<li *ngFor="let beat of beats | filtroBeats:filtroBeat; let i = index" [attr.id]="i + 1" [attr.value]="beat._id" class="otro-beat-{{beat._id}}" [class.active]="beat._id == idBeat1" [ngClass]="{'sonando': beat._id == idBeat1 && sonando, 'pausado': beat._id == idBeat1 && sonando == false}">
+
+					<div [class.active]="beat._id == idBeat1" class="flex space-between contenido-li-listado-beat">
+
+						<div class="caratula-beat-listado">
+							<i class="mdi mdi-play-circle-outline i-play-listado" (click)="getBeat(beat._id, true, $event);"></i>
+							<i class="mdi mdi-pause-circle-outline i-pause-listado" (click)="pauseBeat();"></i>
+
+							<img *ngIf="beat.image != null" src="{{url + 'get-imagen-beat/' + beat.image}}">
+							<img *ngIf="beat.image == null" src="{{url + 'get-image-user/' + beat.user.image}}">
+							
+							<svg class="barras-sonando" *ngIf="beat._id == idBeat1" xmlns="http://www.w3.org/2000/svg" width="55" height="80" viewBox="0 0 55 80" fill="#222">
+								<g transform="matrix(1 0 0 -1 0 80)">
+									<rect width="10" height="5" rx="3">
+										<animate *ngIf="sonando" attributeName="height" begin="0s" dur="4.3s" values="20;45;57;80;64;32;66;45;64;23;66;13;64;56;34;34;2;23;76;79;20" calcMode="linear" repeatCount="indefinite"/>
+									</rect>
+									<rect x="15" width="10" height="5" rx="3">
+										<animate *ngIf="sonando" attributeName="height" begin="0s" dur="2s" values="80;55;33;5;75;23;73;33;12;14;60;80" calcMode="linear" repeatCount="indefinite"/>
+									</rect>
+									<rect x="30" width="10" height="5" rx="3">
+										<animate *ngIf="sonando" attributeName="height" begin="0s" dur="1.4s" values="50;34;78;23;56;23;34;76;80;54;21;50" calcMode="linear" repeatCount="indefinite"/>
+									</rect>
+									<rect x="45" width="10" height="5" rx="3">
+										<animate *ngIf="sonando" attributeName="height" begin="0s" dur="2s" values="30;45;13;80;56;72;45;76;34;23;67;30" calcMode="linear" repeatCount="indefinite"/>
+									</rect>
+								</g>
+							</svg>
+						</div>
+						<div class="contenido-listado-izq" (click)="getBeat(beat._id, true, $event)">
+							<div class="float-left flex width-100 height-100">
+								<div class="float-left">								
+									<span class="titulo-beat" style="display: -webkit-box;-webkit-box-orient: vertical;text-overflow: ellipsis;-webkit-line-clamp: 2;">
+										{{beat.name}}
+									</span>
+									<div class="autor-beat">
+										{{beat.user.nick}}							
+									</div>
+								</div>
+								<!-- <div class="float-left" style="position: relative;bottom: 7px;left: 10px;">
+									<i class="fa fa-volume-up" style="color: #9c9c9c;font-size: 1.5em;font-weight: normal;"></i>
+								</div> -->
+							</div>
+							
+						</div>
+
+						<div class="mas-info-beat-biblioteca">
+							
+							<div class="control-bottom" style="float: left;width: 100%;color: #fff;margin-right: 5px;">
+								<div class="flex control-bottom-der">
+									<i *ngIf="beat.uso == 'libre' && beat._id == idBeat1" (click)="descargar(beat.file)" class="mdi mdi-file-download"></i>
+									<i *ngIf="beat.uso == 'limitado'" class="fa fa-usd" style="color:#59ab7e;margin: 0;/* margin-right: 8px; */font-size: 13px;width: 30px;height: 30px;display: flex;justify-content: center;align-items: center;"></i>
+									<a *ngIf="beat.enlace" href="{{beat.enlace}}" rel="nofollow" target="_blank"><i class="fa fa-shopping-cart"></i></a>
+									<i *ngIf="beat._id == idBeat1" (click)="reproductorBiblioteca.abrirCerrarModalAddLista();" class="mdi mdi-playlist-add"></i>
+								</div>
+							</div>
+
+							
+							
+							
+							<div class="item-mas-info-beat info-reproducciones no-border">
+								<div class="info-beat-num">{{beat.bpm || 120 }} BPM</div>
+							</div>
+							<div class="item-mas-info-beat info-reproducciones">
+								<div class="info-beat-num" style="text-transform: capitalize;">{{beat.style.replace("-"," ")}}</div>
+							</div>
+							<div class="item-mas-info-beat info-reproducciones">
+								<i class="fa fa-play"></i>
+								<div class="info-beat-num reproducciones-beat-{{beat._id}}">{{beat.reproducciones}}</div>
+							</div>
+							<div [class.activo]="likes.indexOf(beat._id) >= 0" class="item-mas-info-beat info-reputacion relative">
+								<div aria-label="+1 Reputación" class="over-dar-repu naranja" id="{{beat._id}}" *ngIf="likes && likes.indexOf(beat._id) < 0" (click)="likeBeat(beat._id);sumarLikeBeat(beat._id);">
+									+ 1
+								</div>
+
+								<div aria-label="-1 Reputación" class="over-dar-repu rojo"
+								id="{{beat._id}}"
+								*ngIf="likes && likes.indexOf(beat._id) >= 0"
+								(mouseenter)="mouseEnter(beat._id)"
+								(mouseleave)="mouseLeave(beat._id)"
+								(click)="borrarLikeBeat(beat._id); restarLikeBeat(beat._id)">
+									- 1
+								</div>
+								<svg height="511pt" version="1.1" viewBox="-38 0 511 511.99956" width="511pt" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-qsl-c0="" id="surface1"><path _ngcontent-qsl-c0="" d="M 413.476562 341.910156 C 399.714844 379.207031 378.902344 411.636719 351.609375 438.289062 C 320.542969 468.625 279.863281 492.730469 230.699219 509.925781 C 229.085938 510.488281 227.402344 510.949219 225.710938 511.289062 C 223.476562 511.730469 221.203125 511.96875 218.949219 512 L 218.507812 512 C 216.105469 512 213.691406 511.757812 211.296875 511.289062 C 209.605469 510.949219 207.945312 510.488281 206.339844 509.9375 C 157.117188 492.769531 116.386719 468.675781 85.289062 438.339844 C 57.984375 411.6875 37.175781 379.277344 23.433594 341.980469 C -1.554688 274.167969 -0.132812 199.464844 1.011719 139.433594 L 1.03125 138.511719 C 1.261719 133.554688 1.410156 128.347656 1.492188 122.597656 C 1.910156 94.367188 24.355469 71.011719 52.589844 69.4375 C 111.457031 66.152344 156.996094 46.953125 195.90625 9.027344 L 196.246094 8.714844 C 202.707031 2.789062 210.847656 -0.117188 218.949219 0.00390625 C 226.761719 0.105469 234.542969 3.007812 240.773438 8.714844 L 241.105469 9.027344 C 280.023438 46.953125 325.5625 66.152344 384.429688 69.4375 C 412.664062 71.011719 435.109375 94.367188 435.527344 122.597656 C 435.609375 128.386719 435.757812 133.585938 435.988281 138.511719 L 436 138.902344 C 437.140625 199.046875 438.554688 273.898438 413.476562 341.910156 Z M 413.476562 341.910156 " style="stroke:none;fill-rule:nonzero;fill: rgb(193, 193, 193);fill-opacity:1;"></path><path _ngcontent-qsl-c0="" d="M 413.476562 341.910156 C 399.714844 379.207031 378.902344 411.636719 351.609375 438.289062 C 320.542969 468.625 279.863281 492.730469 230.699219 509.925781 C 229.085938 510.488281 227.402344 510.949219 225.710938 511.289062 C 223.476562 511.730469 221.203125 511.96875 218.949219 512 L 218.949219 0.00390625 C 226.761719 0.105469 234.542969 3.007812 240.773438 8.714844 L 241.105469 9.027344 C 280.023438 46.953125 325.5625 66.152344 384.429688 69.4375 C 412.664062 71.011719 435.109375 94.367188 435.527344 122.597656 C 435.609375 128.386719 435.757812 133.585938 435.988281 138.511719 L 436 138.902344 C 437.140625 199.046875 438.554688 273.898438 413.476562 341.910156 Z M 413.476562 341.910156 " style="stroke:none;fill-rule:nonzero;fill: rgb(172, 172, 172);fill-opacity:1;"></path></g></svg>
+								<div class="info-beat-num">{{beat.likes}}</div>
+							</div>
+							<div class="etiqueta-estilo">{{beat.style.replace("-"," ")}}</div>
+						</div>
+
+					</div>	
+				</li>
+			</ul>
+
+			<ul class="listado-panel-beats-biblioteca beats grid-beats"  *ngIf="!identity">
+				<li *ngFor="let beat of beats | filtroBeats:filtroBeat; let i = index" [attr.id]="i + 1" [attr.value]="beat._id" class="otro-beat-{{beat._id}}" [class.active]="beat._id == idBeat1" [ngClass]="{'sonando': beat._id == idBeat1 && sonando, 'pausado': beat._id == idBeat1 && sonando == false}">
+
+					<div [class.active]="beat._id == idBeat1" class="flex space-between contenido-li-listado-beat">
+
+						<div class="caratula-beat-listado">
+							<i class="mdi mdi-play-circle-outline i-play-listado" (click)="getBeat(beat._id, true, $event);"></i>
+							<i class="mdi mdi-pause-circle-outline i-pause-listado" (click)="pauseBeat();"></i>
+
+							<img *ngIf="beat.image != null" src="{{url + 'get-imagen-beat/' + beat.image}}">
+							<img *ngIf="beat.image == null" src="{{url + 'get-image-user/' + beat.user.image}}">
+							
+							<svg class="barras-sonando" *ngIf="beat._id == idBeat1" xmlns="http://www.w3.org/2000/svg" width="55" height="80" viewBox="0 0 55 80" fill="#222">
+								<g transform="matrix(1 0 0 -1 0 80)">
+									<rect width="10" height="5" rx="3">
+										<animate *ngIf="sonando" attributeName="height" begin="0s" dur="4.3s" values="20;45;57;80;64;32;66;45;64;23;66;13;64;56;34;34;2;23;76;79;20" calcMode="linear" repeatCount="indefinite"/>
+									</rect>
+									<rect x="15" width="10" height="5" rx="3">
+										<animate *ngIf="sonando" attributeName="height" begin="0s" dur="2s" values="80;55;33;5;75;23;73;33;12;14;60;80" calcMode="linear" repeatCount="indefinite"/>
+									</rect>
+									<rect x="30" width="10" height="5" rx="3">
+										<animate *ngIf="sonando" attributeName="height" begin="0s" dur="1.4s" values="50;34;78;23;56;23;34;76;80;54;21;50" calcMode="linear" repeatCount="indefinite"/>
+									</rect>
+									<rect x="45" width="10" height="5" rx="3">
+										<animate *ngIf="sonando" attributeName="height" begin="0s" dur="2s" values="30;45;13;80;56;72;45;76;34;23;67;30" calcMode="linear" repeatCount="indefinite"/>
+									</rect>
+								</g>
+							</svg>
+						</div>
+						<div class="contenido-listado-izq" (click)="getBeat(beat._id, true, $event)">
+							<div class="float-left flex width-100 height-100">
+								<div class="float-left">								
+									<span class="titulo-beat" style="display: -webkit-box;-webkit-box-orient: vertical;text-overflow: ellipsis;-webkit-line-clamp: 2;">
+										{{beat.name}}
+									</span>
+									<div class="autor-beat">
+										{{beat.user.nick}}							
+									</div>
+								</div>
+								<!-- <div class="float-left" style="position: relative;bottom: 7px;left: 10px;">
+									<i class="fa fa-volume-up" style="color: #9c9c9c;font-size: 1.5em;font-weight: normal;"></i>
+								</div> -->
+							</div>
+							
+						</div>
+
+						<div class="mas-info-beat-biblioteca">
+							
+							<div class="control-bottom" style="float: left;width: 100%;color: #fff;margin-right: 5px;">
+								<div class="flex control-bottom-der">
+									<i *ngIf="beat.uso == 'libre' && beat._id == idBeat1" (click)="descargar(beat.file)" class="mdi mdi-file-download"></i>
+									<i *ngIf="beat.uso == 'limitado'" class="fa fa-usd" style="color:#59ab7e;margin: 0;/* margin-right: 8px; */font-size: 13px;width: 30px;height: 30px;display: flex;justify-content: center;align-items: center;"></i>
+									<a *ngIf="beat.enlace" href="{{beat.enlace}}" rel="nofollow" target="_blank"><i class="fa fa-shopping-cart"></i></a>
+									<i *ngIf="beat._id == idBeat1" (click)="reproductorBiblioteca.abrirCerrarModalAddLista();" class="mdi mdi-playlist-add"></i>
+								</div>
+							</div>
+
+							
+							
+							
+							<div class="item-mas-info-beat info-reproducciones no-border">
+								<div class="info-beat-num">{{beat.bpm || 120 }} BPM</div>
+							</div>
+							<div class="item-mas-info-beat info-reproducciones">
+								<div class="info-beat-num" style="text-transform: capitalize;">{{beat.style.replace("-"," ")}}</div>
+							</div>
+							<div class="item-mas-info-beat info-reproducciones">
+								<i class="fa fa-play"></i>
+								<div class="info-beat-num reproducciones-beat-{{beat._id}}">{{beat.reproducciones}}</div>
+							</div>
+							<div class="item-mas-info-beat info-reputacion relative">
+								<div aria-label="+1 Reputación" class="over-dar-repu naranja" id="{{beat._id}}">
+									+ 1
+								</div>
+
+								<svg height="511pt" version="1.1" viewBox="-38 0 511 511.99956" width="511pt" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-qsl-c0="" id="surface1"><path _ngcontent-qsl-c0="" d="M 413.476562 341.910156 C 399.714844 379.207031 378.902344 411.636719 351.609375 438.289062 C 320.542969 468.625 279.863281 492.730469 230.699219 509.925781 C 229.085938 510.488281 227.402344 510.949219 225.710938 511.289062 C 223.476562 511.730469 221.203125 511.96875 218.949219 512 L 218.507812 512 C 216.105469 512 213.691406 511.757812 211.296875 511.289062 C 209.605469 510.949219 207.945312 510.488281 206.339844 509.9375 C 157.117188 492.769531 116.386719 468.675781 85.289062 438.339844 C 57.984375 411.6875 37.175781 379.277344 23.433594 341.980469 C -1.554688 274.167969 -0.132812 199.464844 1.011719 139.433594 L 1.03125 138.511719 C 1.261719 133.554688 1.410156 128.347656 1.492188 122.597656 C 1.910156 94.367188 24.355469 71.011719 52.589844 69.4375 C 111.457031 66.152344 156.996094 46.953125 195.90625 9.027344 L 196.246094 8.714844 C 202.707031 2.789062 210.847656 -0.117188 218.949219 0.00390625 C 226.761719 0.105469 234.542969 3.007812 240.773438 8.714844 L 241.105469 9.027344 C 280.023438 46.953125 325.5625 66.152344 384.429688 69.4375 C 412.664062 71.011719 435.109375 94.367188 435.527344 122.597656 C 435.609375 128.386719 435.757812 133.585938 435.988281 138.511719 L 436 138.902344 C 437.140625 199.046875 438.554688 273.898438 413.476562 341.910156 Z M 413.476562 341.910156 " style="stroke:none;fill-rule:nonzero;fill: rgb(193, 193, 193);fill-opacity:1;"></path><path _ngcontent-qsl-c0="" d="M 413.476562 341.910156 C 399.714844 379.207031 378.902344 411.636719 351.609375 438.289062 C 320.542969 468.625 279.863281 492.730469 230.699219 509.925781 C 229.085938 510.488281 227.402344 510.949219 225.710938 511.289062 C 223.476562 511.730469 221.203125 511.96875 218.949219 512 L 218.949219 0.00390625 C 226.761719 0.105469 234.542969 3.007812 240.773438 8.714844 L 241.105469 9.027344 C 280.023438 46.953125 325.5625 66.152344 384.429688 69.4375 C 412.664062 71.011719 435.109375 94.367188 435.527344 122.597656 C 435.609375 128.386719 435.757812 133.585938 435.988281 138.511719 L 436 138.902344 C 437.140625 199.046875 438.554688 273.898438 413.476562 341.910156 Z M 413.476562 341.910156 " style="stroke:none;fill-rule:nonzero;fill: rgb(172, 172, 172);fill-opacity:1;"></path></g></svg>
+								<div class="info-beat-num">{{beat.likes}}</div>
+							</div>
+							<div class="etiqueta-estilo">{{beat.style.replace("-"," ")}}</div>
+						</div>
+
+					</div>	
+				</li>
+			</ul>
+		</div>
+
+	</div>
+
+	<div class="panel-beats-biblioteca" *ngIf="viendoTab == 'listas'">		
+		
+		<div class="flex">
+			<div class="barra-filtros-biblioteca">
+				<div style="display: flex;height: 32px;">
+					<div id="dropdown-filtros" class="mi-dropdown">
+						<div  class="btn-mi-dropdown naranja-blanco">
+							Más recientes
+	
+							<div (click)="activarDesactivarDropdown('filtros')" style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;z-index: 999;"></div>
+	
+							<i class="fa fa-angle-down"></i>
+		
+							
+						</div>
+						<ul class="menu-mi-dropdown" id="menu-dropdown-filtros">
+							<li (click)="getBeatsOrdenadosPor('-created_at');" [class.activo]="filtroSeleccionado == 'Más recientes'">Más recientes</li>
+							<li (click)="getBeatsOrdenadosPor('created_at');" [class.activo]="filtroSeleccionado == 'Más antiguas'">Más antiguas</li>
+							<li (click)="getBeatsOrdenadosPor('-likes');" [class.activo]="filtroSeleccionado == 'Más reputadas'">Más reputadas</li>
+							<li (click)="getBeatsOrdenadosPor('-reproducciones');" [class.activo]="filtroSeleccionado == 'Más reproducidas'">Más reproducidas</li>						
+						</ul>
+					</div>
+					
+				</div>
+				
+				<div style="display: inline-flex;justify-content: flex-end;align-items: center;">
+					<h1 *ngIf="user" class="h5" style="margin: 0;margin-left: 15px;color: rgba(0,0,0,0.4);margin-right: 10px;">Todas las listas de {{user.nick}}</h1>
+					<div class="busqueda-filtros-biblioteca">
+						<input type="text" placeholder="Buscar..." name="filtroBeat" [(ngModel)]="filtroBeat">
+						<i class="fa fa-search"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div aria-controls="collapseExample" aria-expanded="true" data-target="#collapseExample" data-toggle="collapse" class="h5 barra-lista-seleccionada">
+				<span>{{lista.nombre}} - {{lista.user.nick}}</span>
+				<!-- <div class="estilos-lista">
+
+		
+						<li *ngFor="let estilo of estilosLista"
+							[class.rojo]="estilo == 'boom-bapm'"
+							[class.naranja]="estilo == 'trap'"
+							[class.negro]="estilo == 'old-school'"
+							[class.verde]="estilo == 'underground'"
+							[class.azul]="estilo == 'jazzy'">
+							{{estilo.replace('-', ' ')}}
+						</li> 
+					</div> -->
+				<span (click)="abrirCerrarListaActiva();" class="fa fa-angle-down" style="font-size: 1.7em;font-weight: normal;"></span>
+
+			</div>
+		<ul class="listado-panel-beats-biblioteca beats grid-beats"  *ngIf="identity">
+			<li *ngFor="let beatLista of beatsLista; let i = index" [attr.id]="i + 1" [attr.value]="beatLista.beat._id" class="otro-beat-{{beatLista.beat._id}}" [class.active]="beatLista.beat._id == idBeat1" [ngClass]="{'sonando': beatLista.beat._id == idBeat1 && sonando, 'pausado': beatLista.beat._id == idBeat1 && sonando == false}">
+
+				<div [class.active]="beatLista.beat._id == idBeat1" class="flex space-between contenido-li-listado-beat">
+
+					<div class="caratula-beat-listado">
+						<i class="mdi mdi-play-circle-outline i-play-listado" (click)="getBeat(beatLista.beat._id, true, $event);"></i>
+						<i class="mdi mdi-pause-circle-outline i-pause-listado" (click)="pauseBeat();"></i>
+
+						<img *ngIf="beatLista.beat.image != null" src="{{url + 'get-imagen-beat/' + beatLista.beat.image}}">
+						<img *ngIf="beatLista.beat.image == null" src="{{url + 'get-image-user/' + beatLista.beat.user.image}}">
+						
+						<svg class="barras-sonando" *ngIf="beatLista.beat._id == idBeat1" xmlns="http://www.w3.org/2000/svg" width="55" height="80" viewBox="0 0 55 80" fill="#222">
+							<g transform="matrix(1 0 0 -1 0 80)">
+								<rect width="10" height="5" rx="3">
+									<animate *ngIf="sonando" attributeName="height" begin="0s" dur="4.3s" values="20;45;57;80;64;32;66;45;64;23;66;13;64;56;34;34;2;23;76;79;20" calcMode="linear" repeatCount="indefinite"/>
+								</rect>
+								<rect x="15" width="10" height="5" rx="3">
+									<animate *ngIf="sonando" attributeName="height" begin="0s" dur="2s" values="80;55;33;5;75;23;73;33;12;14;60;80" calcMode="linear" repeatCount="indefinite"/>
+								</rect>
+								<rect x="30" width="10" height="5" rx="3">
+									<animate *ngIf="sonando" attributeName="height" begin="0s" dur="1.4s" values="50;34;78;23;56;23;34;76;80;54;21;50" calcMode="linear" repeatCount="indefinite"/>
+								</rect>
+								<rect x="45" width="10" height="5" rx="3">
+									<animate *ngIf="sonando" attributeName="height" begin="0s" dur="2s" values="30;45;13;80;56;72;45;76;34;23;67;30" calcMode="linear" repeatCount="indefinite"/>
+								</rect>
+							</g>
+						</svg>
+					</div>
+					<div class="contenido-listado-izq" (click)="getBeat(beatLista.beat._id, true, $event)">
+						<div class="float-left flex width-100 height-100">
+							<div class="float-left">								
+								<span class="titulo-beat" style="display: -webkit-box;-webkit-box-orient: vertical;text-overflow: ellipsis;-webkit-line-clamp: 2;">
+									{{beatLista.beat.name}}
+								</span>
+								<div class="autor-beat">
+									{{beatLista.beat.user.nick}}							
+								</div>
+							</div>
+							<!-- <div class="float-left" style="position: relative;bottom: 7px;left: 10px;">
+								<i class="fa fa-volume-up" style="color: #9c9c9c;font-size: 1.5em;font-weight: normal;"></i>
+							</div> -->
+						</div>
+						
+					</div>
+
+					<div class="mas-info-beat-biblioteca">
+						
+						<div class="control-bottom" style="float: left;width: 100%;color: #fff;margin-right: 5px;">
+							<div class="flex control-bottom-der">
+								<i *ngIf="beatLista.beat.uso == 'libre' && beatLista.beat._id == idBeat1" (click)="descargar(beatLista.beat.file)" class="mdi mdi-file-download"></i>
+								<i *ngIf="beatLista.beat.uso == 'limitado'" class="fa fa-usd" style="color:#59ab7e;margin: 0;/* margin-right: 8px; */font-size: 13px;width: 30px;height: 30px;display: flex;justify-content: center;align-items: center;"></i>
+								<a *ngIf="beatLista.beat.enlace" href="{{beatLista.beat.enlace}}" rel="nofollow" target="_blank"><i class="fa fa-shopping-cart"></i></a>
+								<i *ngIf="beatLista.beat._id == idBeat1" (click)="reproductorBiblioteca.abrirCerrarModalAddLista();" class="mdi mdi-playlist-add"></i>
+							</div>
+						</div>
+
+						
+						
+						
+						<div class="item-mas-info-beat info-reproducciones no-border">
+							<div class="info-beat-num">{{beatLista.beat.bpm || 120 }} BPM</div>
+						</div>
+						<div class="item-mas-info-beat info-reproducciones">
+							<div class="info-beat-num" style="text-transform: capitalize;">{{beatLista.beat.style.replace("-"," ")}}</div>
+						</div>
+						<div class="item-mas-info-beat info-reproducciones">
+							<i class="fa fa-play"></i>
+							<div class="info-beat-num reproducciones-beat-{{beatLista.beat._id}}">{{beatLista.beat.reproducciones}}</div>
+						</div>
+						<div [class.activo]="likes.indexOf(beatLista.beat._id) >= 0" class="item-mas-info-beat info-reputacion relative">
+							<div aria-label="+1 Reputación" class="over-dar-repu naranja" id="{{beatLista.beat._id}}" *ngIf="likes && likes.indexOf(beatLista.beat._id) < 0" (click)="likeBeat(beatLista.beat._id);sumarLikeBeat(beatLista.beat._id);">
+								+ 1
+							</div>
+
+							<div aria-label="-1 Reputación" class="over-dar-repu rojo"
+							id="{{beatLista.beat._id}}"
+							*ngIf="likes && likes.indexOf(beatLista.beat._id) >= 0"
+							(mouseenter)="mouseEnter(beatLista.beat._id)"
+							(mouseleave)="mouseLeave(beatLista.beat._id)"
+							(click)="borrarLikeBeat(beatLista.beat._id); restarLikeBeat(beatLista.beat._id)">
+								- 1
+							</div>
+							<svg height="511pt" version="1.1" viewBox="-38 0 511 511.99956" width="511pt" xmlns="http://www.w3.org/2000/svg"><g _ngcontent-qsl-c0="" id="surface1"><path _ngcontent-qsl-c0="" d="M 413.476562 341.910156 C 399.714844 379.207031 378.902344 411.636719 351.609375 438.289062 C 320.542969 468.625 279.863281 492.730469 230.699219 509.925781 C 229.085938 510.488281 227.402344 510.949219 225.710938 511.289062 C 223.476562 511.730469 221.203125 511.96875 218.949219 512 L 218.507812 512 C 216.105469 512 213.691406 511.757812 211.296875 511.289062 C 209.605469 510.949219 207.945312 510.488281 206.339844 509.9375 C 157.117188 492.769531 116.386719 468.675781 85.289062 438.339844 C 57.984375 411.6875 37.175781 379.277344 23.433594 341.980469 C -1.554688 274.167969 -0.132812 199.464844 1.011719 139.433594 L 1.03125 138.511719 C 1.261719 133.554688 1.410156 128.347656 1.492188 122.597656 C 1.910156 94.367188 24.355469 71.011719 52.589844 69.4375 C 111.457031 66.152344 156.996094 46.953125 195.90625 9.027344 L 196.246094 8.714844 C 202.707031 2.789062 210.847656 -0.117188 218.949219 0.00390625 C 226.761719 0.105469 234.542969 3.007812 240.773438 8.714844 L 241.105469 9.027344 C 280.023438 46.953125 325.5625 66.152344 384.429688 69.4375 C 412.664062 71.011719 435.109375 94.367188 435.527344 122.597656 C 435.609375 128.386719 435.757812 133.585938 435.988281 138.511719 L 436 138.902344 C 437.140625 199.046875 438.554688 273.898438 413.476562 341.910156 Z M 413.476562 341.910156 " style="stroke:none;fill-rule:nonzero;fill: rgb(193, 193, 193);fill-opacity:1;"></path><path _ngcontent-qsl-c0="" d="M 413.476562 341.910156 C 399.714844 379.207031 378.902344 411.636719 351.609375 438.289062 C 320.542969 468.625 279.863281 492.730469 230.699219 509.925781 C 229.085938 510.488281 227.402344 510.949219 225.710938 511.289062 C 223.476562 511.730469 221.203125 511.96875 218.949219 512 L 218.949219 0.00390625 C 226.761719 0.105469 234.542969 3.007812 240.773438 8.714844 L 241.105469 9.027344 C 280.023438 46.953125 325.5625 66.152344 384.429688 69.4375 C 412.664062 71.011719 435.109375 94.367188 435.527344 122.597656 C 435.609375 128.386719 435.757812 133.585938 435.988281 138.511719 L 436 138.902344 C 437.140625 199.046875 438.554688 273.898438 413.476562 341.910156 Z M 413.476562 341.910156 " style="stroke:none;fill-rule:nonzero;fill: rgb(172, 172, 172);fill-opacity:1;"></path></g></svg>
+							<div class="info-beat-num">{{beatLista.beat.likes}}</div>
+						</div>
+						<div class="etiqueta-estilo">{{beatLista.beat.style.replace("-"," ")}}</div>
+					</div>
+
+				</div>	
+			</li>
+		</ul>
+
+		<ul class="cards-listas-beats">
+			<div (click)="selecionarLista(lista);" aria-controls="collapseExample" aria-expanded="true" data-target="#collapseExample" data-toggle="collapse" *ngFor="let lista of listas; let i = index" class="card radius shadowDepth1">
+				<div class="card__image border-tlr-radius">
+					<div *ngIf="lista.beats.length < 3" class="square-box" style="border-radius: 4px;">
+						<div class="square-content">
+							<div class="square-box">
+								<div class="square-content">
+									<img *ngIf="lista && lista.beats[0].beat" src="{{url + 'get-imagen-beat/' + lista.beats[0].beat.image }}" alt="">
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- <div *ngIf="lista.beats.length == 2" class="square-box" style="border-radius: 4px;">
+						<div class="square-content">
+							<div class="square-box" style="width: 50%;height:50%;float:left;">
+								<div class="square-content">
+									<img *ngIf="lista && lista.beats[0].beat" src="{{url + 'get-imagen-beat/' + lista.beats[0].beat.image }}" alt="">
+								</div>
+							</div>
+							<div class="square-box" style="width: 50%;height:50%;float:left;">
+								<div class="square-content">
+									<img *ngIf="lista && lista.beats[0].beat" src="{{url + 'get-imagen-beat/' + lista.beats[1].beat.image }}" alt="">
+								</div>
+							</div>
+						</div>
+					</div> -->
+					<div *ngIf="lista.beats.length == 3" class="square-box" style="border-radius: 4px;">
+						<div class="square-content">
+							<div class="square-box" style="width: 50%;height:50%;float:left;">
+								<div class="square-content">
+									<img *ngIf="lista && lista.beats[0].beat" src="{{url + 'get-imagen-beat/' + lista.beats[0].beat.image }}" alt="">
+								</div>
+							</div>
+							<div class="square-box" style="width: 50%;height:50%;float:left;">
+								<div class="square-content">
+									<img *ngIf="lista && lista.beats[0].beat" src="{{url + 'get-imagen-beat/' + lista.beats[1].beat.image }}" alt="">
+								</div>
+							</div>
+							<div class="square-box" style="width: 50%;height:50%;float:left;">
+								<div class="square-content">
+									<img *ngIf="lista && lista.beats[0].beat" src="{{url + 'get-imagen-beat/' + lista.beats[2].beat.image }}" alt="">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div *ngIf="lista.beats.length >= 4" class="square-box" style="border-radius: 4px;">
+						<div class="square-content">
+							<div class="square-box" style="width: 50%;height:50%;float:left;">
+								<div class="square-content">
+									<img *ngIf="lista && lista.beats[0].beat" src="{{url + 'get-imagen-beat/' + lista.beats[0].beat.image }}" alt="">
+								</div>
+							</div>
+							<div class="square-box" style="width: 50%;height:50%;float:left;">
+								<div class="square-content">
+									<img *ngIf="lista && lista.beats[0].beat" src="{{url + 'get-imagen-beat/' + lista.beats[1].beat.image }}" alt="">
+								</div>
+							</div>
+							<div class="square-box" style="width: 50%;height:50%;float:left;">
+								<div class="square-content">
+									<img *ngIf="lista && lista.beats[0].beat" src="{{url + 'get-imagen-beat/' + lista.beats[2].beat.image }}" alt="">
+								</div>
+							</div>
+							<div class="square-box" style="width: 50%;height:50%;float:left;">
+								<div class="square-content">
+									<img *ngIf="lista && lista.beats[0].beat" src="{{url + 'get-imagen-beat/' + lista.beats[3].beat.image }}" alt="">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="card__content card__padding">        
+					<article class="card__article">
+						<h2 style="font-size: 1em;"><a href="#">{{lista.nombre}}</a></h2>
+					</article>
+				</div>
+
+				<div class="card__action">
+					
+					<div class="card__author">
+						<img src="{{url + 'get-image-user/' + lista.user.image}}" alt="user">
+						<div class="card__author-content">
+							<a href="#">{{lista.user.nick}}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</ul>
+
+		
+
+	</div>
+
+	<div class="panel-beats-biblioteca" *ngIf="viendoTab == 'comprar'">		
+		
+		<div class="flex">
+			<div class="barra-filtros-biblioteca">
+				
+				<div style="display: inline-flex;justify-content: flex-end;align-items: center;">
+					<h1 *ngIf="user" class="h5" style="margin: 0;margin-left: 15px;color: rgba(0,0,0,0.4);margin-right: 10px;">Comprar bases de {{user.nick}}</h1>
+					<div class="busqueda-filtros-biblioteca">
+						<input type="text" placeholder="Buscar..." name="filtroBeat" [(ngModel)]="filtroBeat">
+						<i class="fa fa-search"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="contenedor-beats-biblioteca contenido-tab-productor">
+
+			<div class="flex" style="margin-bottom: 10px;">	
+				<h3 class="h4" style="margin:0;margin-right: 10px;">Punto de venta</h3>
+				<span *ngIf="editandoComprarBeats == false && identity && identity._id == user._id" class="pointer" (click)="abrirCerrarFormComprarBeats('abrir')" style="padding: 1px 8px;background: #999;color: #fff;border-radius: 4px;display: inline-block;">Editar</span>
+				<span *ngIf="editandoComprarBeats && identity && identity._id == user._id" style="display: inline-block;">Editando...</span>
+			</div>
+			
+			<p *ngIf="editandoComprarBeats == false && !identity || editandoComprarBeats == false && identity._id != user._id">
+				{{user.textoComprarBeats || user.nick + ' todabía no ha añadido un punto de venta.'}}
+			</p>
+			<p *ngIf="editandoComprarBeats == false && identity && identity._id == user._id">
+				{{user.textoComprarBeats || 'Añade una breve descripción a tu punto de venta para que los usuarios que desean comprar tus obras entiendan y tengan claro el proceso que deben seguir para hacerse con las mismas.'}}
+			</p>
+
+			<p *ngIf="editandoComprarBeats == false">
+				<strong>Enlace: </strong>
+				<a *ngIf="user && user.enlaceComprarBeats" href="{{user.enlaceComprarBeats}}" rel="nofollow" target="_blanck">{{user.enlaceComprarBeats}}</a>
+				<span *ngIf="user && !user.enlaceComprarBeats">Sin punto de venta</span>
+			</p>
+
+			<form #editarComprarBeatsForm="ngForm" *ngIf="editandoComprarBeats" style="margin-bottom: 20px;">
+				<textarea name="textoComprarBeats" #textoComprarBeats="ngModel" [(ngModel)]="user.textoComprarBeats" style="width: 100%;min-height: auto;padding: 15px;border-radius: 4px;border-color: #eee;margin-bottom: 10px;">{{user.textoComprarBeats}}</textarea>
+				<input type="url" name="enlaceComprarBeats" #enlaceComprarBeats="ngModel" [(ngModel)]="user.enlaceComprarBeats" value="{{user.enlaceComprarBeats}}" placeholder="Ej: https://puntodeventa.com" style="padding: 10px 15px;margin-bottom: 15px;">
+				<button type="submit" (click)="editarUsuario();" class="btn fondo-naranja" style="margin-right: 5px;">Guardar</button>
+				<button class="btn" (click)="abrirCerrarFormComprarBeats('cerrar')">Cancelar</button>
+			</form>
+			
+		</div>
+
+	</div>
+
+	<div class="panel-beats-biblioteca" *ngIf="viendoTab == 'mas-info'">		
+		
+		<div class="flex">
+			<div class="barra-filtros-biblioteca">
+				
+				<div style="display: inline-flex;justify-content: flex-end;align-items: center;">
+					<h1 *ngIf="user" class="h5" style="margin: 0;margin-left: 15px;color: rgba(0,0,0,0.4);margin-right: 10px;">Más información sobre {{user.nick}}</h1>
+					<div class="busqueda-filtros-biblioteca">
+						<input type="text" placeholder="Buscar..." name="filtroBeat" [(ngModel)]="filtroBeat">
+						<i class="fa fa-search"></i>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+
+		<div class="contenedor-beats-biblioteca contenido-tab-productor">
+			<div class="flex" style="margin-bottom: 10px;">	
+				<h3 class="h4" style="margin:0;margin-right: 10px;">Detalles de productor</h3>
+				<span *ngIf="editandoMasInfo == false && identity && identity._id == user._id" class="pointer" (click)="abrirCerrarFormMasInfo('abrir')" style="padding: 1px 8px;background: #999;color: #fff;border-radius: 4px;display: inline-block;">Editar</span>
+				<span *ngIf="editandoMasInfo && identity && identity._id == user._id" style="display: inline-block;">Editando...</span>
+			</div>
+			
+			<p *ngIf="editandoMasInfo == false">
+				<span *ngIf="user.textoMasInfoProductor">
+					{{ user.textoMasInfoProductor }}
+				</span>
+			</p>
+
+			<form #editarMasInfoForm="ngForm" *ngIf="editandoMasInfo" style="margin-bottom: 20px;">
+				<textarea name="textoMasInfoProductor" #textoMasInfoProductor="ngModel" [(ngModel)]="user.textoMasInfoProductor"  style="width: 100%;min-height: auto;padding: 15px;border-radius: 4px;border-color: #eee;margin-bottom: 10px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, placeat laudantium voluptatibus sapiente, asperiores magni dolores nisi alias, magnam rerum delectus cumque voluptates molestiae consectetur sint eveniet. Natus, id quasi.</textarea>
+				<button type="submit" class="btn fondo-naranja" (click)="editarUsuario();" style="margin-right: 5px;">Guardar</button>
+				<button type="submit"class="btn" (click)="abrirCerrarFormMasInfo('cerrar')">Cancelar</button>
+			</form>
+			<p>
+				<strong>Bases publicadas: </strong> {{totalBeats}}
+			</p>
+			<p>
+				<strong>Total reproducciones: </strong> {{totalReproducciones}}
+			</p>
+			<p>
+				<strong>Reputación de productor: </strong> {{user.reputation}}
+			</p>
+
+			<p>
+				<strong>Seguidores: </strong> {{user.totalSeguidores}}
+			</p>
+			<p>
+				<strong>Siguiendo: </strong> {{user.totalSiguiendo}}
+			</p>
+		</div>
+
+	</div>
+</div>
+
+
+<!-- MODAL CREAR LISTA -->
+
+<div *ngIf="identity" class="mi-modal" [class.mi-modal-abierto]="modalCrearListaAbierto == true">
+    
+        <div class="modal__container padding-0 col-xl-7 col-lg-7 col-md-7" style="margin:auto;border-radius: 20px 5px 0 0;position: relative;bottom: 25px;">
+            <div class="modal__featured" style="border-bottom-left-radius: 0;border-top-left-radius: 15px;">
+                <button (click)="cerrarModal('crear-lista');" class="boton-cerrar-modal">
+                    <i class="fa fa-close"></i>
+                </button>
+                <div class="modal__circle" style="background: #6bafa4;"></div>
+                <img class="modal__product" src="../../assets/iconos/icono-listas-rapdise.png" style="opacity: 0.08;box-shadow: 0 0;border: none;width: 170px;height: 170px;border-radius: 0;">
+            </div>
+            <modal-crear-lista (sended)="refrescar($event);"></modal-crear-lista>
+        </div>
+</div>
+
+<!-- MODAL CREAR LISTA -->
+
+<div *ngIf="identity" class="mi-modal" [class.mi-modal-abierto]="modalEditarListaAbierto == true">
+    
+    <div class="modal__container padding-0 col-xl-7 col-lg-7 col-md-7" style="margin:auto;border-radius: 20px 5px 0 0;position: relative;bottom: 25px;">
+        <div class="modal__featured" style="border-bottom-left-radius: 0;border-top-left-radius: 15px;">
+            <button (click)="cerrarModal('editar-lista');" class="boton-cerrar-modal">
+                <i class="fa fa-close"></i>
+            </button>
+            <div class="modal__circle" style="background: #292929;"></div>
+            <img class="modal__product" src="../../assets/iconos/icono-listas-rapdise.png" style="box-shadow: 0 0;border: none;width: 170px;height: 170px;border-radius: 0;filter: invert(100%);">
+        </div>
+        <modal-editar-lista *ngIf="modalEditarListaAbierto == true" [listaAEditar]="listaAEditar" (sended)="refrescar($event);"></modal-editar-lista>
+    </div>
+</div>

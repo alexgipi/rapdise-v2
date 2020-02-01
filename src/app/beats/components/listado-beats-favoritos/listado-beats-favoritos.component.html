@@ -1,0 +1,90 @@
+<ul class="listado-favoritos-biblioteca">
+		<li *ngFor="let beatFavorito of beatsFavoritos; let i = index">
+			<img class="img-favoritos-biblioteca" src="{{url + 'get-imagen-beat/' + beatFavorito.beat.image }}" *ngIf="beatFavorito.beat.image && beatFavorito.beat.image != null">					
+			<img class="img-favoritos-biblioteca" src="{{url + 'get-image-user/' + beatFavorito.beat.user.image }}" *ngIf="beatFavorito.beat.image == null">
+			
+			<div class="flex space-between">				
+				<div class="info-favoritos">
+					<span class="nombre">{{beatFavorito.beat.name}}</span>
+					<div class="autor">
+						<i>Autor:</i> {{beatFavorito.beat.user.nick}} 
+					</div>
+					<div class="reproducciones">
+						<i class="fa fa-volume-down"></i>1.394
+					</div>
+				</div>		
+				<div class="acciones-beat flex">
+					<div class="float-left likes-beat flex">
+						<span class="num-likes" id="beat-{{beatFavorito.beat._id}}">{{beatFavorito.beat.likes}}</span>
+						<div *ngIf="identity">
+							<a id="{{beatFavorito.beat._id}}" class="btn-like btn-like-gris" *ngIf="likes.indexOf(beatFavorito.beat._id) < 0" (click)="likeBeat(beatFavorito.beat._id);sumarLikeBeat(beatFavorito.beat._id);" style="top: 3px;">
+								<span class="fa fa-plus"></span>									
+							</a>
+						
+						
+							<a id="{{beatFavorito.beat._id}}" class="btn-like btn-like-azul"
+							*ngIf="likes.indexOf(beatFavorito.beat._id) >= 0"
+							(mouseenter)="mouseEnter(beatFavorito.beat._id)"
+							(mouseleave)="mouseLeave(beatFavorito.beat._id)"
+							(click)="borrarLikeBeat(beatFavorito.beat._id); restarLikeBeat(beatFavorito.beat._id)"
+							style="top: 3px;">
+								<span *ngIf="beatFavorito.beat._id == likeBeatOver; else following">
+									<span class="fa fa-plus"></span>
+								</span>
+								<ng-template #following>
+									<span class="fa fa-plus"></span>
+								</ng-template>
+							</a>
+						</div>
+
+						<div *ngIf="!identity">
+							<a class="btn-like btn-like-gris" style="top: 3px;">
+								<span class="fa fa-plus"></span>									
+							</a>
+						</div>
+					</div>
+
+					<div class="float-left likes-beat flex">
+						<div *ngIf="identity">
+							<a id="{{beatFavorito.beat._id}}" *ngIf="favoritos.indexOf(beatFavorito.beat._id) < 0" (click)="favoritoBeat(beatFavorito.beat._id);" style="top: 3px;">
+								<span class="fa fa-star-o"></span>									
+							</a>
+						
+						
+							<a id="{{beatFavorito.beat._id}}"
+							*ngIf="favoritos.indexOf(beatFavorito.beat._id) >= 0"
+							(mouseenter)="mouseEnterFavorito(beatFavorito.beat._id)"
+							(mouseleave)="mouseLeaveFavorito(beatFavorito.beat._id)"
+							(click)="borrarFavoritoBeat(beatFavorito.beat._id);"
+							style="top: 3px;">
+								<span *ngIf="beatFavorito.beat._id == favoritoBeatOver; else following">
+									<span class="fa fa-star"></span>
+								</span>
+								<ng-template #following>
+									<span class="fa fa-star"></span>
+								</ng-template>
+							</a>
+						</div>
+
+						<div *ngIf="!identity">
+							<a class="btn-like btn-like-gris" style="top: 3px;">
+								<span class="fa fa-plus"></span>									
+							</a>
+						</div>
+					</div>
+					<i [attr.id]="i + 1" class="fa fa-download"></i>
+					
+					<div class="composition-time">
+						<div class="published more">
+							<svg class="olymp-three-dots-icon"><use xlink:href="assets/icons/icons.svg#olymp-three-dots-icon"></use></svg>
+							<ul class="more-dropdown">
+								<li>
+									<a href="#">Denunciar Beat</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</li>
+</ul>

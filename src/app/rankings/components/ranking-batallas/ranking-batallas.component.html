@@ -1,0 +1,75 @@
+<h1 class="h4">{{titulo}}</h1>
+<div class="mi-tabla">
+	<ul class="mi-tabla-items">
+
+		<li class="mi-tabla-item-vertical mi-tabla-header">
+			<div>
+				<li>#</li>
+				<li>Usuario</li>				
+			</div>
+			<div>
+				<li>Reputación de Batallas</li>
+				<li>Nº Batallas</li>
+				<li>Victorias</li>
+				<li>Derrotas</li>
+			</div>
+		</li>
+
+		<cdk-virtual-scroll-viewport class="viewport-section"  itemSize="55" style="height:500px;">
+			<li class="mi-tabla-item-vertical" *cdkVirtualFor="let user of users; let i = index">
+				<div>
+					<li>{{i+1}}</li>
+					<li>
+						<a [routerLink]="['/perfil', user.nick]">
+							<img src="{{url + 'get-image-user/' + user.image }}" *ngIf="user.image" style="border-radius:5px;width: 35px;height: 35px;margin-right: 10px;" class="img-responsive">
+	
+							<img src="assets/avatars/160419_092630_md9c8c671c7_avatar.png" *ngIf="!user.image" style="border-radius:5px;width: 35px;height: 35px;margin-right: 10px;" class="img-responsive">
+						</a>
+						{{user.nick}}
+					</li>				
+				</div>
+				<div>
+					<li>{{user.reputation}}</li>
+					<li>0</li>
+					<li>{{user.victorias}}</li>
+					<li>{{user.derrotas}}</li>
+				</div>
+			</li>
+		</cdk-virtual-scroll-viewport>
+
+		
+	</ul>
+</div>
+
+
+<div class="table-responsive">		
+	<table class="table fondo-blanco">
+		<thead>
+			<tr>
+			<th scope="col">#</th>
+			<th scope="col">Usuario</th>
+			<th scope="col">Reputación</th>
+			<th scope="col">Nº Batallas</th>
+			<th scope="col">Ganadas</th>
+			<th scope="col">Perdidas</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let user of users; let i = index">
+				<th scope="row">{{i+1}}</th>
+				<td>
+					<a [routerLink]="['/perfil', user.nick]">
+						<img src="{{url + 'get-image-user/' + user.image }}" *ngIf="user.image" style="border-radius:5px;width: 35px;height: 35px;margin-right: 10px;" class="img-responsive">
+
+						<img src="assets/avatars/160419_092630_md9c8c671c7_avatar.png" *ngIf="!user.image" style="border-radius:5px;width: 35px;height: 35px;margin-right: 10px;" class="img-responsive">
+						<span>{{user.nick}}</span>
+					</a>
+				</td>
+				<td>{{user.reputation}}</td>
+				<td>{{user.victorias}}</td>
+				<td>{{user.derrotas}}</td>
+				<td>147</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
